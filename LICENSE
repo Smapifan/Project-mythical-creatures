@@ -1,24 +1,29 @@
-This is free and unencumbered software released into the public domain.
+Smapifan Mod License Agreement
 
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+1. Use and Distribution
+The distribution, monetization, or other usage of this mod is only allowed with explicit permission from the project lead Smapifan or an official team member.
 
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
+2. Re-Textures
+Re-textures that were created independently may be published and monetized. It is not allowed to publish re-textures that were not self-created or only contain minimal changes. If a re-texture is officially added to the project, the person who created it will receive full credit and be listed as a contributor.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+3. Translations (i18n Files)
+Translation files may not be monetized without approval – for example via NexusMods Donation Points (DP) or similar systems.
+A single team member is enough to receive such a request. The final decision will be discussed internally within the team.
+Officially accepted translations will receive:
+- Author credit
+- Translation type (e.g. "German (full)", "French (partial)")
+- Optional external link
 
-For more information, please refer to <https://unlicense.org>
+If multiple translations of the same language are submitted, the first complete version will be prioritized.
+
+4. Team Structure
+This mod project is currently managed by:
+- Smapifan (Project Lead)
+- MettatonBugado
+- MaggPlays
+
+5. Contact
+For questions, permissions, or collaboration inquiries, please contact one of the official team members.
+
+Note:
+This license serves to protect the work of the team and ensure fairness when handling external contributions. Any violations may result in removal of the affected content.
