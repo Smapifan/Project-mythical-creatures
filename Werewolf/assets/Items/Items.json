@@ -1,0 +1,130 @@
+{
+  "Changes": [
+    {
+      "Action": "Load",
+      "FromFile": "assets/Items/Meat.png",
+      "Target": "Mods/Smapifan.Werewolf/Meat"
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/Objects",
+      "Entries": {
+        "Meat": {
+          "Name": "Meat",
+          "DisplayName": "{{i18n:Meat}}",
+          "Description": "{{i18n:Meat_Description}}",
+          "Type": "Object",
+          "Category": 0,
+          "Price": 100,
+          "Edibility": -300,
+          "IsDrink": false,
+          "ContextTags": ["color_red", "Werewolf_item"],
+          "Texture": "Mods/Smapifan.Werewolf/Meat",
+          "SpriteIndex": 0
+        }
+      }
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/NPCGiftTastes",
+      "TextOperations": [
+        {
+          "Operation": "Append",
+          "Target": ["Entries", "Universal_Hate"],
+          "Value": "Meat",
+          "Delimiter": " "
+        }
+      ]
+    },
+
+    {
+      "Action": "Load",
+      "FromFile": "assets/Items/Steak.png",
+      "Target": "Mods/Smapifan.Werewolf/Steak"
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/Objects",
+      "Entries": {
+        "Steak": {
+          "Name": "Steak",
+          "DisplayName": "{{i18n:Steak}}",
+          "Description": "{{i18n:Steak_Description}}",
+          "Type": "Cooking",
+          "Category": -7,
+          "Price": 250,
+          "Edibility": 25,
+          "IsDrink": false,
+          "ContextTags": ["color_red", "Werewolf_item"],
+          "Texture": "Mods/Smapifan.Werewolf/Steak",
+          "SpriteIndex": 0
+        }
+      }
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/NPCGiftTastes",
+      "TextOperations": [
+        {
+          "Operation": "Append",
+          "Target": ["Entries", "Universal_Hate"],
+          "Value": "Steak",
+          "Delimiter": " "
+        }
+      ]
+    },
+    
+    {
+      "Action": "EditData",
+      "Target": "Data/CookingRecipes",
+      "Entries": {
+        "Steak": "Meat 1/25 0/Steak 1//{{i18n:Steak}}"
+      }
+    },
+
+
+
+    {
+      "Action": "Load",
+      "FromFile": "assets/Items/Grey_Wolf_Flute.png",
+      "Target": "Mods/Smapifan.Werewolf/Grey_Wolf_Flute"
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/Objects",
+      "Entries": {
+        "GreyWolfFlute": {
+          "Name": "Grey Wolf Flute",
+          "DisplayName": "{{i18n:Grey_Wolf_Flute}}",
+          "Description": "{{i18n:Grey_Wolf_Flute_Description}}",
+          "Type": "Object",
+          "Category": 0,
+          "Price": 100,
+          "Edibility": -300,
+          "IsDrink": false,
+          "ContextTags": ["color_grey", "Werewolf_item"],
+          "Texture": "Mods/Smapifan.Werewolf/Grey_Wolf_Flute",
+          "SpriteIndex": 0
+        }
+      }
+    },
+
+    {
+      "Action": "EditData",
+      "Target": "Data/NPCGiftTastes",
+      "TextOperations": [
+        {
+          "Operation": "Append",
+          "Target": ["Entries", "Universal_Hate"],
+          "Value": "GreyWolfFlute",
+          "Delimiter": " "
+        }
+      ]
+    }
+  ]
+}

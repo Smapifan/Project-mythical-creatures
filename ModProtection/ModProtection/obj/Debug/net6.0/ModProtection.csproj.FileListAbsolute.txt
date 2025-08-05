@@ -1,0 +1,8 @@
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.csproj.AssemblyReference.cache
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.AssemblyInfoInputs.cache
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.AssemblyInfo.cs
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.csproj.CoreCompileInputs.cache
+C:\Users\tequi\Desktop\ModProtection\ModProtection\bin\Debug\net6.0\ModProtection.deps.json
+C:\Users\tequi\Desktop\ModProtection\ModProtection\bin\Debug\net6.0\ModProtection.dll
+C:\Users\tequi\Desktop\ModProtection\ModProtection\obj\Debug\net6.0\ModProtection.dll

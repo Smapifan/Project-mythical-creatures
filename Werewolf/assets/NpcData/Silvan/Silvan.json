@@ -1,0 +1,97 @@
+{
+  "Changes": [
+    {
+      "LogName": "Load Silvan",
+      "Action": "EditData",
+      "Target": "Data/Characters",
+      "Entries": {
+        "Silvan": {
+          "DisplayName": "{{i18n:Silvan}}",
+          "BirthSeason": "fall",
+          "BirthDay": 22,
+          "HomeRegion": "Town",
+          "Gender": "male",
+          "Age": "Adult",
+          "Manner": "Polite",
+          "SocialAnxiety": "outgoing",
+          "Optimism": "Positive",
+          "CanBeRomanced": false,
+          "CanVisitIsland": false,
+          "WinterStarParticipant": false,
+          "Home": [
+            {
+              "Id": "Default",
+              "Location": "SilvansHome",
+              "Tile": {
+                "X": 6,
+                "Y": 7
+              },
+              "Direction": "down"
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "LogName": "Load GiftTastes for Silvan",
+      "Action": "EditData",
+      "Target": "Data/NPCGiftTastes",
+      "Entries": {
+        "Silvan": "{{i18n:Silvan.Love}}/Steak Meat/{{i18n:Silvan.Like}}/74/{{i18n:Silvan.Neutral}}//{{i18n:Silvan.Dislike}}//{{i18n:Silvan.Hate}}/"
+      }
+    },
+	
+	
+	
+	{
+	  "LogName": "Load Schedule for Silvan",
+      "Target": "Characters/schedules/Silvan",
+      "Action": "Load",
+      "FromFile": "assets/NpcData/Silvan/schedule.json"
+    },
+	
+    {
+	  "LogName": "Load Dialogue for Silvan",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Silvan/dialogue.json"
+    },
+	
+	
+    
+    {
+      "LogName": "Load Portrait for Silvan",
+      "Action": "Load",
+      "Target": "Portraits/Silvan",
+      "FromFile": "assets/NpcData/Silvan/Silvan Portrait.png"
+    },
+	
+	{
+      "LogName": "Load sprite for Silvan",
+      "Action": "Load",
+      "Target": "Characters/Silvan",
+      "FromFile": "assets/NpcData/Silvan/Silvan Sprite.png"
+    },
+	
+    {
+      "LogName": "Silvan_Forest_Event",
+      "Action": "EditData",
+      "Target": "Data/Events/WerewolfForest",
+      "Entries": {
+        "Silvan_Forest/t 1900 2300": "nightTime/34 14/farmer 39 14 3 Silvan 33 14 1 Abigail 58 14 3/move Silvan 5 0 1/pause 1500/speak Silvan \"OH,ein kleiner Snack für die Nacht.\"/playSound biiten/pause 500/speak Silvan \"Was ist Passiert,Ich war besessen von dem Mond.\"/move Abigail -18 0 3/pause 1500/speak Abigail \"Du hast @ gebissen, du Monster !!!\"/pause 500/speak Abigail \"Komm nicht näher Monster !!!\"/move Silvan -3 0 1/pause 500/speak Silvan \"Du wirst nun Teil des Rudels @.\"/pause 2000/speak Abigail \"Lass das so schnell wie möglich von Harvey untersuchen @.\"/end"
+      }
+    },
+	
+    {
+      "LogName": "Silvan_Hospital_Event",
+      "Action": "EditData",
+      "Target": "Data/Events/Hospital",
+      "Entries": {
+        "Silvan_Hospital/t 900 1500": "none/21 12/farmer 20 12 2 Harvey 21 12 3/pause 2000/speak Harvey \"Das sieht schlimm aus @, du solltest dich ausruhen.\"/pause 2000/speak Harvey \"Wie ist das passiert ?\"/pause 2000/speak Harvey \"Ihr seid einem Monster mit grauem Fell, langen spitzen Ohren, roten Augen und einem Schwanz begegnet...\"/pause 5000/speak Harvey \"Das klingt nach einem Werwolf, einer schrecklichen Kreatur der Nacht.\"/speak Harvey \"Halte dich von Menschen fern!\"/end"
+      },
+      "When": {
+        "HasSeenEvent: CurrentPlayer |contains=Silvan_Forest": true
+      }
+    }
+  ]
+}

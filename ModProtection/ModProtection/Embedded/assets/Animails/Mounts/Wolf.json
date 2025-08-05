@@ -1,0 +1,365 @@
+{
+    "Changes":[
+        {
+            "LogName": "Wolf",
+            "Action": "EditData",
+            "Target": "aedenthorn.CustomMounts/dict",
+            "Entries": {
+                "Smapifan.Werewolf.White_Wolf": {
+                    "Name": "Smapifan.Werewolf.White_Wolf",
+                    "Stable": "Black Wolf Shelter",
+                    "SpawnOffset": {
+						"X": 1,
+						"Y": 4 
+                    },
+                    "Speed": 4,
+                    "FrameWidth": 48,
+                    "FrameHeight": 48,
+                    "FootstepSound": "sandyStep",
+                    "FootstepSoundStone": "woodyHit",
+                    "FootstepSoundWood": "woodyHit",
+                    "FluteItem": "(O)119",
+                    "FluteSound": "flute",
+                    "EatItem": "(O)227",
+                    "EatSound": "gulp",
+                    "EatSpeedBonus": 0.6,
+                    "AllowHats": false,
+                    "CustomAnimations": {
+                        "Left": {
+                            "FacingDirection": 3,
+                            "Chance": 0.001,
+                            "Frames": [
+                                {
+                                    "Frame": 21,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "Flip": true,
+                                    "SoundChance": 0.01,
+                                    "Sound": "{{ModId}}_Wolfhowl2",
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 21,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                }
+                            ]
+                        },
+                        "Right": {
+                            "FacingDirection": 1,
+                            "Chance": 0.001,
+                            "Frames": [
+                                {
+                                    "Frame": 21,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "SoundChance": 0.01,
+                                    "Sound": "{{ModId}}_Wolfhowl2",
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 21,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                }
+                            ]
+                        },
+                        "Up": {
+                            "FacingDirection": 0,
+                            "Chance": 0.001,
+                            "Frames": [
+                                {
+                                    "Frame": 25,
+                                    "MinLength": 0,
+                                    "MaxLength": 250
+                                },
+                                {
+                                    "Frame": 25,
+                                    "SoundChance": 0.01,
+                                    "Sound": "{{ModId}}_Wolfhowl2",
+                                    "MinLength": 250,
+                                    "MaxLength": 250
+                                },
+                                {
+                                    "Frame": 25,
+                                    "MinLength": 0,
+                                    "MaxLength": 250
+                                }
+                            ],
+                        }
+                    },
+                    "TexturePath": "{{InternalAssetKey: assets/black_wolf.png}}"
+                }
+            },
+                        "When": {
+                "WolfHowl": "on"
+            },
+        },
+        {
+            "LogName": "White Wolf",
+            "Action": "EditData",
+            "Target": "aedenthorn.CustomMounts/dict",
+            "Entries": {
+                "Smapifan.Werewolf.White_Wolf": {
+                    "Name": "{{i18n:White_Wolf}}",
+                    "Stable": "Smapifan.Werewolf.White_Wolf_Cave",
+                    "SpawnOffset": {
+                        "X": 2,
+                        "Y": 3
+                    },
+                    "Speed": 3,
+                    "FrameWidth": 48,
+                    "FrameHeight": 48,
+                    "Size": {
+                        "X": 96,
+                        "Y": 32
+                    },
+                    "FootstepSound": "sandyStep",
+                    "FootstepSoundStone": "woodyHit",
+                    "FootstepSoundWood": "woodyHit",
+                    "FluteItem": "(O)123",
+                    "FluteSound": "flute",
+                    "EatItem": "Meat",
+                    "EatSound": "gulp",
+                    "EatSpeedBonus": 0.6,
+                    "HatScale": 1.5,
+                    "HatOffsets": [
+                        {
+                            "X": 16,
+                            "Y": -16
+                        },
+                        {
+                            "X": 32,
+                            "Y": -32
+                        },
+                        {
+                            "X": 16,
+                            "Y": 0
+                        },
+                        {
+                            "X": 0,
+                            "Y": -32
+                        }
+                    ],
+                    "CustomAnimations": {
+                        "Left": {
+                            "FacingDirection": 3,
+                            "Chance": 0.002,
+                            "Frames": [
+                                {
+                                    "Frame": 21,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "Flip": true,
+                                    "SoundChance": 1,
+                                    "Sound": "harvest",
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 21,
+                                    "Flip": true,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                }
+                            ]
+                        },
+                        "Right": {
+                            "FacingDirection": 1,
+                            "Chance": 0.002,
+                            "Frames": [
+                                {
+                                    "Frame": 21,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "SoundChance": 1,
+                                    "Sound": "harvest",
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 24,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 23,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 22,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                },
+                                {
+                                    "Frame": 21,
+                                    "MinLength": 100,
+                                    "MaxLength": 100
+                                }
+                            ]
+                        },
+                        "Down": {
+                            "FacingDirection": 2,
+                            "Chance": 0.002,
+                            "Frames": [
+                                {
+                                    "Frame": 25,
+                                    "MinLength": 0,
+                                    "MaxLength": 250
+                                },
+                                {
+                                    "Frame": 25,
+                                    "SoundChance": 1,
+                                    "Sound": "harvest",
+                                    "MinLength": 250,
+                                    "MaxLength": 250
+                                },
+                                {
+                                    "Frame": 25,
+                                    "MinLength": 0,
+                                    "MaxLength": 250
+                                }
+                            ]
+                        }
+                    },
+                    "TexturePath": "{{InternalAssetKey: assets/Animails/Mounts/WhiteWolf.png}}"
+                }
+            }
+        }
+      ]
+    }
