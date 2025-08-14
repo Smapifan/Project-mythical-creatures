@@ -13,7 +13,5 @@ MaggPlays                  | [Nexusmods](https://www.nexusmods.com/)            
 MetatonBugado              | [Nexusmods](https://www.nexusmods.com/)                    | [Here]()
 all contributors           | [Github](https://github.com/)                              | [Here](https://github.com/Smapifan/Project-mythical-creatures/issues)
 
-
-
-## info for ["all contributors"](https://github.com/)
+## info for the Contact["all contributors"](https://github.com/)
 Please write an issue so that we can be informed and take care of it.
