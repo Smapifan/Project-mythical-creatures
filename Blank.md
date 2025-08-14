@@ -15,5 +15,5 @@ all contributors           | [Github](https://github.com/)                      
 
 
 
-## info for "all contributors"
+## info for "[all contributors](https://github.com/) "
 Please write an issue so that we can be informed and take care of it.
