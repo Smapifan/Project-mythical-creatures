@@ -1,4 +1,12 @@
- # Werewolf
+## Project mythical creatures
+this project will include 4 mods.
+&nbsp;                     | current stand                                                                                       
+:------------------------- | :-----------------------------------------------------------------------------------------------------------------
+The werewolf Mod               | [↻]()                                                                                         
+The vampire Mod                | [❑]() 
+the fairy and elf mod          | [❑]()
+
+## Werewolf
 The Werewolf Mod code
 
 ## Current status of the mod
