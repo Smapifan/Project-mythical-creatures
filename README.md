@@ -57,11 +57,3 @@ Three-Heart Dance Partner  | [❑](ThreeHeartDancePartner/i18n)                 
 [Polish]: https://www.nexusmods.com/stardewvalley/mods/3616
 [Thai]: https://www.nexusmods.com/stardewvalley/mods/7052
 [Ukrainian]: https://www.nexusmods.com/stardewvalley/mods/8427
-
-## Compiling the mods
-Installing stable releases from Nexus Mods is recommended for most users. If you really want to
-compile the mod yourself, read on.
-
-These mods use the [crossplatform build config](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig)
-so they can be built on Linux, macOS, and Windows without changes. See [the build config documentation](https://www.nuget.org/packages/Pathoschild.Stardew.ModBuildConfig)
-for troubleshooting.
