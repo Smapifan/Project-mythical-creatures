@@ -10,6 +10,6 @@ If you manually come to the desired project, contact me.
 
 ## contributors
 
-Contributors               | Contact                                                                                                          | Online platform
+&nbsp;                     | Contributors               | Online platform                                                                                                  | Contact
 :------------------------- | :---------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------
-Smapifan                   | [Here](https://forums.nexusmods.com/messenger/compose/?to=194093408)                                             | Nexusmods
+Smapifan                   | Nexusmods                                                                                                        | [Here](https://forums.nexusmods.com/messenger/compose/?to=194093408)
