@@ -1,13 +1,17 @@
 # Werewolf
 The Werewolf Mod code
 
+## Current status of the mod
+Here is the current status listed in detail.
+
+(❑ = not yet started , ↻ = in progress , ✓ = complete)
+
+&nbsp;                     | current stand
+:-------------------------
+Werewolf         | [❑](Werewolf)                                                                                         | [✓](Werewolf/assets/NpcData/Silvan/Silvan.json)                                                                                | [❑](AnimalSocialMenu/i18n)                                                                                        | [✓](AnimalSocialMenu/i18n/hu.json)                                                                                                | [❑](AnimalSocialMenu/i18n)                                                                                        | [❑](AnimalSocialMenu/i18n)                                                                                        | [✓](AnimalSocialMenu/i18n/ko.json)                                                                                        | [❑](AnimalSocialMenu/i18n)                                                                                        | [❑](AnimalSocialMenu/i18n)                                                                                         | [❑](AnimalSocialMenu/i18n)                                                                                         | [✓](AnimalSocialMenu/i18n/es.json)                                                                                                | [✓](AnimalSocialMenu/i18n/th.json)                                                                                        | [❑](AnimalSocialMenu/i18n)                                                                                        | [✓](AnimalSocialMenu/i18n/uk.json)
+
+
 ## Translating the mods
-<!--
-
-    This section is auto-generated using a script, there's no need to edit it manually.
-    https://gist.github.com/Pathoschild/040ff6c8dc863ed2a7a828aa04447033
-
--->
 The mods can be translated into any language supported by the game, and SMAPI will automatically
 use the right translations.
 
