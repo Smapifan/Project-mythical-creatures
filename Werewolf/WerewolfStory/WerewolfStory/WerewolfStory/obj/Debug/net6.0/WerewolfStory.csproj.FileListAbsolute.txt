@@ -1,0 +1,8 @@
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\bin\Debug\net6.0\WerewolfStory.deps.json
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\bin\Debug\net6.0\WerewolfStory.dll
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.csproj.AssemblyReference.cache
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.AssemblyInfoInputs.cache
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.AssemblyInfo.cs
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.csproj.CoreCompileInputs.cache
+C:\Users\tequi\Desktop\Werewolf\WerewolfStory\WerewolfStory\obj\Debug\net6.0\WerewolfStory.dll

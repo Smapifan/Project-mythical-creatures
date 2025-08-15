@@ -1,0 +1,138 @@
+{
+  "Changes": [
+    {
+      "LogName": "Mapstring for the Maps",
+      "Action": "EditData",
+      "Target": "Strings/StringsFromMaps",
+      "Entries": {
+        "Haus.0": "{{i18n:Haus.0}}",
+        "Haus.1": "{{i18n:Haus.1}}",
+        "Haus.2": "{{i18n:Haus.2}}",
+        "Haus.3": "{{i18n:Haus.3}}",
+    	  "Forest.0": "{{i18n:Forest.0}}"
+      }
+    },
+	
+	
+	
+    {
+      "Action": "EditMap",
+      "Target": "Maps/Woods",
+      "FromFile": "assets/Maps/Woods.tbin",
+      "FromArea": {
+        "X": 0,
+        "Y": 0,
+        "Width": 3,
+        "Height": 6
+      },
+      "ToArea": {
+        "X": 0,
+        "Y": 18,
+        "Width": 3,
+        "Height": 6
+      },
+      "When": {
+        "HasMod |contains=FlashShifter.StardewValleyExpandedCP": false
+      }
+    },
+	
+	{
+        "Action": "EditMap",
+        "Target": "Maps/Woods",
+        "MapTiles": [
+            {
+                "Position": { "X": 0, "Y": 19},
+                "Layer": "Back",
+                "SetProperties": {
+                    "TouchAction": "Warp WerewolfForest 55 13"
+                }
+            },
+			{
+                "Position": { "X": 0, "Y": 20},
+                "Layer": "Back",
+                "SetProperties": {
+                    "TouchAction": "Warp WerewolfForest 55 14"
+                }
+            },
+			{
+                "Position": { "X": 0, "Y": 21},
+                "Layer": "Back",
+                "SetProperties": {
+                    "TouchAction": "Warp WerewolfForest 55 15"
+                }
+            },
+            {
+                "Position": { "X": 0, "Y": 22},
+                "Layer": "Back",
+                "SetProperties": {
+                    "TouchAction": "Warp WerewolfForest 55 16"
+                }
+            }
+        ]
+    },
+	
+	{
+        "LogName": "Make woods pathable for NPC schedules.",
+        "Action": "EditData",
+        "Target": "Data/Locations",
+        "TargetField": ["Woods"],
+        "Entries": {
+            "ExcludeFromNpcPathfinding": false
+      }
+    },
+	
+	
+	
+    {
+      "LogName": "Load the WerewolfForest Map",
+      "Action": "Load",
+      "Target": "Maps/WerewolfForest",
+      "FromFile": "assets/Maps/SilvansHomeRegion.tbin"
+    },
+	
+    {
+      "LogName": "Add Werewolf Forest To Locations",
+      "Action": "EditData",
+      "Target": "Data/Locations",
+      "Entries": {
+        "WerewolfForest": {
+          "DisplayName": "Werewolf Forest",
+          "DefaultArrivalTile": {
+            "X": 1,
+            "Y": 23
+          },
+          "CreateOnLoad": {
+            "MapPath": "Maps/WerewolfForest"
+          }
+        }
+      }
+    },
+	
+	
+	
+    {
+      "LogName": "Load SilvansHome",
+      "Action": "Load",
+      "Target": "Maps/SilvansHome",
+      "FromFile": "assets/Maps/SilvansHome.tbin"
+    },
+	
+    {
+      "LogName": "Add SilvansHome to Locations",
+      "Action": "EditData",
+      "Target": "Data/Locations",
+      "Entries": {
+        "SilvansHome": {
+          "DisplayName": "Silvans Home",
+          "DefaultArrivalTile": {
+            "X": 1,
+            "Y": 23
+          },
+          "CreateOnLoad": {
+            "MapPath": "Maps/SilvansHome"
+          }
+        }
+      }
+    }
+  ]
+}
