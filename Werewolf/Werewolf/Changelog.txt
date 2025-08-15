@@ -1,0 +1,26 @@
+1.0.1
+The update key has been updated.
+No bug fixes
+
+1.0.0
+This mod was published.
+
+0.0.9
+Get a license from MaggPlays.
+MaggPlays Profile: https://next.nexusmods.com/profile/MaggPlays
+License: To utilize and expand the assets such as the Wolf's Cave or the Direwolf sprite
+
+0.0.8 
+Get a license from MettatonBugado.
+MettatonBugado Profile: https://next.nexusmods.com/profile/MettatonBugado
+License:To use the assets of the Werewolf Abigail Mod
+
+
+"{{InternalAssetKey: assets/LooseSprites/RaccoonShop.png}}"
+
+                {
+                    "Id": "{{ModId}}...",
+                    "ItemId": "(H){{ModId}}...",
+                    "TradeItemId": "{{ModId}}...",
+                    "TradeItemAmount": "3"
+                }

@@ -1,0 +1,53 @@
+{
+    "Changes": [
+        { 
+            "LogName": "Bleeding Abigail Sprite",
+            "Action": "Load",
+            "Target": "Characters/Abigail",
+            "FromFile": "assets/NpcData/Abigail/Characters/Abigail_S.png",
+            "Priority": "Higest"
+        },
+
+        {
+            "LogName": "Bleeding Abigail Winter Sprite",
+            "Action": "Load",
+            "Target": "Characters/Abigail_Winter",
+            "FromFile": "assets/NpcData/Abigail/Characters/Abigail_S_W.png",
+            "Priority": "Higest"
+        },
+
+        {
+            "LogName": "Bleeding Abigail Beach Sprite",
+            "Action": "Load",
+            "Target": "Characters/Abigail_Beach",
+            "FromFile": "assets/NpcData/Abigail/Characters/Abigail_S_B.png",
+            "Priority": "Higest"
+        },
+
+
+
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Abigail Portrait",
+            "Target": "Portraits/Abigail",
+            "FromFile": "assets/NpcData/Abigail/Portraits/Abigail_P.png",
+            "Priority": "Higest"
+        },
+
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Abigail Winter Portrait",
+            "Target": "Portraits/Abigail_Winter",
+            "FromFile": "assets/NpcData/Abigail/Portraits/Abigail_P_W.png",
+            "Priority": "Higest"
+        },
+        
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Abigail Beach Portrait",
+            "Target": "Portraits/Abigail_Beach",
+            "FromFile": "assets/NpcData/Abigail/Portraits/Abigail_P_B.png",
+            "Priority": "Higest"
+        }
+    ]
+}
