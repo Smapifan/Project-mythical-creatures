@@ -10,5 +10,4 @@ Contributors                                                                    
 :------------------------- | :--------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------
 Smapifan                   | [Nexusmods](https://www.nexusmods.com/)                    | [Here](https://forums.nexusmods.com/messenger/compose/?to=194093408)
 MaggPlays                  | [Nexusmods](https://www.nexusmods.com/)                    | [Here](https://forums.nexusmods.com/messenger/compose/?to=194014746)
-MetatonBugado              | [Nexusmods](https://www.nexusmods.com/)                    | [Here]()
-all contributors           | [Github](https://github.com/)                              | [Here](https://github.com/Smapifan/Project-mythical-creatures/issues)
+MetatonBugado              | [Nexusmods](https://www.nexusmods.com/)                    | [Here](https://forums.nexusmods.com/messenger/compose/?to=166817383)
