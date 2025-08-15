@@ -10,9 +10,9 @@ Here is the current status listed in detail.
 
 &nbsp;                     | current stand                                                          | typ
 :------------------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------
-Abigail bleeding           | [↻](Werewolf/assets/NpcData/Abigail/Abigail.json)                      | NPCData
-Abigail bleeding Sprites   | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
-Abigail bleeding Portraits | [↻](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
+Abigail bleeding           | [↻](https://github.com/Smapifan/Project-mythical-creatures/blob/main/Werewolf/Werewolf/assets/NpcData/Abigail/Abigail.json)                      | NPCData
+Abigail bleeding Sprites   | [✓](https://github.com/Smapifan/Project-mythical-creatures/blob/main/Werewolf/Werewolf/assets/NpcData/Abigail/Characters)                   | NPCData
+Abigail bleeding Portraits | [↻](Werewolf/assets/NpcData/Abigail/Characters)                   | NPCData
 Abigails data folder       | [✓](Werewolf/assets/NpcData/Abigail)                                   | NPCData
 Abigail werewolf           | [✓](Werewolf/assets/NpcData/Abigail/W_Abigail.json)                    | NPCData
 Abigail werewolf Sprites   | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
@@ -73,4 +73,5 @@ Contributions are welcome! See [Modding:Translations](https://stardewvalleywiki.
 
 &nbsp;                     | Chinese                       | English                       | French                        | German                        | Hungarian                     | Italian                       | Japanese                      | Korean                        | Polish                        | Portuguese                    | Russian                       | Spanish                       | Thai                          | Turkish                       | Ukrainian
 :------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :----------------------------
+
 Werewolf                   | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n/default.json)  | [❑](Werewolf/Werewolf/i18n)  | [✓](Werewolf/Werewolf/i18n/de.json)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)
