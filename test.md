@@ -17,22 +17,18 @@ Abigails data folder       | [✓](Werewolf/assets/NpcData/Abigail)             
 Abigail werewolf           | [✓](Werewolf/assets/NpcData/Abigail/W_Abigail.json)                    | NPCData
 Abigail werewolf Sprites   | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
 Abigail werewolf Portraits | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
-
 Luca                       | [↻](Werewolf/assets/NpcData/Silvan/Silvan.json)                        | NPCData
 Lucas data folder          | [✓](Werewolf/assets/NpcData/Luca)                                      | NPCData
 Lucas dialogue             |  ❑                                                                     | NPCData
 Lucas Portraits            |  ❑                                                                     | NPCData
 Lucas schedule             |  ❑                                                                     | NPCData
 Lucas Sprite               |  ❑                                                                     | NPCData
-
 Silvan                     | [✓](Werewolf/assets/NpcData/Silvan/Silvan.json)                        | NPCData
 Silvans data folder        | [✓](Werewolf/assets/NpcData/Silvan)                                    | NPCData
 Silvans dialogue           | [↻](Werewolf/assets/NpcData/Silvan/dialogue.json)                      | NPCData
 Silvans Portraits          | [✓](Werewolf/assets/NpcData/Silvan/SilvanPortrait.png)                 | NPCData
 Silvans schedule           | [↻](Werewolf/assets/NpcData/Silvan/schedule.json.json)                 | NPCData
 Silvans Portraits          | [✓](Werewolf/assets/NpcData/Silvan/SilvanSprite.png)                   | NPCData
-
-
 Lucas home                 |  ❑                                                                     | Locations
 Silvans home               | [✓](Werewolf/assets/Maps/SilvansHome.tbin)                             | Locations
 Werewolf Forest            | [✓](Werewolf/assets/Maps/SilvansHomeRegion.tbin)                       | Locations
