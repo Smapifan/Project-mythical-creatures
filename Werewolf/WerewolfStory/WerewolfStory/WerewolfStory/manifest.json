@@ -1,0 +1,10 @@
+{
+    "Name": "Werewolf Story",
+    "Author": "Smapifan",
+    "Version": "1.0.0",
+    "Description": "C# code for the Werewolf mod",
+    "UniqueID": "Smapifan.WerewolfStory",
+    "EntryDll": "WerewolfStory.dll",
+    "UpdateKeys": [ "Nexus:???" ],
+    "MinimumApiVersion": "4.0.0"
+}

@@ -1,0 +1,12 @@
+{
+   "Name": "Werewolf",
+   "Author": "Smapifan",
+   "Version": "1.0",
+   "Description": "Make A Werewolf Life Story In Stardew Valley",
+   "UniqueID": "Smapifan.Werewolf",
+   "MinimumApiVersion": "4.0.0",
+   "UpdateKeys": [ "Nexus:" ],
+   "ContentPackFor": {
+      "UniqueID": "Pathoschild.ContentPatcher"
+   }
+}

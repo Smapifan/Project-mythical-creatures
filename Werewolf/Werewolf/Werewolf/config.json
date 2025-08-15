@@ -1,0 +1,26 @@
+{
+  // a section
+  "Always on spirit's eve": "true",
+  "Eye color": "Yellow",
+  "Always werewolf": "false",
+
+  // b section
+  "Build Cost for Black Wolf Cave": "5000",
+  "Build Days for Black Wolf Cave": "5",
+  "Coal Cost for Black Wolf Cave": "1",
+  "Wood Cost for Black Wolf Cave": "1",
+  "Stone Cost for Black Wolf Cave": "1",
+  "Hardwood Cost for Black Wolf Cave": "1",
+  "Fiber Cost for Black Wolf Cave": "1",
+  "Moss Cost for Black Wolf Cave": "1",
+  
+  // c section
+  "Build Cost for White Wolf Cave": "5000",
+  "Build Days for White Wolf Cave": "5",
+  "Quartz Cost for White Wolf Cave": "1",
+  "Wood Cost for White Wolf Cave": "1",
+  "Stone Cost for White Wolf Cave": "1",
+  "Hardwood Cost for White Wolf Cave": "1",
+  "Fiber Cost for White Wolf Cave": "1",
+  "Moss Cost for White Wolf Cave": "1"
+}
