@@ -3,7 +3,7 @@ This project will include 4 mods.
 
 &nbsp;                     | current stand
 :------------------------- | :-----------------------------------------------------------------------------------------------------------------
-The werewolf Mod           | [↻](Werewolf)
+The werewolf Mod           | [↻](Werewolf/md Data/Werewolf.md)
 The vampire Mod            | [❑](Blank.md)
 The fairy and elf mod      | [❑](Blank.md)
 
