@@ -1,0 +1,24 @@
+{
+  "Changes": [
+    {
+      "LogName": "mail silvans first letter",
+      "Action": "EditData",
+      "Target": "data/mail",
+      "Entries": { 
+        "Werewolf1": "{{i18n:Mail.Message1}} %item cookingRecipe Steak%%[#]{{i18n:Mail.Name1}}"
+      }
+    },
+
+    {
+      "LogName": "Send mail event silvans first letter",
+      "Action": "EditData",
+      "Target": "Data/Events/Farm",
+      "Entries": {
+        "101226//SendMail Werewolf1": "null"
+      },
+      "When": {
+        "HasSeenEvent: CurrentPlayer |contains=Silvan_Forest": true
+      }
+    }
+  ]
+}
