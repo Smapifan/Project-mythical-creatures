@@ -1,14 +1,12 @@
-(
-echo # Programming / data files
-echo *.cs     linguist-language=C#
-echo *.json   linguist-language=JSON
-echo *.xml    linguist-language=XML
-echo *.yaml   linguist-language=YAML
-echo *.yml    linguist-language=YAML
-echo *.ini    linguist-language=INI
-echo.
-echo # Binary / asset files → count as Other
-echo *.png    linguist-detectable=false
-echo *.tbin   linguist-detectable=false
-echo *.xnb    linguist-detectable=false
-) > .gitattributes
+# Programming / data files
+*.cs     linguist-language=C#
+*.json   linguist-language=JSON
+*.xml    linguist-language=XML
+*.yaml   linguist-language=YAML
+*.yml    linguist-language=YAML
+*.ini    linguist-language=INI
+
+# Binary / asset files → count as Other
+*.png    linguist-detectable=false
+*.tbin   linguist-detectable=false
+*.xnb    linguist-detectable=false
