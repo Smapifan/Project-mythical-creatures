@@ -18,11 +18,14 @@ jobs:
         with:
           fetch-depth: 0  # volle Git-History, alle Branches verfügbar
 
+      - name: List Scripts
+        run: ls -R $GITHUB_WORKSPACE/.github/scripts
+
       - name: Run filetype scan
-        run: python .github/scripts/filetype_scan.py
+        run: python $GITHUB_WORKSPACE/.github/scripts/filetype_scan.py
 
       - name: Generate Markdown
-        run: python .github/scripts/markdown_generator.py
+        run: python $GITHUB_WORKSPACE/.github/scripts/markdown_generator.py
 
       - name: Commit and push results
         run: |
