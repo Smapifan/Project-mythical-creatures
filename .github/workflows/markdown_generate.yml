@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Python ausführen
-        run: python .github/scripts/markdown_generator.py
+        run: python .github/workflows/markdown_generator.py
       - name: Zeige Ergebnis
         run: cat FILETYPES.md
       - name: Commit und Push FILETYPES.md
