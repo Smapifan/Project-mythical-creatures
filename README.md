@@ -11,7 +11,7 @@ The werewolf Mod           | [↻](Werewolf/Werewolf/MdData/README.md)
 The vampire Mod            | [❑](Blank.md)
 The fairy and elf mod      | [❑](Blank.md)
 
-
+## 
 
 ## contributors
 
@@ -21,7 +21,7 @@ Smapifan                   | [Nexusmods](https://www.nexusmods.com/)            
 MaggPlays                  | [Nexusmods](https://www.nexusmods.com/)                    | [Here](https://forums.nexusmods.com/messenger/compose/?to=194014746)
 MetatonBugado              | [Nexusmods](https://www.nexusmods.com/)                    | [Here]()
 
-
+## 
 
 ## Translations
 The mods can be translated into any language supported by the game, and SMAPI will automatically use the right translations.
