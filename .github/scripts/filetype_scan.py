@@ -11,9 +11,15 @@ os.makedirs(output_dir, exist_ok=True)
 branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
 branches = [b.strip().replace('origin/', '') for b in branches if 'HEAD' not in b]
 
-for branch in branches:
-    # Nur echte Branches (kann man filtern, z.B. main und Wiki)
-    if branch not in ["main", "Wiki"]:
+# Nur Branches, die existieren
+branches_to_scan = [b for b in branches if b in ["main", "Wiki"]]
+
+for branch in branches_to_scan:
+    # Prüfen, ob Branch existiert
+    check_branch = subprocess.run(['git', 'rev-parse', '--verify', branch],
+                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if check_branch.returncode != 0:
+        print(f"Branch '{branch}' existiert nicht, überspringe.")
         continue
 
     # Branch lokal erstellen oder wechseln
