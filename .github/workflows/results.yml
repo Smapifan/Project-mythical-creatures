@@ -1,0 +1,33 @@
+name: Generate Results
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - Wiki
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # für Push erforderlich
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Voller Checkout, damit Branches verfügbar sind
+
+      - name: Run filetype scan
+        run: python .github/scripts/filetype_scan.py
+
+      - name: Generate Markdown and JSON results
+        run: python .github/scripts/markdown_generator.py
+
+      - name: Commit and push results
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add Results/*.json FILETYPES.md
+          git commit -m "Automatische Aktualisierung der Results und FILETYPES.md" || echo "Nothing to commit"
+          git push
