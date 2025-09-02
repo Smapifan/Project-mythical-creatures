@@ -11,17 +11,17 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # für Push erforderlich
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Voller Checkout, damit Branches verfügbar sind
+          fetch-depth: 0
 
-      - name: Run filetype scan
+      - name: Scan branches and generate JSON
         run: python .github/scripts/filetype_scan.py
 
-      - name: Generate Markdown and JSON results
+      - name: Generate Markdown
         run: python .github/scripts/markdown_generator.py
 
       - name: Commit and push results

@@ -1,19 +1,18 @@
 import os
 import json
-from collections import Counter
 import subprocess
+from collections import Counter
 
-# Funktion um alle Branches zu bekommen
-branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
-branches = [b.strip().replace('origin/', '') for b in branches if 'HEAD' not in b]
+# Liste der Branches, die wir berücksichtigen wollen
+branches_to_scan = ["main", "Wiki"]
 
-# Ergebnisse sammeln
-all_results = []
+output_dir = "Results"
+os.makedirs(output_dir, exist_ok=True)
 
-for branch in branches:
-    # Temporär zum Branch wechseln
+for branch in branches_to_scan:
+    # Zum Branch wechseln
     subprocess.run(['git', 'checkout', branch], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    
+
     filetypes = []
     for root, dirs, files in os.walk('.'):
         if '.git' in root or '.github' in root:
@@ -24,19 +23,17 @@ for branch in branches:
                 filetypes.append(ext.lower())
             else:
                 filetypes.append('(no ext)')
-    
+
     if not filetypes:
         filetypes.append('(no files found)')
-    
+
     counter = Counter(filetypes)
     result = {
         "branch": branch,
-        "filetypes": dict(counter)
+        "filetypes": dict(counter),
+        "total_files": sum(counter.values())
     }
-    all_results.append(result)
 
-# Ergebnisse immer in results.txt schreiben
-results_path = os.path.join('.github', 'results.txt')
-with open(results_path, "w", encoding="utf-8") as f:
-    for r in all_results:
-        f.write(json.dumps(r) + "\n")
+    json_path = os.path.join(output_dir, f"Result{branch}.json")
+    with open(json_path, "w", encoding="utf-8") as jf:
+        json.dump(result, jf, indent=2)
