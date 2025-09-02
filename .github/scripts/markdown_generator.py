@@ -4,7 +4,7 @@ import json
 output_dir = "Results"
 lines = ["## 🗂️ File Types (alle Branches)\n"]
 
-# Alle JSON-Dateien im Results-Ordner verarbeiten
+# Alle JSON-Dateien verarbeiten
 for filename in sorted(os.listdir(output_dir)):
     if not filename.endswith(".json"):
         continue
@@ -21,7 +21,7 @@ for filename in sorted(os.listdir(output_dir)):
     lines.append("|-----------|-------|------------|")
 
     for ext, count in sorted(filetypes.items(), key=lambda x: -x[1]):
-        percent = f"{(count/total)*100:.2f}%"  # zwei Nachkommstellen
+        percent = f"{(count/total)*100:.2f}%"
         lines.append(f"| `{ext}` | {count} | {percent} |")
 
     lines.append("")
