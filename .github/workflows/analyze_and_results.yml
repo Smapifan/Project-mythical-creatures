@@ -4,59 +4,54 @@ on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
-  analyze-and-result:
+  analyze_and_results:
     runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'  # Verhindert Ausführung bei Commits vom Bot
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Run filetype_scan.py
+      - name: Datei‑Typ Analyse
         run: python .github/scripts/filetype_scan.py
 
-      - name: Generate Markdown
+      - name: Markdown generieren
         run: python .github/scripts/markdown_generator.py
 
-      - name: Generate JSON result
+      - name: JSON Ergebnis generieren (Dateitypen + Prozent)
         run: |
           BRANCH=${GITHUB_REF#refs/heads/}
           python3 - << 'EOF'
 import json
 from pathlib import Path
 
-# aktuelle Branch und gesammelte Einträge
 branch = "${BRANCH}"
-lines = Path("results.txt").read_text(encoding="utf-8").splitlines()
-entries = [json.loads(l) for l in lines if l.strip()]
-latest = [e for e in entries if e.get("branch")==branch]
-if latest:
-    data = latest[-1]
-    filetypes = data.get("filetypes", {})
-    total = sum(filetypes.values())
-    # Prozentwerte berechnen
-    percentages = {ext: round((count/total)*100, 2) for ext, count in filetypes.items()}
-else:
-    filetypes = {}
-    percentages = {}
+entries = [json.loads(l) for l in Path("results.txt").read_text(encoding="utf-8").splitlines() if l.strip()]
+latest = next((e for e in reversed(entries) if e["branch"] == branch), {})
+filetypes = latest.get("filetypes", {})
+total = sum(filetypes.values()) or 1
+percentages = {ext: round(count/total*100, 2) for ext, count in filetypes.items()}
 
 output = {
     "branch": branch,
     "filetypes": filetypes,
     "percentages": percentages
 }
-
 out_path = Path("Results") / f"Result{branch}.json"
 out_path.parent.mkdir(exist_ok=True)
 out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
 EOF
 
-      - name: Commit & Push
+      - name: Commit & Push Ergebnisse
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "github-actions@users.noreply.github.com"
           git add FILETYPES.md Results/Result${BRANCH}.json
-          git commit -m "Update markdown & results for branch ${BRANCH}" || echo "No changes to commit"
+          git commit -m "Update results for branch ${BRANCH}" || echo "No changes to commit"
           git push
