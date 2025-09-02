@@ -1,28 +1,51 @@
 import os
 import json
-from collections import Counter
 import subprocess
+from collections import Counter
 
-# Aktuellen Branch ermitteln
-branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).decode().strip()
+# Ordner für Ergebnisse
+output_dir = "Results"
+os.makedirs(output_dir, exist_ok=True)
 
-filetypes = []
-for root, dirs, files in os.walk('.'):
-    if '.git' in root or '.github' in root:
+# Branches, die wir prüfen wollen
+branches_to_scan = ["main", "Wiki"]
+
+# Alle Remote-Branches abrufen
+remote_branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
+remote_branches = [b.strip().replace('origin/', '') for b in remote_branches if 'HEAD' not in b]
+
+for branch in branches_to_scan:
+    if branch not in remote_branches:
+        print(f"Branch '{branch}' existiert nicht im Remote, überspringe.")
         continue
-    for f in files:
-        if '.' in f:
-            ext = f[f.rfind('.'):]
-            filetypes.append(ext.lower())
-        else:
-            filetypes.append('(no ext)')
 
-counter = Counter(filetypes)
-result = {
-    "branch": branch,
-    "filetypes": dict(counter)
-}
+    # Branch lokal erstellen oder wechseln
+    subprocess.run(['git', 'checkout', '-B', branch, f'origin/{branch}'],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-# Ergebnis als JSON-Zeile anhängen
-with open("results.txt", "a", encoding="utf-8") as f:
-    f.write(json.dumps(result) + "\n")
+    # Dateien sammeln
+    filetypes = []
+    for root, dirs, files in os.walk('.'):
+        if '.git' in root or '.github' in root:
+            continue
+        for f in files:
+            if '.' in f:
+                ext = f[f.rfind('.'):]
+                filetypes.append(ext.lower())
+            else:
+                filetypes.append('(no ext)')
+
+    if not filetypes:
+        filetypes.append('(no files found)')
+
+    counter = Counter(filetypes)
+    result = {
+        "branch": branch,
+        "filetypes": dict(counter),
+        "total_files": sum(counter.values())
+    }
+
+    # JSON speichern
+    json_path = os.path.join(output_dir, f"Result{branch}.json")
+    with open(json_path, "w", encoding="utf-8") as jf:
+        json.dump(result, jf, indent=2)
