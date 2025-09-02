@@ -11,12 +11,12 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # für Push erforderlich
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # gesamte Git-History und alle Branches verfügbar
+          fetch-depth: 0  # volle Git-History, alle Branches verfügbar
 
       - name: Run filetype scan
         run: python .github/scripts/filetype_scan.py

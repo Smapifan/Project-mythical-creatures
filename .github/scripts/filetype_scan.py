@@ -7,26 +7,29 @@ from collections import Counter
 output_dir = "Results"
 os.makedirs(output_dir, exist_ok=True)
 
-# Branches prüfen
+# Branches, die wir prüfen wollen
 branches_to_scan = ["main", "Wiki"]
 
-# Dateiendungen, die als "other" behandelt werden
-blacklist_exts = ['.zip', '.exe', '.dll']  # hier kannst du beliebige Endungen einfügen
+# Endungen, die in 'other' zusammengefasst werden
+blacklist_exts = ['.zip', '.exe', '.dll']  # beliebig anpassen
 
-# Remote-Branches abrufen
-remote_branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
-remote_branches = [b.strip().replace('origin/', '') for b in remote_branches if 'HEAD' not in b]
+# GitHub Actions: alle Remote-Branches holen
+subprocess.run(['git', 'fetch', '--all'], check=True)
 
 for branch in branches_to_scan:
+    # Prüfen, ob Branch im Remote existiert
+    remote_branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
+    remote_branches = [b.strip().replace('origin/', '') for b in remote_branches if 'HEAD' not in b]
+
     if branch not in remote_branches:
         print(f"Branch '{branch}' existiert nicht im Remote, überspringe.")
         continue
 
-    # Branch lokal erstellen oder wechseln
-    subprocess.run(['git', 'checkout', '-B', branch, f'origin/{branch}'],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # Branch lokal erstellen oder sauber wechseln
+    subprocess.run(['git', 'checkout', '-B', branch, f'origin/{branch}'], check=True)
+    subprocess.run(['git', 'reset', '--hard'], check=True)
 
-    # Dateien sammeln
+    # Dateien im Branch sammeln
     filetypes = []
     for root, dirs, files in os.walk('.'):
         if '.git' in root or '.github' in root:
@@ -51,3 +54,5 @@ for branch in branches_to_scan:
     json_path = os.path.join(output_dir, f"Result{branch}.json")
     with open(json_path, "w", encoding="utf-8") as jf:
         json.dump(result, jf, indent=2)
+
+    print(f"Branch '{branch}' gescannt. JSON gespeichert unter {json_path}")

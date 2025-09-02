@@ -36,3 +36,5 @@ for filename in sorted(os.listdir(output_dir)):
 
 with open("FILETYPES.md", "w", encoding="utf-8") as f:
     f.write("\n".join(lines))
+
+print("Markdown FILETYPES.md erfolgreich erstellt.")
