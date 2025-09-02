@@ -1,0 +1,172 @@
+/* Body */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hintergrundbilder pro Seite */
+body.index {
+  background-image: url('backgrounds/index_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.page1 {
+  background-image: url('backgrounds/page1_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.page2 {
+  background-image: url('backgrounds/page2_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.page3 {
+  background-image: url('backgrounds/page3_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.page4 {
+  background-image: url('backgrounds/page4_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.page5 {
+  background-image: url('backgrounds/page5_bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* Header */
+header {
+  background-color: #a52a2a;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Hamburger-Button */
+.hamburger {
+  font-size: 50px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #fff;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  right: -250px;
+  height: 100%;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+/* Sidebar sichtbar */
+.sidebar.active {
+  right: 0;
+}
+
+/* Content */
+.content {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* Überschriften */
+h1 {
+  color: #a52a2a;
+  padding: 20px;
+}
+
+/* Links */
+a {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Collapsible Section nur für Page2 --- */
+.page2 .collapsible {
+  background-color: #a52a2a;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Nur Collapsible-Buttons: active oder hover */
+.page2 .collapsible.active,
+.page2 .collapsible:hover {
+  background-color: #802020;
+}
+
+.page2 .content-collapsible {
+  padding: 0 15px;
+  display: none;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  border-left: 3px solid #a52a2a;
+  margin-bottom: 10px;
+}
+
+/* --- Tabellen nur für Page2 --- */
+.page2 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.page2 table, 
+.page2 th, 
+.page2 td {
+  border: 1px solid #333;
+}
+
+.page2 th, 
+.page2 td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Bilder in Tabellen nur Page2 */
+.page2 td img {
+  max-width: 80px;
+  height: auto;
+}
+
+/* Inline Bilder in Content nur Page2 */
+.page2 .content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+}

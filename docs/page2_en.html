@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Page 2 - English</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page2">
+  <header>
+    <div style="font-size: 20px;">Werewolf Valley</div>
+    <nav>
+      <label for="langSelect">Language:</label>
+      <select id="langSelect" onchange="switchLang(this.value)">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </nav>
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="page1_en.html">Page 1</a></li>
+      <li><a href="page2_en.html">Page 2</a></li>
+      <li><a href="page3_en.html">Page 3</a></li>
+      <li><a href="page4_en.html">Page 4</a></li>
+      <li><a href="page5_en.html">Page 5</a></li>
+    </ul>
+
+    <!-- Abbrechen-Button -->
+    <button id="closeMenu" class="cancel-btn">Close</button>
+  </div>
+
+  <div class="content">
+    <h1>Page 2 (English)</h1>
+    <p>This page contains collapsible sections, images, and tables.</p>
+
+    <button type="button" class="collapsible">Click to expand details</button>
+    <div class="content-collapsible">
+      <p>Some detailed text about crops in Stardew Valley.</p>
+      <img src="images/example_image2.jpg" alt="Another Image">
+    </div>
+
+    <h2>Table with images</h2>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Image</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>Apple</td>
+        <td><img src="images/apple.png" alt="Apple"></td>
+        <td>Common fruit found in Stardew Valley</td>
+      </tr>
+      <tr>
+        <td>Golden Pumpkin</td>
+        <td><img src="images/golden_pumpkin.png" alt="Golden Pumpkin"></td>
+        <td>Special rare item</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    function switchLang(lang) {
+      let page = window.location.pathname.split("/").pop();
+      let baseName = page.replace(/_(en|de)\.html$/, "");
+      window.location.href = baseName + "_" + lang + ".html";
+    }
+
+    window.onload = function() {
+      let page = window.location.pathname.split("/").pop();
+      let currentLang = page.includes("_de") ? "de" : "en";
+      let select = document.getElementById("langSelect");
+      select.value = currentLang;
+      for (let option of select.options) option.disabled = (option.value === currentLang);
+
+      // Collapsible
+      const coll = document.getElementsByClassName("collapsible");
+      for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          let content = this.nextElementSibling;
+          content.style.display = (content.style.display === "block") ? "none" : "block";
+        });
+      }
+
+      // Abbrechen-Button
+      const cancelBtn = document.getElementById("closeMenu");
+      if(cancelBtn){
+        cancelBtn.addEventListener("click", function(){
+          const sidebar = document.getElementById("sidebar");
+          if(sidebar) sidebar.classList.remove("active");
+        });
+      }
+
+      // ESC-Taste schließt Sidebar
+      document.addEventListener("keydown", function(e){
+        if(e.key === "Escape") {
+          const sidebar = document.getElementById("sidebar");
+          if(sidebar) sidebar.classList.remove("active");
+        }
+      });
+    };
+  </script>
+</body>
+</html>

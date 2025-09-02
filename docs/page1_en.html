@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Page 1 - English</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page1">
+  <header>
+    <div style="font-size: 20px;">Werewolf Valley</div>
+    <nav>
+      <label for="langSelect">Language:</label>
+      <select id="langSelect" onchange="switchLang(this.value)">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </nav>
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="page1_en.html">Page 1</a></li>
+      <li><a href="page2_en.html">Page 2</a></li>
+      <li><a href="page3_en.html">Page 3</a></li>
+      <li><a href="page4_en.html">Page 4</a></li>
+      <li><a href="page5_en.html">Page 5</a></li>
+    </ul>
+
+    <!-- Abbrechen-Button -->
+    <button id="closeMenu" class="cancel-btn">Close</button>
+  </div>
+
+  <div class="content">
+    <h1>Page 1 (English)</h1>
+    <p>Content for Page 1 goes here.</p>
+  </div>
+
+  <script>
+    // Sidebar toggle
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    // Language switcher
+    function switchLang(lang) {
+      let page = window.location.pathname.split("/").pop();
+      let baseName = page.replace(/_(en|de)\.html$/, "");
+      window.location.href = baseName + "_" + lang + ".html";
+    }
+
+    // Init: current language & Abbrechen-Button
+    window.onload = function() {
+      let page = window.location.pathname.split("/").pop();
+      let currentLang = page.includes("_de") ? "de" : "en";
+
+      // Language select
+      let select = document.getElementById("langSelect");
+      select.value = currentLang;
+      for (let option of select.options) option.disabled = (option.value === currentLang);
+
+      // Abbrechen-Button
+      const cancelBtn = document.getElementById("closeMenu");
+      if(cancelBtn){
+        cancelBtn.addEventListener("click", function(){
+          const sidebar = document.getElementById("sidebar");
+          if(sidebar) sidebar.classList.remove("active");
+        });
+      }
+
+      // ESC-Taste schließt Sidebar
+      document.addEventListener("keydown", function(e){
+        if(e.key === "Escape") {
+          const sidebar = document.getElementById("sidebar");
+          if(sidebar) sidebar.classList.remove("active");
+        }
+      });
+    };
+  </script>
+</body>
+</html>
