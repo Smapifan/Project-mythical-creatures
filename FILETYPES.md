@@ -1,0 +1,1 @@
+## 🗂️ File Types (alle Branches)
