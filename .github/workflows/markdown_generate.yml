@@ -14,6 +14,8 @@ jobs:
         run: python .github/scripts/markdown_generator.py
       - name: Zeige Ergebnis
         run: cat FILETYPES.md
+      - name: Setze GitHub-Token
+        run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
       - name: Commit und Push FILETYPES.md
         run: |
           git config --global user.name "github-actions"
