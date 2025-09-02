@@ -1,0 +1,62 @@
+name: Analyse & Ergebnisse generieren
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  analyze-and-result:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run filetype_scan.py
+        run: python .github/scripts/filetype_scan.py
+
+      - name: Generate Markdown
+        run: python .github/scripts/markdown_generator.py
+
+      - name: Generate JSON result
+        run: |
+          BRANCH=${GITHUB_REF#refs/heads/}
+          python3 - << 'EOF'
+import json
+from pathlib import Path
+
+# aktuelle Branch und gesammelte Einträge
+branch = "${BRANCH}"
+lines = Path("results.txt").read_text(encoding="utf-8").splitlines()
+entries = [json.loads(l) for l in lines if l.strip()]
+latest = [e for e in entries if e.get("branch")==branch]
+if latest:
+    data = latest[-1]
+    filetypes = data.get("filetypes", {})
+    total = sum(filetypes.values())
+    # Prozentwerte berechnen
+    percentages = {ext: round((count/total)*100, 2) for ext, count in filetypes.items()}
+else:
+    filetypes = {}
+    percentages = {}
+
+output = {
+    "branch": branch,
+    "filetypes": filetypes,
+    "percentages": percentages
+}
+
+out_path = Path("Results") / f"Result{branch}.json"
+out_path.parent.mkdir(exist_ok=True)
+out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+EOF
+
+      - name: Commit & Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add FILETYPES.md Results/Result${BRANCH}.json
+          git commit -m "Update markdown & results for branch ${BRANCH}" || echo "No changes to commit"
+          git push
