@@ -19,7 +19,16 @@ for filename in sorted(os.listdir(output_dir)):
     lines.append("| File Type | Count | Percentage |")
     lines.append("|-----------|-------|------------|")
 
-    for ext, count in sorted(filetypes.items(), key=lambda x: -x[1]):
+    # Sortieren: andere Dateitypen nach Count absteigend, 'other' immer ans Ende
+    sorted_items = sorted(
+        ((ext, cnt) for ext, cnt in filetypes.items() if ext != 'other'),
+        key=lambda x: -x[1]
+    )
+
+    if 'other' in filetypes:
+        sorted_items.append(('other', filetypes['other']))
+
+    for ext, count in sorted_items:
         percent = f"{(count/total)*100:.2f}%"
         lines.append(f"| `{ext}` | {count} | {percent} |")
 
