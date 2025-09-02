@@ -11,7 +11,7 @@ on:
 jobs:
   analyze_and_results:
     runs-on: ubuntu-latest
-    if: github.actor != 'github-actions[bot]'  # Verhindert Ausführung bei Commits vom Bot
+    if: ${{ github.actor != 'github-actions[bot]' }}  # Verhindert Ausführung bei Commits vom Bot
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
