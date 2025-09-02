@@ -4,7 +4,6 @@ import json
 output_dir = "Results"
 lines = ["## 🗂️ File Types (alle Branches)\n"]
 
-# Alle JSON-Dateien verarbeiten
 for filename in sorted(os.listdir(output_dir)):
     if not filename.endswith(".json"):
         continue
@@ -26,6 +25,5 @@ for filename in sorted(os.listdir(output_dir)):
 
     lines.append("")
 
-# Markdown speichern
 with open("FILETYPES.md", "w", encoding="utf-8") as f:
     f.write("\n".join(lines))

@@ -7,19 +7,19 @@ from collections import Counter
 output_dir = "Results"
 os.makedirs(output_dir, exist_ok=True)
 
-# Alle Remote-Branches abrufen
-branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
-branches = [b.strip().replace('origin/', '') for b in branches if 'HEAD' not in b]
+# Branches prüfen
+branches_to_scan = ["main", "Wiki"]
 
-# Nur Branches, die existieren
-branches_to_scan = [b for b in branches if b in ["main", "Wiki"]]
+# Dateiendungen, die als "other" behandelt werden
+blacklist_exts = ['.zip', '.exe', '.dll']  # hier kannst du beliebige Endungen einfügen
+
+# Remote-Branches abrufen
+remote_branches = subprocess.check_output(['git', 'branch', '-r']).decode().splitlines()
+remote_branches = [b.strip().replace('origin/', '') for b in remote_branches if 'HEAD' not in b]
 
 for branch in branches_to_scan:
-    # Prüfen, ob Branch existiert
-    check_branch = subprocess.run(['git', 'rev-parse', '--verify', branch],
-                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    if check_branch.returncode != 0:
-        print(f"Branch '{branch}' existiert nicht, überspringe.")
+    if branch not in remote_branches:
+        print(f"Branch '{branch}' existiert nicht im Remote, überspringe.")
         continue
 
     # Branch lokal erstellen oder wechseln
@@ -32,11 +32,10 @@ for branch in branches_to_scan:
         if '.git' in root or '.github' in root:
             continue
         for f in files:
-            if '.' in f:
-                ext = f[f.rfind('.'):]
-                filetypes.append(ext.lower())
-            else:
-                filetypes.append('(no ext)')
+            ext = f[f.rfind('.'):].lower() if '.' in f else '(no ext)'
+            if ext in blacklist_exts:
+                ext = 'other'
+            filetypes.append(ext)
 
     if not filetypes:
         filetypes.append('(no files found)')
