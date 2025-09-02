@@ -1,0 +1,23 @@
+name: Markdown-Generierung
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python ausführen
+        run: python .github/scripts/markdown_generator.py
+      - name: Zeige Ergebnis
+        run: cat FILETYPES.md
+      - name: Commit und Push FILETYPES.md
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add FILETYPES.md
+          git commit -m "Update FILETYPES.md" || echo "Nichts zu committen"
+          git push
