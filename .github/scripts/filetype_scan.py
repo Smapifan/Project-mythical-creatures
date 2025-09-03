@@ -64,3 +64,4 @@ for branch in branches_to_scan:
         json.dump(result, jf, indent=2)
 
     print(f"Branch '{branch}' gescannt. JSON gespeichert unter {json_path}")
+
