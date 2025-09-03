@@ -1,4 +1,4 @@
-## Project mythical creatures
+## Project mythical creatures.
 This project will include 4 mods.
 
 ✓ = complete ,
