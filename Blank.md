@@ -1,4 +1,4 @@
-## Info
+## Info.
 This page seems to be empty.
 
 ## Manual search
