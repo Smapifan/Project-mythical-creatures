@@ -19,7 +19,6 @@ for filename in sorted(os.listdir(output_dir)):
     lines.append("| File Type | Count | Percentage |")
     lines.append("|-----------|-------|------------|")
 
-    # Sortieren: andere Dateitypen nach Count absteigend, 'other' immer ans Ende
     sorted_items = sorted(
         ((ext, cnt) for ext, cnt in filetypes.items() if ext != 'other'),
         key=lambda x: -x[1]
@@ -37,4 +36,4 @@ for filename in sorted(os.listdir(output_dir)):
 with open("FILETYPES.md", "w", encoding="utf-8") as f:
     f.write("\n".join(lines))
 
-print("Markdown FILETYPES.md erfolgreich erstellt.")
+print("FILETYPES.md erfolgreich erstellt.")

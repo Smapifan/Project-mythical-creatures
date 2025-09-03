@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - Wiki
 
 jobs:
   generate:
@@ -15,21 +16,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # volle Git-History, alle Branches verfügbar
+          fetch-depth: 0
 
-      - name: List Scripts
-        run: ls -R $GITHUB_WORKSPACE/.github/scripts
-
-      - name: Run filetype scan
-        run: python $GITHUB_WORKSPACE/.github/scripts/filetype_scan.py
-
-      - name: Generate Markdown
-        run: python $GITHUB_WORKSPACE/.github/scripts/markdown_generator.py
-
-      - name: Commit and push results
+      - name: Set Git user
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add Results/*.json FILETYPES.md
-          git commit -m "Automatische Aktualisierung der Results und FILETYPES.md" || echo "Nothing to commit"
-          git push
+
+      - name: Run filetype scan
+        run: python .github/scripts/filetype_scan.py
+
+      - name: Switch to main and commit results
+        run: |
+          BRANCH_NAME=${GITHUB_REF_NAME}
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add Results/Result${BRANCH_NAME}.json
+          git commit -m "Update results for ${BRANCH_NAME}" || echo "Nothing to commit"
+          git push origin main
+
+      - name: Run markdown generator
+        run: python .github/scripts/markdown_generator.py
+
+      - name: Commit FILETYPES.md
+        run: |
+          git add FILETYPES.md
+          git commit -m "Update FILETYPES.md" || echo "Nothing to commit"
+          git push origin main
