@@ -1,4 +1,4 @@
-## 🗂️ File Types (alle Branches)
+## 🗂️ File Types (all Branches)
 
 ### Branch `Wiki`
 | File Type | Count | Percentage |
