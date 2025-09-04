@@ -26,10 +26,12 @@ jobs:
       - name: Generate Markdown
         run: python .github/scripts/markdown_generator_lines.py
 
-      - name: Commit results
+      - name: Commit results to main
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
+          git checkout main
+          git merge --strategy=ours $GITHUB_REF_NAME || echo "Merge okay"
           git add All_Code/ FILECODE.md
           git commit -m "Update code line counts" || echo "No changes"
           git push
