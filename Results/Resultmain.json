@@ -1,7 +1,7 @@
 {
   "branch": "main",
   "filetypes": {
-    ".md": 3,
+    ".md": 4,
     ".sln": 1,
     ".json": 37,
     ".csproj": 1,
@@ -16,5 +16,5 @@
     ".tbin": 3,
     ".wav": 2
   },
-  "total_files": 102
+  "total_files": 103
 }
