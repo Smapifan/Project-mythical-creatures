@@ -2,7 +2,7 @@ import os
 import json
 
 output_dir = "Results"
-lines = ["## 🗂️ File Types (alle Branches)\n"]
+lines = ["## 🗂️ File Types (all Branches)\n"]
 
 for filename in sorted(os.listdir(output_dir)):
     if not filename.endswith(".json"):
@@ -37,3 +37,4 @@ with open("FILETYPES.md", "w", encoding="utf-8") as f:
     f.write("\n".join(lines))
 
 print("FILETYPES.md erfolgreich erstellt.")
+
