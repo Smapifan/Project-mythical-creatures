@@ -6,8 +6,9 @@ input_dir = "All_Code"
 output_file = "FILECODE.md"
 
 rows = []
+json_files = sorted(Path(input_dir).glob("*.json"))  # sortiert nach Branch-Namen
 
-for file in Path(input_dir).glob("*.json"):
+for file in json_files:
     with open(file, "r", encoding="utf-8") as f:
         data = json.load(f)
     branch = data["branch"]
@@ -15,7 +16,7 @@ for file in Path(input_dir).glob("*.json"):
     by_ext = data["lines_by_ext"]
 
     rows.append(f"### Branch `{branch}`\n")
-    rows.append("| Sprache | Zeilen | Prozent |\n")
+    rows.append("| Dateityp | Zeilen | Prozent |\n")
     rows.append("|----------|--------|---------|\n")
     for ext, count in sorted(by_ext.items(), key=lambda x: -x[1]):
         perc = (count / total) * 100 if total else 0
@@ -23,7 +24,7 @@ for file in Path(input_dir).glob("*.json"):
     rows.append(f"| **Total** | **{total}** | 100% |\n\n")
 
 with open(output_file, "w", encoding="utf-8") as f:
-    f.write("## 📊 Code Line Counts (all Branches)\n\n")
+    f.write("##  Code Line Counts (all Branches)\n\n")
     f.writelines(rows)
 
 print(f"Markdown erstellt: {output_file}")
