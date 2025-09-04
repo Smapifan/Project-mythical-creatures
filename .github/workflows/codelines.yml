@@ -1,0 +1,35 @@
+name: Count Code Lines
+
+on:
+  push:
+    branches:
+      - main
+      - Wiki
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run line counter
+        run: python .github/scripts/linecount_scan.py
+
+      - name: Generate Markdown
+        run: python .github/scripts/markdown_generator_lines.py
+
+      - name: Commit results
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add All_Code/ FILECODE.md
+          git commit -m "Update code line counts" || echo "No changes"
+          git push
