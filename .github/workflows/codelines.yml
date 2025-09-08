@@ -1,37 +1,33 @@
-name: Count Code Lines
+name: Line Count
 
 on:
-  push:
-    branches:
-      - main
-      - Wiki
-  workflow_dispatch:
+  push:          # Bei jedem Push in egal welchen Branch
+  pull_request:  # Auch bei PRs
 
 jobs:
-  build:
+  linecount:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # wichtig, damit alle Branches da sind
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Run line counter
+      - name: Run linecount script
         run: python .github/scripts/linecount_scan.py
 
-      - name: Generate Markdown
-        run: python .github/scripts/markdown_generator_lines.py
-
-      - name: Commit results to main
+      - name: Commit and push results
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git checkout main
-          git merge --strategy=ours $GITHUB_REF_NAME || echo "Merge okay"
-          git add All_Code/ FILECODE.md
-          git commit -m "Update code line counts" || echo "No changes"
-          git push
+          git add All_Code/*.json
+          git commit -m "Update line count JSONs [skip ci]" || echo "No changes to commit"
+          git push origin main
