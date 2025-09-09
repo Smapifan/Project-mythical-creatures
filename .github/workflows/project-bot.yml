@@ -41,14 +41,36 @@ jobs:
           git commit -m "Update filetype results for ${BRANCH_NAME}" || echo "Nothing to commit"
           git push origin main
 
-      # --- 2. Markdown Generator ---
-      - name: Run markdown generator
-        run: python .github/scripts/markdown_generator.py
-
-      - name: Commit FILETYPES.md
+      # --- 2. Markdown Generator (mit Debug) ---
+      - name: Run markdown generator (with debug)
         run: |
-          git add FILETYPES.md
-          git commit -m "Update FILETYPES.md" || echo "Nothing to commit"
+          echo ">>> Working directory:"
+          pwd
+
+          echo ">>> Files before generation:"
+          ls -R .
+
+          python .github/scripts/markdown_generator.py
+
+          echo ">>> Files after generation:"
+          ls -R .
+
+          echo ">>> Show markdown files in root:"
+          ls *.md || echo "No .md files in root"
+
+          echo ">>> Try to print markdown content:"
+          for f in *.md; do
+            echo "----- $f -----"
+            cat "$f"
+          done || echo "No markdown files found"
+
+      - name: Commit Markdown
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add *.md
+          git commit -m "Update markdown file(s)" || echo "Nothing to commit"
           git push origin main
 
       # --- 3. Line Count ---
