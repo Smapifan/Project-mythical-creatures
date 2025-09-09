@@ -1,8 +1,9 @@
 name: Line Count
 
 on:
-  push:          # läuft bei jedem Push
-  pull_request:  # läuft auch bei PRs
+  push:                # bei jedem Push
+  pull_request:        # bei jedem PR
+  workflow_dispatch:   # manuell starten möglich
 
 jobs:
   linecount:
@@ -27,11 +28,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Aktuellsten Stand von main holen
+          # Sicherstellen, dass main aktuell ist
           git fetch origin main
           git checkout main
 
-          # JSON-Ergebnisse hinzufügen
+          # Ergebnisse hinzufügen
           git add All_Code/*.json
           git commit -m "Update line count JSONs [skip ci]" || echo "No changes to commit"
           
