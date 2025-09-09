@@ -5,61 +5,41 @@ from pathlib import Path
 import tempfile
 import shutil
 
-# Dateien zählen
+# --- Funktionen ---
 def count_lines(file_path):
+    """Zählt die Zeilen einer Datei, ignoriert Fehler."""
     try:
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             return sum(1 for _ in f)
     except Exception:
         return 0
 
-blacklist_exts = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".exe", ".dll"}
+# --- Einstellungen ---
+blacklist_exts = {".zip", ".exe", ".dll", ".png", ".jpg", ".jpeg", ".gif", ".bmp"}
+output_dir = Path("All_Code")
+output_dir.mkdir(exist_ok=True)
 
-# Aktuellen Branchnamen holen
-branch = os.getenv("GITHUB_REF_NAME", "unknown")
+# --- Branches holen ---
+branches = subprocess.check_output(["git", "branch", "-r"]).decode().splitlines()
+branches = [b.strip().replace("origin/", "") for b in branches if "origin/" in b and "HEAD" not in b]
 
-# Ordner All_Code auf main erstellen
-outdir = Path("All_Code")
-outdir.mkdir(exist_ok=True)
+# --- Branches scannen ---
+for branch in branches:
+    print(f"Scanne Branch: {branch}")
 
-# Ziel-Dateiname
-json_path = outdir / f"Lines_{branch}.json"
+    # Temporärer Worktree
+    tmpdir = tempfile.mkdtemp(prefix="worktree_")
+    try:
+        subprocess.run(["git", "fetch", "origin", branch], check=True)
+        subprocess.run(["git", "worktree", "add", tmpdir, f"origin/{branch}"], check=True)
 
-# --- Mit Worktree Branch auschecken ---
-tmpdir = tempfile.mkdtemp(prefix="worktree_")
-try:
-    subprocess.run(["git", "fetch", "origin", branch], check=True)
-    subprocess.run(["git", "worktree", "add", tmpdir, f"origin/{branch}"], check=True)
+        total_lines = 0
+        ext_counter = {}
 
-    total_lines = 0
-    ext_counter = {}
-
-    for root, dirs, files in os.walk(tmpdir):
-        if ".git" in root:
-            continue
-        for f in files:
-            ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
-            if ext in blacklist_exts:
-                ext = "other"
-            path = os.path.join(root, f)  # ✅ eigene Zeile
-            lines = count_lines(path)
-            total_lines += lines
-            ext_counter[ext] = ext_counter.get(ext, 0) + lines
-
-    result = {
-        "branch": branch,
-        "total_lines": total_lines,
-        "lines_by_ext": ext_counter,
-    }
-
-    with open(json_path, "w", encoding="utf-8") as jf:
-        json.dump(result, jf, indent=2, ensure_ascii=False)
-
-    print(f"Gespeichert: {json_path}")
-
-finally:
-    subprocess.run(["git", "worktree", "remove", tmpdir, "--force"], check=True)
-    shutil.rmtree(tmpdir, ignore_errors=True)            for f in files:
+        for root, dirs, files in os.walk(tmpdir):
+            if ".git" in root:
+                continue
+            for f in files:
                 ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
                 if ext in blacklist_exts:
                     ext = "other"
@@ -68,37 +48,22 @@ finally:
                 total_lines += lines
                 ext_counter[ext] = ext_counter.get(ext, 0) + lines
 
+        # JSON speichern
         result = {
             "branch": branch,
             "total_lines": total_lines,
             "lines_by_ext": ext_counter
         }
 
-        json_path = os.path.join(output_dir, f"Lines_{branch}.json")
+        json_path = output_dir / f"Lines_{branch}.json"
         with open(json_path, "w", encoding="utf-8") as jf:
-            json.dump(result, jf, indent=2)
+            json.dump(result, jf, indent=2, ensure_ascii=False)
 
-        print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
+        print(f"Branch '{branch}' gescannt. JSON: {json_path}")
 
+    finally:
         # Worktree wieder entfernen
-        subprocess.run(["git", "worktree", "remove", tmpdir, "--force"], check=True)            path = os.path.join(root, f)
-            lines = count_lines(path)
-            total_lines += lines
-            ext_counter[ext] = ext_counter.get(ext, 0) + lines
+        subprocess.run(["git", "worktree", "remove", tmpdir, "--force"], check=True)
+        shutil.rmtree(tmpdir, ignore_errors=True)
 
-    result = {
-        "branch": branch,
-        "total_lines": total_lines,
-        "lines_by_ext": ext_counter
-    }
-
-    # Speichern IMMER ins lokale Verzeichnis
-    json_path = os.path.join(output_dir, f"Lines_{branch}.json")
-    os.makedirs(os.path.dirname(json_path), exist_ok=True)
-    with open(json_path, "w", encoding="utf-8") as jf:
-        json.dump(result, jf, indent=2)
-
-    print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
-
-# Am Ende zurück auf main
-subprocess.run(["git", "checkout", "main"], check=True)
+print("Fertig! Alle Branches gescannt.")
