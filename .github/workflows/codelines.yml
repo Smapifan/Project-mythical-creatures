@@ -1,8 +1,8 @@
 name: Line Count
 
 on:
-  push:          # Bei jedem Push in egal welchen Branch
-  pull_request:  # Auch bei PRs
+  push:          # läuft bei jedem Push
+  pull_request:  # läuft auch bei PRs
 
 jobs:
   linecount:
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # wichtig, damit alle Branches da sind
+          fetch-depth: 0   # alle Branches holen
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,12 +22,18 @@ jobs:
       - name: Run linecount script
         run: python .github/scripts/linecount_scan.py
 
-      - name: Commit and push results
+      - name: Commit and push results to main
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+          # Aktuellsten Stand von main holen
+          git fetch origin main
           git checkout main
+
+          # JSON-Ergebnisse hinzufügen
           git add All_Code/*.json
           git commit -m "Update line count JSONs [skip ci]" || echo "No changes to commit"
-          git push origin main
+          
+          # Immer nach main pushen
+          git push origin HEAD:main
