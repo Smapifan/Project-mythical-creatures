@@ -1,0 +1,65 @@
+name: Project Bot
+
+on:
+  push:                # bei jedem Push
+  pull_request:        # bei jedem PR
+  workflow_dispatch:   # manuell starten möglich
+
+jobs:
+  projectbot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # alle Branches holen
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # --- 1. Filetype Scan ---
+      - name: Run filetype scan
+        run: python .github/scripts/filetype_scan.py
+
+      - name: Commit filetype results
+        run: |
+          BRANCH_NAME=${GITHUB_REF_NAME}
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add Results/Result${BRANCH_NAME}.json
+          git commit -m "Update filetype results for ${BRANCH_NAME}" || echo "Nothing to commit"
+          git push origin main
+
+      # --- 2. Markdown Generator ---
+      - name: Run markdown generator
+        run: python .github/scripts/markdown_generator.py
+
+      - name: Commit FILETYPES.md
+        run: |
+          git add FILETYPES.md
+          git commit -m "Update FILETYPES.md" || echo "Nothing to commit"
+          git push origin main
+
+      # --- 3. Line Count ---
+      - name: Run linecount script
+        run: python .github/scripts/linecount_scan.py
+
+      - name: Commit linecount results
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add All_Code/*.json
+          git commit -m "Update line count JSONs [skip ci]" || echo "Nothing to commit"
+          git push origin HEAD:main
