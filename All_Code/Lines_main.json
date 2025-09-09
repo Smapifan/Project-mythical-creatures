@@ -1,0 +1,20 @@
+{
+  "branch": "main",
+  "total_lines": 46144,
+  "lines_by_ext": {
+    ".md": 151,
+    ".sln": 22,
+    ".json": 3604,
+    ".csproj": 16,
+    ".cs": 137,
+    ".props": 16,
+    ".targets": 6,
+    ".cache": 145,
+    "other": 1635,
+    ".txt": 48,
+    ".editorconfig": 15,
+    ".png": 28767,
+    ".tbin": 47,
+    ".wav": 11535
+  }
+}
