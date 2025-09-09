@@ -5,58 +5,43 @@ from pathlib import Path
 import tempfile
 import shutil
 
-output_dir = "All_Code"
-blacklist_exts = ['.zip', '.exe', '.dll']
-
-def count_lines(path):
+# Dateien zählen
+def count_lines(file_path):
     try:
-        return sum(1 for _ in open(path, encoding="utf-8", errors="ignore"))
-    except:
+        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            return sum(1 for _ in f)
+    except Exception:
         return 0
 
-# Stelle sicher, dass das Ausgabe-Verzeichnis existiert
-os.makedirs(output_dir, exist_ok=True)
+blacklist_exts = {".png", ".jpg", ".jpeg", ".gif", ".bmp", ".exe", ".dll"}
 
-# Hole alle Branches
-branches = subprocess.check_output(
-    ["git", "branch", "-r"]
-).decode().splitlines()
-branches = [b.strip().replace("origin/", "") for b in branches if "origin/" in b and "HEAD" not in b]
+# Aktuellen Branchnamen holen
+branch = os.getenv("GITHUB_REF_NAME", "unknown")
 
-for branch in branches:
-    # Temporäres Arbeitsverzeichnis
-    with tempfile.TemporaryDirectory() as tmpdir:
-        subprocess.run(["git", "worktree", "add", "--detach", tmpdir, f"origin/{branch}"], check=True)
+# Ordner All_Code auf main erstellen
+outdir = Path("All_Code")
+outdir.mkdir(exist_ok=True)
 
-        total_lines = 0
-        ext_counter = {}
+# Ziel-Dateiname
+json_path = outdir / f"Lines_{branch}.json"
 
-        for root, dirs, files in os.walk(tmpdir):
-            if ".git" in root:
-                continue
-            for f in files:
-                ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
-                if ext in blacklist_exts:
-                    ext = "other"
-                path = os.path.join(root, f)
-                lines = count_lines(path)
-                total_lines += lines
-                ext_counter[ext] = ext_counter.get(ext, 0) + lines
+# --- Mit Worktree Branch auschecken ---
+tmpdir = tempfile.mkdtemp(prefix="worktree_")
+try:
+    subprocess.run(["git", "fetch", "origin", branch], check=True)
+    subprocess.run(["git", "worktree", "add", tmpdir, f"origin/{branch}"], check=True)
 
-        result = {
-            "branch": branch,
-            "total_lines": total_lines,
-            "lines_by_ext": ext_counter
-        }
+    total_lines = 0
+    ext_counter = {}
 
-        json_path = os.path.join(output_dir, f"Lines_{branch}.json")
-        with open(json_path, "w", encoding="utf-8") as jf:
-            json.dump(result, jf, indent=2)
-
-        print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
-
-        # Worktree wieder entfernen
-        subprocess.run(["git", "worktree", "remove", tmpdir, "--force"], check=True)            path = os.path.join(root, f)
+    for root, dirs, files in os.walk(tmpdir):
+        if ".git" in root:
+            continue
+        for f in files:
+            ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
+            if ext in blacklist_exts:
+                ext = "other"
+            path = os.path.join(root, f)  # ✅ eigene Zeile
             lines = count_lines(path)
             total_lines += lines
             ext_counter[ext] = ext_counter.get(ext, 0) + lines
@@ -64,16 +49,14 @@ for branch in branches:
     result = {
         "branch": branch,
         "total_lines": total_lines,
-        "lines_by_ext": ext_counter
+        "lines_by_ext": ext_counter,
     }
 
-    # Speichern IMMER ins lokale Verzeichnis
-    json_path = os.path.join(output_dir, f"Lines_{branch}.json")
-    os.makedirs(os.path.dirname(json_path), exist_ok=True)
     with open(json_path, "w", encoding="utf-8") as jf:
-        json.dump(result, jf, indent=2)
+        json.dump(result, jf, indent=2, ensure_ascii=False)
 
-    print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
+    print(f"Gespeichert: {json_path}")
 
-# Am Ende zurück auf main
-subprocess.run(["git", "checkout", "main"], check=True)
+finally:
+    subprocess.run(["git", "worktree", "remove", tmpdir, "--force"], check=True)
+    shutil.rmtree(tmpdir, ignore_errors=True)
