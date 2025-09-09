@@ -2,12 +2,12 @@ import os
 import json
 from pathlib import Path
 
-# Arbeitsverzeichnis: Repo-Root
-repo_root = Path.cwd()  # Läuft im Root, kein extra Pfad nötig
+# --- Repo-Root ermitteln ---
+repo_root = Path(__file__).parent.parent.parent  # .github/scripts -> Repo-Root
 input_dir = repo_root / "All_Code"
 output_file = repo_root / "FILECODE.md"
 
-# Alle JSON-Dateien sammeln
+# --- Alle JSON-Dateien sammeln ---
 json_files = sorted(input_dir.glob("*.json"))
 if not json_files:
     print(f"Keine JSON-Dateien in {input_dir} gefunden!")
@@ -21,6 +21,7 @@ else:
         total = data.get("total_lines", 0)
         by_ext = data.get("lines_by_ext", {})
 
+        # Markdown-Tabelle für diesen Branch
         rows.append(f"### Branch `{branch}`\n")
         rows.append("| Dateityp | Zeilen | Prozent |\n")
         rows.append("|----------|--------|---------|\n")
@@ -29,7 +30,7 @@ else:
             rows.append(f"| `{ext}` | {count} | {perc:.2f}% |\n")
         rows.append(f"| **Total** | **{total}** | 100% |\n\n")
 
-    # Markdown schreiben
+    # Markdown-Datei schreiben
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("## Code Line Counts (all Branches)\n\n")
         f.writelines(rows)
