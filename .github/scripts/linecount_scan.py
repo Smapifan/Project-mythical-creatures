@@ -4,17 +4,9 @@ import subprocess
 from pathlib import Path
 
 output_dir = "All_Code"
-os.makedirs(output_dir, exist_ok=True)
-
-# Blacklist-Dateien, werden zu "other"
 blacklist_exts = ['.zip', '.exe', '.dll']
 
-# aktuellen Branch merken
-current_branch = subprocess.check_output(
-    ["git", "rev-parse", "--abbrev-ref", "HEAD"]
-).decode().strip()
-
-# Alle Branches abrufen
+# Hole alle Branches
 branches = subprocess.check_output(
     ["git", "branch", "-r"]
 ).decode().splitlines()
@@ -26,37 +18,40 @@ def count_lines(path):
     except:
         return 0
 
-try:
-    for branch in branches:
-        subprocess.run(["git", "checkout", branch, "-f"], check=True)
+# Stelle sicher, dass der Ordner immer existiert
+os.makedirs(output_dir, exist_ok=True)
 
-        total_lines = 0
-        ext_counter = {}
+for branch in branches:
+    subprocess.run(["git", "checkout", branch], check=True)
 
-        for root, dirs, files in os.walk("."):
-            if ".git" in root:
-                continue
-            for f in files:
-                ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
-                if ext in blacklist_exts:
-                    ext = "other"
-                path = os.path.join(root, f)
-                lines = count_lines(path)
-                total_lines += lines
-                ext_counter[ext] = ext_counter.get(ext, 0) + lines
+    total_lines = 0
+    ext_counter = {}
 
-        result = {
-            "branch": branch,
-            "total_lines": total_lines,
-            "lines_by_ext": ext_counter
-        }
+    for root, dirs, files in os.walk("."):
+        if ".git" in root:
+            continue
+        for f in files:
+            ext = os.path.splitext(f)[1].lower() if "." in f else "(no ext)"
+            if ext in blacklist_exts:
+                ext = "other"
+            path = os.path.join(root, f)
+            lines = count_lines(path)
+            total_lines += lines
+            ext_counter[ext] = ext_counter.get(ext, 0) + lines
 
-        json_path = os.path.join(output_dir, f"Lines_{branch}.json")
-        with open(json_path, "w", encoding="utf-8") as jf:
-            json.dump(result, jf, indent=2)
+    result = {
+        "branch": branch,
+        "total_lines": total_lines,
+        "lines_by_ext": ext_counter
+    }
 
-        print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
+    # Speichern IMMER ins lokale Verzeichnis
+    json_path = os.path.join(output_dir, f"Lines_{branch}.json")
+    os.makedirs(os.path.dirname(json_path), exist_ok=True)
+    with open(json_path, "w", encoding="utf-8") as jf:
+        json.dump(result, jf, indent=2)
 
-finally:
-    # Am Ende zurück zum ursprünglichen Branch
-    subprocess.run(["git", "checkout", current_branch, "-f"], check=True)
+    print(f"Branch '{branch}' gescannt, JSON gespeichert unter {json_path}")
+
+# Am Ende zurück auf main
+subprocess.run(["git", "checkout", "main"], check=True)
