@@ -1,9 +1,10 @@
 name: Project Bot
 
 on:
-  push:                # bei jedem Push
-  pull_request:        # bei jedem PR
-  workflow_dispatch:   # manuell starten möglich
+  push:
+    branches: [main, Wiki]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   projectbot:
@@ -12,62 +13,34 @@ jobs:
       contents: write
 
     steps:
-      # --- 1. Checkout ---
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # alle Branches holen
+          fetch-depth: 0
 
-      # --- 2. Git einrichten ---
-      - name: Set up Git
+      - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # --- 3. Python einrichten ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      # --- 4. Linecount Script ---
+      # --- Linecount ---
       - name: Run linecount script
         run: python .github/scripts/linecount_scan.py
 
-      # --- 5. Commit & Push JSONs nach main ---
-      - name: Commit linecount results
+      # --- Markdown Generator ---
+      - name: Generate markdown
+        run: python .github/scripts/markdown_generator.py
+
+      # --- Commit everything to main ---
+      - name: Commit and push results
         run: |
           git fetch origin main
           git checkout main
           git pull origin main
-          git add All_Code/*.json
-          git commit -m "Update line count JSONs [skip ci]" || echo "Nothing to commit"
-          git push origin main
-
-      # --- 6. Markdown Generator (optional Debug) ---
-      - name: Run markdown generator with debug
-        run: |
-          echo ">>> Working directory:"
-          pwd
-          echo ">>> Files before generation:"
-          ls -R .
-          python .github/scripts/markdown_generator.py
-          echo ">>> Files after generation:"
-          ls -R .
-          echo ">>> Show markdown files in root:"
-          ls *.md || echo "No .md files in root"
-          echo ">>> Content preview:"
-          for f in *.md; do
-            echo "----- $f -----"
-            head -n 20 "$f"
-          done || echo "No markdown files found"
-
-      # --- 7. Commit & Push Markdown ---
-      - name: Commit markdown
-        run: |
-          git fetch origin main
-          git checkout main
-          git pull origin main
-          git add *.md
-          git commit -m "Update markdown file(s)" || echo "Nothing to commit"
+          git add All_Code/*.json FILECODE.md
+          git commit -m "Update line count JSONs & Markdown [skip ci]" || echo "Nothing to commit"
           git push origin main
