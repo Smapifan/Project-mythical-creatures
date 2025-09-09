@@ -1,9 +1,9 @@
 {
   "branch": "Wiki",
-  "total_lines": 742,
+  "total_lines": 743,
   "lines_by_ext": {
     ".md": 3,
-    "": 4,
+    "": 5,
     ".html": 563,
     ".css": 172
   }
