@@ -8,14 +8,10 @@ Here is the current status listed in detail.
 ↻ = in progress , 
 ❑ = not yet started
 
-&nbsp;                     | current stand                                                          | typ
-:------------------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------
-Adrian                     | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | NPCData
-Adrians data folder        | [✓](Werewolf/assets/NpcData/Adrian)                                   | NPCData
-Adrians dialogue           |  ❑                                                                    | NPCData
-Adrians portraits          |  ❑                                                                    | NPCData
-Adrians schedule           |  ❑                                                                    | NPCData
-Adrians sprite             |  ❑                                                                    | NPCData
+&nbsp;                     | current stand                                                          | Portrait                                                              | Sprite                                                                | Dialogue                                                              | Schedule                                                              | NPCData
+:------------------------- | :--------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :--------------------------------------------------------------------
+Adrian                     | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | ❑                                                                    | ❑                                                                    
+
 Lara                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | NPCData
 Lara data folder           | [✓](Werewolf/assets/NpcData/Adrian)                                   | NPCData
 Lara dialogue              |  ❑                                                                    | NPCData
