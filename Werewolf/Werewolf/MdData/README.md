@@ -15,14 +15,9 @@ Adrian werewolf            | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)  
 Lara                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | ❑                                                                    | ❑                                                                    
 Lara bleeding              | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | None                                                                  | None                                                                 
 Lara werewolf              | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | None                                                                  | None                                                                 
+Lauren                     | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | ❑                                                                    | ❑                                                                    
+Lauren werewolf            | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | None                                                                  | None                                                                 
 
-
-Lauren                     | [↻](Werewolf/assets/NpcData/Lauren/Lauren.json)                       | NPCData
-Laurens data folder        | [✓](Werewolf/assets/NpcData/Lauren)                                   | NPCData
-Laurens dialogue           |  ❑                                                                    | NPCData
-Laurens portraits          |  ❑                                                                    | NPCData
-Laurens schedule           |  ❑                                                                    | NPCData
-Laurens sprite             |  ❑                                                                    | NPCData
 Luca                       | [↻](Werewolf/assets/NpcData/Luca/Luca.json)                           | NPCData
 Lucas data folder          | [✓](Werewolf/assets/NpcData/Luca)                                     | NPCData
 Lucas dialogue             |  ❑                                                                    | NPCData
