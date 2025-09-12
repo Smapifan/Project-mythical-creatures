@@ -8,20 +8,14 @@ Here is the current status listed in detail.
 ↻ = in progress , 
 ❑ = not yet started
 
-&nbsp;                     | current stand                                                          | Portrait                                                              | Sprite                                                                | Dialogue                                                              | Schedule                                                              | NPCData
+&nbsp;                     | Current stand                                                          | Portrait                                                              | Sprite                                                                | Dialogue                                                              | Schedule                                                              | NPCData
 :------------------------- | :--------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------------------- | :--------------------------------------------------------------------
 Adrian                     | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | ❑                                                                    | ❑                                                                    
+Lara                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | ❑                                                                    | ❑                                                                    
+Lara bleeding              | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | None                                                                  | None                                                                 
+Lara werewolf              | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | ❑                                                                     | ❑                                                                     | ❑                                                                    | None                                                                  | None                                                                 
 
-Lara                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                       | NPCData
-Lara data folder           | [✓](Werewolf/assets/NpcData/Adrian)                                   | NPCData
-Lara dialogue              |  ❑                                                                    | NPCData
-Lara portraits             |  ❑                                                                    | NPCData
-Lara schedule              |  ❑                                                                    | NPCData
-Lara sprite                |  ❑                                                                    | NPCData
-Lara bleeding portraits    |  ❑                                                                    | NPCData
-Lara bleeding sprite       |  ❑                                                                    | NPCData
-Lara werewolf portraits    |  ❑                                                                    | NPCData
-Lara werewolf sprite       |  ❑                                                                    | NPCData
+
 Lauren                     | [↻](Werewolf/assets/NpcData/Lauren/Lauren.json)                       | NPCData
 Laurens data folder        | [✓](Werewolf/assets/NpcData/Lauren)                                   | NPCData
 Laurens dialogue           |  ❑                                                                    | NPCData
