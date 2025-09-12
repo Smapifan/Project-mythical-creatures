@@ -1,7 +1,7 @@
 ## Werewolf
 The Werewolf Mod code
 
-## Current status of the mod
+## Current status of the mod(Werewolf Valley Expansion)
 Here is the current status listed in detail.
 
 ✓ = complete ,
@@ -10,27 +10,30 @@ Here is the current status listed in detail.
 
 &nbsp;                     | current stand                                                          | typ
 :------------------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------
-Abigail bleeding           | [↻](https://github.com/Smapifan/Project-mythical-creatures/blob/main/Werewolf/Werewolf/assets/NpcData/Abigail/Abigail.json)                      | NPCData
-Abigail bleeding Sprites   | [✓](https://github.com/Smapifan/Project-mythical-creatures/blob/main/Werewolf/Werewolf/assets/NpcData/Abigail/Characters)                   | NPCData
-Abigail bleeding Portraits | [↻](Werewolf/assets/NpcData/Abigail/Characters)                   | NPCData
-Abigails data folder       | [✓](Werewolf/assets/NpcData/Abigail)                                   | NPCData
-Abigail werewolf           | [✓](Werewolf/assets/NpcData/Abigail/W_Abigail.json)                    | NPCData
-Abigail werewolf Sprites   | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
-Abigail werewolf Portraits | [✓](Werewolf/assets/NpcData/Abigail/Characters.json)                   | NPCData
+Adrian                     | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                      | NPCData
+Adrians data folder        | [✓](Werewolf/assets/NpcData/Adrian)                                  | NPCData
+Adrians dialogue           |  ❑                                                                   | NPCData
+Adrians Portraits          |  ❑                                                                   | NPCData
+Adrians schedule           |  ❑                                                                   | NPCData
+Adrians Sprite             |  ❑                                                                   | NPCData
 
-Adrian                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                      | NPCData
-Adrians data folder          | [✓](Werewolf/assets/NpcData/Adrian)                                  | NPCData
-Adrians dialogue             |  ❑                                                                   | NPCData
-Adrians Portraits            |  ❑                                                                   | NPCData
-Adrians schedule             |  ❑                                                                   | NPCData
-Adrians Sprite               |  ❑                                                                   | NPCData
+Lara                       | [↻](Werewolf/assets/NpcData/Adrian/Adrian.json)                      | NPCData
+Lara data folder           | [✓](Werewolf/assets/NpcData/Adrian)                                  | NPCData
+Lara dialogue              |  ❑                                                                   | NPCData
+Lara portraits             |  ❑                                                                   | NPCData
+Lara schedule              |  ❑                                                                   | NPCData
+Lara sprite                |  ❑                                                                   | NPCData
+Lara bleeding portraits    |  ❑                                                                   | NPCData
+Lara bleeding sprite       |  ❑                                                                   | NPCData
+Lara werewolf portraits    |  ❑                                                                   | NPCData
+Lara werewolf sprite       |  ❑                                                                   | NPCData
 
-Lauren                       | [↻](Werewolf/assets/NpcData/Lauren/Lauren.json)                      | NPCData
-Laurens data folder          | [✓](Werewolf/assets/NpcData/Lauren)                                  | NPCData
-Laurens dialogue             |  ❑                                                                   | NPCData
-Laurens Portraits            |  ❑                                                                   | NPCData
-Laurens schedule             |  ❑                                                                   | NPCData
-Laurens Sprite               |  ❑                                                                   | NPCData
+Lauren                     | [↻](Werewolf/assets/NpcData/Lauren/Lauren.json)                      | NPCData
+Laurens data folder        | [✓](Werewolf/assets/NpcData/Lauren)                                  | NPCData
+Laurens dialogue           |  ❑                                                                   | NPCData
+Laurens Portraits          |  ❑                                                                   | NPCData
+Laurens schedule           |  ❑                                                                   | NPCData
+Laurens Sprite             |  ❑                                                                   | NPCData
 
 Luca                       | [↻](Werewolf/assets/NpcData/Luca/Luca.json)                            | NPCData
 Lucas data folder          | [✓](Werewolf/assets/NpcData/Luca)                                      | NPCData
@@ -39,12 +42,12 @@ Lucas Portraits            |  ❑                                               
 Lucas schedule             |  ❑                                                                     | NPCData
 Lucas Sprite               |  ❑                                                                     | NPCData
 
-Rudolf                       | [↻](Werewolf/assets/NpcData/Rudolf/Rudolf.json)                    | NPCData
-Rudolfs data folder          | [✓](Werewolf/assets/NpcData/Rudolf)                                 | NPCData
-Rudolfs dialogue             |  ❑                                                                   | NPCData
-Rudolfs Portraits            |  ❑                                                                   | NPCData
-Rudolfs schedule             |  ❑                                                                   | NPCData
-Rudolfs Sprite               |  ❑                                                                   | NPCData
+Rudolf                     | [↻](Werewolf/assets/NpcData/Rudolf/Rudolf.json)                    | NPCData
+Rudolfs data folder        | [✓](Werewolf/assets/NpcData/Rudolf)                                 | NPCData
+Rudolfs dialogue           |  ❑                                                                   | NPCData
+Rudolfs Portraits          |  ❑                                                                   | NPCData
+Rudolfs schedule           |  ❑                                                                   | NPCData
+Rudolfs Sprite             |  ❑                                                                   | NPCData
 
 Silvan                     | [✓](Werewolf/assets/NpcData/Silvan/Silvan.json)                        | NPCData
 Silvans data folder        | [✓](Werewolf/assets/NpcData/Silvan)                                    | NPCData
@@ -71,6 +74,6 @@ Contributions are welcome! See [Modding:Translations](https://stardewvalleywiki.
 ↻ = in progress , 
 ❑ = not yet started
 
-| Translations              | Chinese                       | English                       | French                        | German                        | Hungarian                     | Italian                       | Japanese                      | Korean                        | Polish                        | Portuguese                    | Russian                       | Spanish                       | Thai                          | Turkish                       | Ukrainian                       |
-|----------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|-------------------------------|
-| Werewolf                   | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n/default.json)  | [❑](Werewolf/Werewolf/i18n)  | [✓](Werewolf/Werewolf/i18n/de.json)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  |
+&nbsp;                     | Chinese                       | English                       | French                        | German                        | Hungarian                     | Italian                       | Japanese                      | Korean                        | Polish                        | Portuguese                    | Russian                       | Spanish                       | Thai                          | Turkish                       | Ukrainian
+:------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :---------------------------- | :----------------------------
+Werewolf                   | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n/default.json)  | [❑](Werewolf/Werewolf/i18n)  | [✓](Werewolf/Werewolf/i18n/de.json)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)  | [❑](Werewolf/Werewolf/i18n)
