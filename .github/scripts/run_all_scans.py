@@ -1,78 +1,130 @@
 import os
 import json
+from datetime import datetime
 
-# --- Setup directories ---
-output_dir = "All_Code"
-os.makedirs(output_dir, exist_ok=True)
+# === Setup ===
+BASE_DIR = os.getcwd()
+OUTPUT_DIR = os.path.join(BASE_DIR, "All_Code")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# -------------------------
-# 1️⃣ Linecount Scan
-# -------------------------
-print("=== Running Linecount Scan ===")
-linecount_data = {}
+# === 1️⃣ FILETYPE SCAN ===
+def run_filetype_scan():
+    print("📂 Running filetype scan...")
 
-for root, dirs, files in os.walk("."):
-    for file in files:
-        if file.endswith(".py"):
-            filepath = os.path.join(root, file)
-            with open(filepath, "r", encoding="utf-8") as f:
-                lines = f.readlines()
-                linecount_data[filepath] = len(lines)
+    file_data = {}
+    total_files = 0
 
-# Save linecount JSON
-linecount_json_path = os.path.join(output_dir, "linecount.json")
-with open(linecount_json_path, "w", encoding="utf-8") as f:
-    json.dump(linecount_data, f, indent=2)
+    for root, _, files in os.walk(BASE_DIR):
+        if ".git" in root or ".github" in root:
+            continue
+        for file in files:
+            ext = os.path.splitext(file)[1].lower() or "no_extension"
+            file_data.setdefault(ext, 0)
+            file_data[ext] += 1
+            total_files += 1
 
-print(f"Linecount finished. Saved in {linecount_json_path}")
+    output_path = os.path.join(OUTPUT_DIR, "filetype.json")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump({"total_files": total_files, "filetypes": file_data}, f, indent=2)
 
-# -------------------------
-# 2️⃣ Generate Markdown for Linecount
-# -------------------------
-print("=== Generating Markdown for Linecount ===")
-md_lines = ["# Code Linecount Report\n"]
-for filepath, lines in linecount_data.items():
-    md_lines.append(f"- `{filepath}`: {lines} lines")
+    print(f"✅ Filetype scan complete — saved to {output_path}")
+    return output_path, file_data, total_files
 
-filecode_md_path = "FILECODE.md"
-with open(filecode_md_path, "w", encoding="utf-8") as f:
-    f.write("\n".join(md_lines))
 
-print(f"FILECODE.md created successfully!")
+# === 2️⃣ LINECOUNT SCAN ===
+def run_linecount_scan():
+    print("📄 Running linecount scan...")
 
-# -------------------------
-# 3️⃣ Filetype Scan
-# -------------------------
-print("=== Running Filetype Scan ===")
-filetype_data = {}
+    line_data = {}
+    total_lines = 0
 
-for root, dirs, files in os.walk("."):
-    for file in files:
-        ext = os.path.splitext(file)[1].lower() or "no_extension"
-        filepath = os.path.join(root, file)
-        filetype_data.setdefault(ext, []).append(filepath)
+    for root, _, files in os.walk(BASE_DIR):
+        if ".git" in root or ".github" in root:
+            continue
+        for file in files:
+            if file.endswith((".py", ".json", ".yml", ".yaml", ".js", ".ts", ".cs", ".cpp", ".java", ".html", ".css")):
+                path = os.path.join(root, file)
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        lines = f.readlines()
+                    count = len(lines)
+                    line_data[path.replace(BASE_DIR + os.sep, "")] = count
+                    total_lines += count
+                except Exception as e:
+                    print(f"⚠️ Could not read {path}: {e}")
 
-# Save filetype JSON
-filetype_json_path = os.path.join(output_dir, "filetype.json")
-with open(filetype_json_path, "w", encoding="utf-8") as f:
-    json.dump(filetype_data, f, indent=2)
+    output_path = os.path.join(OUTPUT_DIR, "linecount.json")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump({"total_lines": total_lines, "files": line_data}, f, indent=2)
 
-print(f"Filetype scan finished. Saved in {filetype_json_path}")
+    print(f"✅ Linecount scan complete — saved to {output_path}")
+    return output_path, line_data, total_lines
 
-# -------------------------
-# 4️⃣ Generate Markdown for Filetype
-# -------------------------
-print("=== Generating Markdown for Filetype ===")
-md_lines = ["# Filetype Report\n"]
-for ext, files in filetype_data.items():
-    md_lines.append(f"## {ext} ({len(files)} files)")
-    for file in files:
-        md_lines.append(f"- `{file}`")
 
-all_file_report_md_path = "ALL_FILE_REPORT.md"
-with open(all_file_report_md_path, "w", encoding="utf-8") as f:
-    f.write("\n".join(md_lines))
+# === 3️⃣ MARKDOWN GENERATOR: FILETYPE ===
+def generate_filetype_markdown(file_data, total_files):
+    print("📝 Generating filetype markdown...")
 
-print(f"ALL_FILE_REPORT.md created successfully!")
+    md = [
+        "# 📦 Filetype Report",
+        "",
+        f"**Total Files:** {total_files}",
+        "",
+        "| File Extension | Count |",
+        "|----------------|--------|",
+    ]
 
-print("=== All scans and markdown generation finished ===")
+    for ext, count in sorted(file_data.items(), key=lambda x: x[0]):
+        md.append(f"| `{ext}` | {count} |")
+
+    md.append("")
+    md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
+
+    output_path = os.path.join(BASE_DIR, "ALL_FILE_REPORT.md")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(md))
+
+    print(f"✅ Markdown report created — saved to {output_path}")
+    return output_path
+
+
+# === 4️⃣ MARKDOWN GENERATOR: LINECOUNT ===
+def generate_linecount_markdown(line_data, total_lines):
+    print("🧾 Generating linecount markdown...")
+
+    md = [
+        "# 📊 Code Linecount Report",
+        "",
+        f"**Total Lines:** {total_lines}",
+        "",
+        "| File | Lines |",
+        "|------|--------|",
+    ]
+
+    for path, count in sorted(line_data.items(), key=lambda x: x[0]):
+        md.append(f"| `{path}` | {count} |")
+
+    md.append("")
+    md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
+
+    output_path = os.path.join(BASE_DIR, "FILECODE.md")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(md))
+
+    print(f"✅ Linecount markdown created — saved to {output_path}")
+    return output_path
+
+
+# === MAIN EXECUTION FLOW ===
+if __name__ == "__main__":
+    print("🚀 Starting all scans...")
+
+    # Run Linecount first (like original logic)
+    line_json, line_data, total_lines = run_linecount_scan()
+    line_md = generate_linecount_markdown(line_data, total_lines)
+
+    # Then run Filetype scan
+    file_json, file_data, total_files = run_filetype_scan()
+    file_md = generate_filetype_markdown(file_data, total_files)
+
+    print("\n🎉 All scans and markdown generations finished successfully!")
