@@ -30,24 +30,17 @@ jobs:
         with:
           python-version: '3.x'
 
-      # 4️⃣ Run linecount script
-      - name: Run linecount script
-        run: python .github/scripts/linecount_scan.py
+      # 4️⃣ Run combined scan script
+      - name: Run all scans
+        run: python .github/scripts/run_all_scans.py
 
-      # 5️⃣ Generate Markdown from line counts
-      - name: Generate markdown from lines
-        run: python .github/scripts/markdown_generator_lines.py
-
-      # 6️⃣ Check FILECODE.md exists
-      - name: Check FILECODE.md
+      # 5️⃣ Check generated files exist
+      - name: Check generated markdown files
         run: |
-          if [ -f FILECODE.md ]; then
-            echo "FILECODE.md exists"
-          else
-            echo "ERROR: FILECODE.md missing!"
-          fi
+          [ -f FILECODE.md ] && echo "FILECODE.md exists" || echo "ERROR: FILECODE.md missing!"
+          [ -f ALL_FILE_REPORT.md ] && echo "ALL_FILE_REPORT.md exists" || echo "ERROR: ALL_FILE_REPORT.md missing!"
 
-      # 7️⃣ Commit and push results
+      # 6️⃣ Commit and push results
       - name: Commit and push results
         run: |
           git fetch origin main
@@ -55,5 +48,6 @@ jobs:
           git pull origin main
           git add All_Code/*.json || echo "No JSON files found"
           [ -f FILECODE.md ] && git add FILECODE.md || echo "FILECODE.md does not exist"
-          git commit -m "Update line count JSONs & Markdown [skip ci]" || echo "Nothing to commit"
+          [ -f ALL_FILE_REPORT.md ] && git add ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
+          git commit -m "Update line count & filetype JSONs and Markdown [skip ci]" || echo "Nothing to commit"
           git push origin main
