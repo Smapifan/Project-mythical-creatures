@@ -1,8 +1,7 @@
 {
-  "total_lines": 3788,
+  "total_lines": 3767,
   "files": {
-    "All_Code/linecount.json": 47,
-    "All_Code/Lines_main.json": 20,
+    "All_Code/linecount.json": 46,
     "All_Code/filetype.json": 20,
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
     "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 25,
