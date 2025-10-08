@@ -1,10 +1,10 @@
 {
   "branch": "main",
-  "total_lines": 46113,
+  "total_lines": 46103,
   "lines_by_ext": {
     "": 1,
     ".md": 109,
-    ".json": 3614,
+    ".json": 3604,
     ".sln": 22,
     ".csproj": 16,
     ".cs": 137,
