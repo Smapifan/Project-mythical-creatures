@@ -2,7 +2,7 @@ name: Project Bot
 
 on:
   push:
-    branches: [main, Wiki]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -13,34 +13,47 @@ jobs:
       contents: write
 
     steps:
+      # 1️⃣ Checkout code
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2️⃣ Set Git user
       - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      # 3️⃣ Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      # --- Linecount ---
+      # 4️⃣ Run linecount script
       - name: Run linecount script
         run: python .github/scripts/linecount_scan.py
 
-      # --- Markdown Generator ---
-      - name: Generate markdown
-        run: python .github/scripts/markdown_generator.py
+      # 5️⃣ Generate Markdown from line counts
+      - name: Generate markdown from lines
+        run: python .github/scripts/markdown_generator_lines.py
 
-      # --- Commit everything to main ---
+      # 6️⃣ Check FILECODE.md exists
+      - name: Check FILECODE.md
+        run: |
+          if [ -f FILECODE.md ]; then
+            echo "FILECODE.md exists"
+          else
+            echo "ERROR: FILECODE.md missing!"
+          fi
+
+      # 7️⃣ Commit and push results
       - name: Commit and push results
         run: |
           git fetch origin main
           git checkout main
           git pull origin main
-          git add All_Code/*.json FILECODE.md
+          git add All_Code/*.json || echo "No JSON files found"
+          [ -f FILECODE.md ] && git add FILECODE.md || echo "FILECODE.md does not exist"
           git commit -m "Update line count JSONs & Markdown [skip ci]" || echo "Nothing to commit"
           git push origin main
