@@ -1,0 +1,161 @@
+# Filetype Report
+
+## .md (5 files)
+- `./FILETYPES.md`
+- `./README.md`
+- `./FILECODE.md`
+- `./Blank.md`
+- `./Werewolf/Werewolf/MdData/README.md`
+## .json (38 files)
+- `./Results/Resultmain.json`
+- `./All_Code/linecount.json`
+- `./All_Code/Lines_main.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/manifest.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.deps.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Animails/Mounts/Wolf.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Another/MountsAndCavesOptions.json`
+- `./Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Buildings/Wolf_cave.json`
+- `./Werewolf/Werewolf/config.json`
+- `./Werewolf/Werewolf/manifest.json`
+- `./Werewolf/Werewolf/content.json`
+- `./Werewolf/Werewolf/assets/Shops/Shops.json`
+- `./Werewolf/Werewolf/assets/Animails/Stable/Wolf.json`
+- `./Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json`
+- `./Werewolf/Werewolf/assets/Animails/Pet/Wolf.json`
+- `./Werewolf/Werewolf/assets/Animails/Coop/Wolf.json`
+- `./Werewolf/Werewolf/assets/Items/Swords.json`
+- `./Werewolf/Werewolf/assets/Items/Items.json`
+- `./Werewolf/Werewolf/assets/NpcData/Mails.json`
+- `./Werewolf/Werewolf/assets/NpcData/Blank.json`
+- `./Werewolf/Werewolf/assets/NpcData/Silvan/dialogue.json`
+- `./Werewolf/Werewolf/assets/NpcData/Silvan/schedule.json`
+- `./Werewolf/Werewolf/assets/NpcData/Silvan/Silvan.json`
+- `./Werewolf/Werewolf/assets/NpcData/Luca/Luca.json`
+- `./Werewolf/Werewolf/assets/NpcData/Adrian/Adrian.json`
+- `./Werewolf/Werewolf/assets/NpcData/Lauren/Lauren.json`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Abigail.json`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/W_Abigail.json`
+- `./Werewolf/Werewolf/assets/NpcData/Rudolf/Rudolf.json`
+- `./Werewolf/Werewolf/assets/Another/MountsAndCavesOptions.json`
+- `./Werewolf/Werewolf/assets/Maps/Overlay.json`
+- `./Werewolf/Werewolf/assets/Maps/Maps.json`
+- `./Werewolf/Werewolf/assets/Sounds/Sounds.json`
+- `./Werewolf/Werewolf/assets/Buildings/Wolf_cave.json`
+- `./Werewolf/Werewolf/i18n/de.json`
+- `./Werewolf/Werewolf/i18n/default.json`
+## no_extension (11 files)
+- `./.git/HEAD`
+- `./.git/index`
+- `./.git/config`
+- `./.git/description`
+- `./.git/FETCH_HEAD`
+- `./.git/refs/remotes/origin/main`
+- `./.git/refs/heads/main`
+- `./.git/info/exclude`
+- `./.git/logs/HEAD`
+- `./.git/logs/refs/remotes/origin/main`
+- `./.git/logs/refs/heads/main`
+## .worktree (1 files)
+- `./.git/config.worktree`
+## .sample (14 files)
+- `./.git/hooks/pre-push.sample`
+- `./.git/hooks/pre-merge-commit.sample`
+- `./.git/hooks/prepare-commit-msg.sample`
+- `./.git/hooks/fsmonitor-watchman.sample`
+- `./.git/hooks/push-to-checkout.sample`
+- `./.git/hooks/pre-commit.sample`
+- `./.git/hooks/post-update.sample`
+- `./.git/hooks/update.sample`
+- `./.git/hooks/pre-applypatch.sample`
+- `./.git/hooks/sendemail-validate.sample`
+- `./.git/hooks/commit-msg.sample`
+- `./.git/hooks/pre-receive.sample`
+- `./.git/hooks/pre-rebase.sample`
+- `./.git/hooks/applypatch-msg.sample`
+## .rev (1 files)
+- `./.git/objects/pack/pack-c7d238ecdf8ffc99ee98f9126fd200cf1468efe8.rev`
+## .idx (1 files)
+- `./.git/objects/pack/pack-c7d238ecdf8ffc99ee98f9126fd200cf1468efe8.idx`
+## .pack (1 files)
+- `./.git/objects/pack/pack-c7d238ecdf8ffc99ee98f9126fd200cf1468efe8.pack`
+## .py (1 files)
+- `./.github/scripts/run_all_scans.py`
+## .yml (1 files)
+- `./.github/workflows/project-bot.yml`
+## .sln (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory.sln`
+## .csproj (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/WerewolfStory.csproj`
+## .cs (3 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfo.cs`
+- `./Werewolf/WerewolfStory/WerewolfStory/Code/FileChecker.cs`
+## .targets (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.g.targets`
+## .props (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.g.props`
+## .cache (5 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/project.nuget.cache`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.assets.cache`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfoInputs.cache`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.csproj.AssemblyReference.cache`
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.csproj.CoreCompileInputs.cache`
+## .dll (2 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.dll`
+- `./Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.dll`
+## .txt (3 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.csproj.FileListAbsolute.txt`
+- `./Werewolf/Werewolf/Dialouge_info.txt`
+- `./Werewolf/Werewolf/Changelog.txt`
+## .editorconfig (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.GeneratedMSBuildEditorConfig.editorconfig`
+## .zip (1 files)
+- `./Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory 1.0.0.zip`
+## .png (38 files)
+- `./Werewolf/Werewolf/assets/Animails/Mounts/GreyWolf.png`
+- `./Werewolf/Werewolf/assets/Animails/Mounts/WhiteWolf.png`
+- `./Werewolf/Werewolf/assets/Items/Grey_Wolf_Flute.png`
+- `./Werewolf/Werewolf/assets/Items/Meat.png`
+- `./Werewolf/Werewolf/assets/Items/Steak.png`
+- `./Werewolf/Werewolf/assets/NpcData/Silvan/SilvanSprite.png`
+- `./Werewolf/Werewolf/assets/NpcData/Silvan/SilvanPortrait.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_Y.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_G.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_G_W.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_Y_W.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_G_B.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Portraits/Werebibi_Y_B.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_Y.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Abigail_S.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_G.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Abigail_S_B.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_G_W.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_Y_W.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Abigail_S_W.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_G_B.png`
+- `./Werewolf/Werewolf/assets/NpcData/Abigail/Characters/Werebibi_Y_B.png`
+- `./Werewolf/Werewolf/assets/Maps/townInterior_2.png`
+- `./Werewolf/Werewolf/assets/Maps/spring_outdoorsTileSheet2.png`
+- `./Werewolf/Werewolf/assets/Maps/spring_outdoorsTileSheet.png`
+- `./Werewolf/Werewolf/assets/Maps/walls_and_floors.png`
+- `./Werewolf/Werewolf/assets/Maps/Untitled 05-12-2025 06-15-28.png`
+- `./Werewolf/Werewolf/assets/Maps/paths.png`
+- `./Werewolf/Werewolf/assets/Maps/furniture.png`
+- `./Werewolf/Werewolf/assets/Maps/retro_furniture.png`
+- `./Werewolf/Werewolf/assets/Maps/winter_outdoorsTileSheet2.png`
+- `./Werewolf/Werewolf/assets/Maps/winter_outdoorsTileSheet.png`
+- `./Werewolf/Werewolf/assets/Maps/spring_town.png`
+- `./Werewolf/Werewolf/assets/Maps/overlay_spring.png`
+- `./Werewolf/Werewolf/assets/Maps/townInterior.png`
+- `./Werewolf/Werewolf/assets/Maps/Haus.png`
+- `./Werewolf/Werewolf/assets/Buildings/White_Wolf_Cave.png`
+- `./Werewolf/Werewolf/assets/Buildings/Grey_Wolf_Cave.png`
+## .tbin (3 files)
+- `./Werewolf/Werewolf/assets/Maps/SilvansHomeRegion.tbin`
+- `./Werewolf/Werewolf/assets/Maps/Woods.tbin`
+- `./Werewolf/Werewolf/assets/Maps/SilvansHome.tbin`
+## .wav (2 files)
+- `./Werewolf/Werewolf/assets/Sounds/bitten.wav`
+- `./Werewolf/Werewolf/assets/Sounds/howl.wav`
