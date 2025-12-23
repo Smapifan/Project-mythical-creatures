@@ -46,8 +46,8 @@ jobs:
           git fetch origin main
           git checkout main
           git pull origin main
-          git add Other/All_Code/*.json || echo "No JSON files found"
-          [ -f FILECODE.md ] && git add Other/FILECODE.md || echo "FILECODE.md does not exist"
-          [ -f ALL_FILE_REPORT.md ] && git add Other/ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
+          git add All_Code/*.json || echo "No JSON files found"
+          [ -f FILECODE.md ] && git add FILECODE.md || echo "FILECODE.md does not exist"
+          [ -f ALL_FILE_REPORT.md ] && git add ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
           git commit -m "Update line count & filetype JSONs and Markdown [skip ci]" || echo "Nothing to commit"
           git push origin main
