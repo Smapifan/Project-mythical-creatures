@@ -1,78 +1,85 @@
-name: Build SMAPI Mod
+name: SMAPI DLL Builder (Auto Zip Input)
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
+  build_smapi_mod:
+    runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout Repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      # 1️⃣ Checkout the repository
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      # 2️⃣ .NET SDK installieren
+      # 2️⃣ Setup .NET 6 SDK
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 3️⃣ Input finden (erstes ZIP oder Archiv in input/)
-      - name: Find input archive
-        id: input
+      # 3️⃣ Install unzip & p7zip for .7z support
+      - name: Install unzip & p7zip
         run: |
-          $file = Get-ChildItem "DLL-Builder/input" -File | Select-Object -First 1
-          if (-not $file) { throw "Keine Input-Datei gefunden!" }
-          echo "INPUT_FILE=$($file.FullName)" >> $env:GITHUB_ENV
-          # Modname aus ZIP-Datei
-          $modname = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
-          echo "MOD_NAME=$modname" >> $env:GITHUB_ENV
+          sudo apt-get update
+          sudo apt-get install -y unzip p7zip-full
 
-      # 4️⃣ Archiv entpacken
-      - name: Extract archive
+      # 4️⃣ Prepare folders
+      - name: Prepare folders
         run: |
-          mkdir source
-          Expand-Archive -Path $env:INPUT_FILE -DestinationPath source
-          Remove-Item $env:INPUT_FILE
+          mkdir -p DLL-Builder/output
+          mkdir -p DLL-Builder/temp_build
 
-      # 5️⃣ Projekt oder Solution bauen
-      - name: Build SMAPI DLL
+      # 5️⃣ Unpack all archives
+      - name: Unpack input archives
         run: |
-          cd source
-          $solution = Get-ChildItem -Recurse -Filter *.sln | Select-Object -First 1
-          if ($solution) {
-              dotnet build $solution.FullName -c Release
-          } else {
-              $proj = Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1
-              dotnet build $proj.FullName -c Release
-          }
+          for archive in DLL-Builder/input/*; do
+            if [[ "$archive" == *.zip ]]; then
+              unzip -o "$archive" -d DLL-Builder/temp_build
+            elif [[ "$archive" == *.7z ]]; then
+              7z x "$archive" -oDLL-Builder/temp_build
+            fi
+          done
 
-      # 6️⃣ Fertige Mod vorbereiten (DLL + Assets + manifest.json)
-      - name: Prepare SMAPI Mod
+      # 6️⃣ Restore dependencies (assuming .sln is inside unpacked folder)
+      - name: Restore dependencies
         run: |
-          mkdir ../mod_output
-          # DLL kopieren
-          $dll = Get-ChildItem -Recurse -Filter *.dll | Select-Object -First 1
-          Copy-Item $dll.FullName -Destination ../mod_output/
-          # Alles andere kopieren außer Quellcode und bin/obj
-          Get-ChildItem source | Where-Object { $_.Name -notin @('bin','obj') } | ForEach-Object {
-              if ($_.PSIsContainer) {
-                  Copy-Item $_.FullName -Destination ../mod_output/ -Recurse -Force
-              } else {
-                  Copy-Item $_.FullName -Destination ../mod_output/ -Force
-              }
-          }
+          sln_file=$(find DLL-Builder/temp_build -name "*.sln" | head -n 1)
+          echo "Found solution: $sln_file"
+          dotnet restore "$sln_file"
 
-      # 7️⃣ ZIP erstellen im output/ Ordner
-      - name: Zip SMAPI Mod
+      # 7️⃣ Build DLL
+      - name: Build DLL
         run: |
-          $outputFolder = "..\DLL-Builder\output"
-          mkdir $outputFolder -ErrorAction SilentlyContinue
-          Compress-Archive -Path ../mod_output/* -DestinationPath "$outputFolder\$env:MOD_NAME.zip"
+          sln_file=$(find DLL-Builder/temp_build -name "*.sln" | head -n 1)
+          dotnet build "$sln_file" -c Release -o DLL-Builder/output/build
 
-      # 8️⃣ Cleanup
-      - name: Cleanup
+      # 8️⃣ Copy assets & manifest
+      - name: Copy assets and manifest
         run: |
-          Remove-Item -Recurse -Force source
-          Remove-Item -Recurse -Force ../mod_output
+          mod_root=$(find DLL-Builder/temp_build -maxdepth 1 -type d | head -n 2 | tail -n 1)
+          echo "Mod root folder: $mod_root"
+          mkdir -p DLL-Builder/output/build/Assets
+          if [ -d "$mod_root/Assets" ]; then
+            cp -r "$mod_root/Assets/"* DLL-Builder/output/build/Assets/
+          fi
+          if [ -f "$mod_root/manifest.json" ]; then
+            cp "$mod_root/manifest.json" DLL-Builder/output/build/
+          fi
+
+      # 9️⃣ Zip the final mod folder
+      - name: Package mod as zip
+        run: |
+          cd DLL-Builder/output
+          mod_name=$(jq -r .name build/manifest.json)
+          zip -r "$mod_name.zip" build
+          echo "✅ Mod packaged: DLL-Builder/output/$mod_name.zip"
+
+      # 🔟 Upload zip as artifact
+      - name: Upload mod artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: smapi-mod
+          path: DLL-Builder/output/*.zip
