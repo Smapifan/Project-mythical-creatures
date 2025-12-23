@@ -1,9 +1,9 @@
 {
-  "total_files": 103,
+  "total_files": 106,
   "filetypes": {
-    ".md": 5,
+    ".md": 6,
     ".sln": 1,
-    ".json": 36,
+    ".json": 37,
     ".csproj": 1,
     ".cs": 3,
     ".targets": 1,
@@ -15,6 +15,7 @@
     ".zip": 1,
     ".png": 38,
     ".tbin": 3,
-    ".wav": 2
+    ".wav": 2,
+    "no_extension": 1
   }
 }

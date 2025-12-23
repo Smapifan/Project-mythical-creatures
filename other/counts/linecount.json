@@ -1,5 +1,5 @@
 {
-  "total_lines": 3701,
+  "total_lines": 3764,
   "files": {
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
     "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 25,
@@ -38,6 +38,8 @@
     "Werewolf/Werewolf/assets/Sounds/Sounds.json": 30,
     "Werewolf/Werewolf/assets/Buildings/Wolf_cave.json": 116,
     "Werewolf/Werewolf/i18n/de.json": 213,
-    "Werewolf/Werewolf/i18n/default.json": 225
+    "Werewolf/Werewolf/i18n/default.json": 225,
+    "other/counts/linecount.json": 43,
+    "other/counts/filetype.json": 20
   }
 }
