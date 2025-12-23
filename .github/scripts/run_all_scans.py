@@ -5,11 +5,14 @@ from datetime import datetime
 # === Setup ===
 BASE_DIR = os.getenv("BASE_DIR", os.getcwd())
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", os.path.join(BASE_DIR, "other"))
+COUNTS_DIR = os.path.join(OUTPUT_DIR, "counts")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+os.makedirs(COUNTS_DIR, exist_ok=True)
 
 print("🚀 Script gestartet")
 print("BASE_DIR:", BASE_DIR)
 print("OUTPUT_DIR:", OUTPUT_DIR)
+print("COUNTS_DIR:", COUNTS_DIR)
 
 # === 1️⃣ FILETYPE SCAN ===
 def run_filetype_scan():
@@ -27,7 +30,7 @@ def run_filetype_scan():
             file_data[ext] += 1
             total_files += 1
 
-    output_path = os.path.join(OUTPUT_DIR, "filetype.json")
+    output_path = os.path.join(COUNTS_DIR, "filetype.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"total_files": total_files, "filetypes": file_data}, f, indent=2)
 
@@ -56,7 +59,7 @@ def run_linecount_scan():
                 except Exception as e:
                     print(f"⚠️ Could not read {path}: {e}")
 
-    output_path = os.path.join(OUTPUT_DIR, "linecount.json")
+    output_path = os.path.join(COUNTS_DIR, "linecount.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"total_lines": total_lines, "files": line_data}, f, indent=2)
 
