@@ -30,24 +30,32 @@ jobs:
         with:
           python-version: '3.x'
 
-      # 4️⃣ Run combined scan script
-      - name: Run all scans
-        run: python .github/scripts/run_all_scans.py
+      # 4️⃣ Ensure output folder exists
+      - name: Prepare Other Folder
+        run: mkdir -p other
 
-      # 5️⃣ Check generated files exist
+      # 5️⃣ Run combined scan script
+      - name: Run all scans
+        run: |
+          python .github/scripts/run_all_scans.py
+        env:
+          BASE_DIR: ${{ github.workspace }}
+          OUTPUT_DIR: ${{ github.workspace }}/other
+
+      # 6️⃣ Check generated files exist
       - name: Check generated markdown files
         run: |
-          [ -f FILECODE.md ] && echo "FILECODE.md exists" || echo "ERROR: FILECODE.md missing!"
-          [ -f ALL_FILE_REPORT.md ] && echo "ALL_FILE_REPORT.md exists" || echo "ERROR: ALL_FILE_REPORT.md missing!"
+          [ -f other/FILECODE.md ] && echo "FILECODE.md exists" || echo "ERROR: FILECODE.md missing!"
+          [ -f other/ALL_FILE_REPORT.md ] && echo "ALL_FILE_REPORT.md exists" || echo "ERROR: ALL_FILE_REPORT.md missing!"
 
-      # 6️⃣ Commit and push results
+      # 7️⃣ Commit and push results
       - name: Commit and push results
         run: |
           git fetch origin main
           git checkout main
           git pull origin main
-          git add All_Code/*.json || echo "No JSON files found"
-          [ -f FILECODE.md ] && git add FILECODE.md || echo "FILECODE.md does not exist"
-          [ -f ALL_FILE_REPORT.md ] && git add ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
-          git commit -m "Update line count & filetype JSONs and Markdown [skip ci]" || echo "Nothing to commit"
+          git add other/*.json || echo "No JSON files found"
+          [ -f other/FILECODE.md ] && git add other/FILECODE.md || echo "FILECODE.md does not exist"
+          [ -f other/ALL_FILE_REPORT.md ] && git add other/ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
+          git commit -m "Update line count & filetype JSONs and Markdown in other/ [skip ci]" || echo "Nothing to commit"
           git push origin main
