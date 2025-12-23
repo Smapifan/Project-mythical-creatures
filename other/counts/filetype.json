@@ -1,5 +1,5 @@
 {
-  "total_files": 109,
+  "total_files": 110,
   "filetypes": {
     ".md": 6,
     ".sln": 1,
@@ -12,7 +12,7 @@
     ".dll": 2,
     ".txt": 3,
     ".editorconfig": 1,
-    ".zip": 2,
+    ".zip": 3,
     ".png": 38,
     ".tbin": 3,
     ".wav": 2,

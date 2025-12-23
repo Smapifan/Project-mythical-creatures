@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 3767
+**Total Lines:** 3768
 
 | File | Lines |
 |------|--------|
@@ -42,7 +42,7 @@
 | `Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfo.cs` | 22 |
 | `Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json` | 79 |
 | `Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json` | 115 |
-| `other/counts/filetype.json` | 21 |
+| `other/counts/filetype.json` | 22 |
 | `other/counts/linecount.json` | 45 |
 
-_Generated on 2025-12-23 21:40:55 UTC_
+_Generated on 2025-12-23 22:04:04 UTC_
