@@ -1,9 +1,31 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 3768
+**Total Lines:** 8189
 
 | File | Lines |
 |------|--------|
+| `DLL-Builder/input/stardew/Stardew Valley.deps.json` | 1518 |
+| `DLL-Builder/input/stardew/Stardew Valley.runtimeconfig.json` | 15 |
+| `DLL-Builder/input/stardew/StardewModdingAPI.deps.json` | 1518 |
+| `DLL-Builder/input/stardew/StardewModdingAPI.runtimeconfig.json` | 17 |
+| `DLL-Builder/input/stardew/smapi-internal/config.json` | 185 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/de.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/default.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/es.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/fr.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/hu.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/id.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/it.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/ja.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/ko.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/pl.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/pt.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/ru.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/th.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/tr.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
+| `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -45,4 +67,4 @@
 | `other/counts/filetype.json` | 22 |
 | `other/counts/linecount.json` | 45 |
 
-_Generated on 2025-12-23 22:04:04 UTC_
+_Generated on 2025-12-23 22:06:50 UTC_
