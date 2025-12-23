@@ -4,16 +4,16 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # optional manuelles Starten
+  workflow_dispatch:
 
 jobs:
   run_scans:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repository auschecken
+      # 1️⃣ Repo auschecken
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2️⃣ Python einrichten
       - name: Setup Python
@@ -21,12 +21,12 @@ jobs:
         with:
           python-version: "3.x"
 
-      # 3️⃣ Dependencies installieren (falls nötig)
+      # 3️⃣ Abhängigkeiten installieren (falls benötigt)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
 
-      # 4️⃣ Ordner für Outputs erstellen
+      # 4️⃣ Ordner für Outputs vorbereiten
       - name: Prepare Output Folder
         run: |
           mkdir -p other
@@ -36,9 +36,10 @@ jobs:
         run: |
           python run_all_scans.py
 
-      # 6️⃣ Ergebnisse als Artefakt hochladen
+      # 6️⃣ Ergebnisse als Artefakt hochladen 🆕 (v4!)
       - name: Upload Scan Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: scan-reports
           path: other/
+          if-no-files-found: error
