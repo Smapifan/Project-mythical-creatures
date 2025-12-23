@@ -1,6 +1,6 @@
 # 📦 Filetype Report
 
-**Total Files:** 409
+**Total Files:** 408
 
 | File Extension | Count |
 |----------------|--------|
@@ -27,7 +27,7 @@
 | `.txt` | 5 |
 | `.wav` | 2 |
 | `.xml` | 7 |
-| `.zip` | 3 |
+| `.zip` | 2 |
 | `no_extension` | 2 |
 
-_Generated on 2025-12-23 22:51:43 UTC_
+_Generated on 2025-12-23 22:51:56 UTC_
