@@ -1,4 +1,4 @@
-name: SMAPI DLL Builder (Auto Zip Input)
+name: SMAPI DLL Builder
 
 on:
   push:
@@ -10,76 +10,62 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      # 1️⃣ Checkout repo
+      - uses: actions/checkout@v4
 
-      # 2️⃣ Setup .NET 6 SDK
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
+      # 2️⃣ Setup .NET 6
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 3️⃣ Install unzip & p7zip for .7z support
-      - name: Install unzip & p7zip
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y unzip p7zip-full
+      # 3️⃣ Install unzip
+      - run: sudo apt-get update && sudo apt-get install -y unzip
 
       # 4️⃣ Prepare folders
-      - name: Prepare folders
-        run: |
+      - run: |
+          rm -rf DLL-Builder/output/build DLL-Builder/temp_build
           mkdir -p DLL-Builder/output
+          mkdir -p DLL-Builder/output/logs
           mkdir -p DLL-Builder/temp_build
 
-      # 5️⃣ Unpack all archives
-      - name: Unpack input archives
-        run: |
-          for archive in DLL-Builder/input/*; do
-            if [[ "$archive" == *.zip ]]; then
-              unzip -o "$archive" -d DLL-Builder/temp_build
-            elif [[ "$archive" == *.7z ]]; then
-              7z x "$archive" -oDLL-Builder/temp_build
-            fi
+      # 5️⃣ Unpack all ZIPs in input/stardew (falls vorhanden)
+      - run: |
+          for archive in DLL-Builder/input/stardew/*.zip; do
+            unzip -o "$archive" -d DLL-Builder/input/stardew/
           done
 
-      # 6️⃣ Restore dependencies (assuming .sln is inside unpacked folder)
-      - name: Restore dependencies
-        run: |
-          sln_file=$(find DLL-Builder/temp_build -name "*.sln" | head -n 1)
-          echo "Found solution: $sln_file"
-          dotnet restore "$sln_file"
+      # 6️⃣ Find the Mod csproj
+      - run: |
+          CS_PROJECT=$(find DLL-Builder/temp_build -name "*.csproj" | head -n 1)
+          echo "Found csproj: $CS_PROJECT"
+          echo "CS_PROJECT=$CS_PROJECT" >> $GITHUB_ENV
 
-      # 7️⃣ Build DLL
-      - name: Build DLL
-        run: |
-          sln_file=$(find DLL-Builder/temp_build -name "*.sln" | head -n 1)
-          dotnet build "$sln_file" -c Release -o DLL-Builder/output/build
+      # 7️⃣ Build the Mod with GamePath
+      - run: |
+          dotnet build $CS_PROJECT -c Release -p:GamePath=$GITHUB_WORKSPACE/DLL-Builder/input/stardew | tee DLL-Builder/output/logs/log.txt
 
       # 8️⃣ Copy assets & manifest
-      - name: Copy assets and manifest
-        run: |
-          mod_root=$(find DLL-Builder/temp_build -maxdepth 1 -type d | head -n 2 | tail -n 1)
-          echo "Mod root folder: $mod_root"
+      - run: |
+          MOD_ROOT=$(dirname $CS_PROJECT)
           mkdir -p DLL-Builder/output/build/Assets
-          if [ -d "$mod_root/Assets" ]; then
-            cp -r "$mod_root/Assets/"* DLL-Builder/output/build/Assets/
+          if [ -d "$MOD_ROOT/Assets" ]; then
+            cp -r "$MOD_ROOT/Assets/"* DLL-Builder/output/build/Assets/
           fi
-          if [ -f "$mod_root/manifest.json" ]; then
-            cp "$mod_root/manifest.json" DLL-Builder/output/build/
+          if [ -f "$MOD_ROOT/manifest.json" ]; then
+            cp "$MOD_ROOT/manifest.json" DLL-Builder/output/build/
           fi
 
       # 9️⃣ Zip the final mod folder
-      - name: Package mod as zip
-        run: |
+      - run: |
           cd DLL-Builder/output
-          mod_name=$(jq -r .name build/manifest.json)
-          zip -r "$mod_name.zip" build
-          echo "✅ Mod packaged: DLL-Builder/output/$mod_name.zip"
+          MOD_NAME=$(jq -r .name build/manifest.json)
+          zip -r "$MOD_NAME.zip" build
+          echo "✅ Mod packaged: DLL-Builder/output/$MOD_NAME.zip"
 
-      # 🔟 Upload zip as artifact
-      - name: Upload mod artifact
-        uses: actions/upload-artifact@v4
+      # 🔟 Upload zip and log as artifacts
+      - uses: actions/upload-artifact@v4
         with:
           name: smapi-mod
-          path: DLL-Builder/output/*.zip
+          path: |
+            DLL-Builder/output/*.zip
+            DLL-Builder/output/logs/log.txt
