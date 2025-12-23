@@ -3,9 +3,13 @@ import json
 from datetime import datetime
 
 # === Setup ===
-BASE_DIR = os.getcwd()
-OUTPUT_DIR = os.path.join(BASE_DIR, "All_Code")
+BASE_DIR = os.getenv("BASE_DIR", os.getcwd())
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", os.path.join(BASE_DIR, "other"))
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+print("🚀 Script gestartet")
+print("BASE_DIR:", BASE_DIR)
+print("OUTPUT_DIR:", OUTPUT_DIR)
 
 # === 1️⃣ FILETYPE SCAN ===
 def run_filetype_scan():
@@ -29,7 +33,6 @@ def run_filetype_scan():
 
     print(f"✅ Filetype scan complete — saved to {output_path}")
     return output_path, file_data, total_files
-
 
 # === 2️⃣ LINECOUNT SCAN ===
 def run_linecount_scan():
@@ -60,7 +63,6 @@ def run_linecount_scan():
     print(f"✅ Linecount scan complete — saved to {output_path}")
     return output_path, line_data, total_lines
 
-
 # === 3️⃣ MARKDOWN GENERATOR: FILETYPE ===
 def generate_filetype_markdown(file_data, total_files):
     print("📝 Generating filetype markdown...")
@@ -80,13 +82,12 @@ def generate_filetype_markdown(file_data, total_files):
     md.append("")
     md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
 
-    output_path = os.path.join(BASE_DIR, "ALL_FILE_REPORT.md")
+    output_path = os.path.join(OUTPUT_DIR, "ALL_FILE_REPORT.md")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
 
     print(f"✅ Markdown report created — saved to {output_path}")
     return output_path
-
 
 # === 4️⃣ MARKDOWN GENERATOR: LINECOUNT ===
 def generate_linecount_markdown(line_data, total_lines):
@@ -107,19 +108,18 @@ def generate_linecount_markdown(line_data, total_lines):
     md.append("")
     md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
 
-    output_path = os.path.join(BASE_DIR, "FILECODE.md")
+    output_path = os.path.join(OUTPUT_DIR, "FILECODE.md")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
 
     print(f"✅ Linecount markdown created — saved to {output_path}")
     return output_path
 
-
 # === MAIN EXECUTION FLOW ===
 if __name__ == "__main__":
     print("🚀 Starting all scans...")
 
-    # Run Linecount first (like original logic)
+    # Run Linecount first
     line_json, line_data, total_lines = run_linecount_scan()
     line_md = generate_linecount_markdown(line_data, total_lines)
 
