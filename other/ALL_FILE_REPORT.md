@@ -1,6 +1,6 @@
 # 📦 Filetype Report
 
-**Total Files:** 103
+**Total Files:** 106
 
 | File Extension | Count |
 |----------------|--------|
@@ -9,8 +9,8 @@
 | `.csproj` | 1 |
 | `.dll` | 2 |
 | `.editorconfig` | 1 |
-| `.json` | 36 |
-| `.md` | 5 |
+| `.json` | 38 |
+| `.md` | 6 |
 | `.png` | 38 |
 | `.props` | 1 |
 | `.sln` | 1 |
@@ -20,4 +20,4 @@
 | `.wav` | 2 |
 | `.zip` | 1 |
 
-_Generated on 2025-12-23 21:21:43 UTC_
+_Generated on 2025-12-23 21:22:22 UTC_
