@@ -1,0 +1,20 @@
+{
+  "total_files": 104,
+  "filetypes": {
+    ".md": 6,
+    ".json": 36,
+    ".sln": 1,
+    ".csproj": 1,
+    ".cs": 3,
+    ".targets": 1,
+    ".props": 1,
+    ".cache": 5,
+    ".dll": 2,
+    ".txt": 3,
+    ".editorconfig": 1,
+    ".zip": 1,
+    ".png": 38,
+    ".tbin": 3,
+    ".wav": 2
+  }
+}

@@ -1,11 +1,9 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 3766
+**Total Lines:** 3701
 
 | File | Lines |
 |------|--------|
-| `All_Code/filetype.json` | 20 |
-| `All_Code/linecount.json` | 45 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -45,4 +43,4 @@
 | `Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json` | 79 |
 | `Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json` | 115 |
 
-_Generated on 2025-12-23 20:50:38 UTC_
+_Generated on 2025-12-23 20:53:06 UTC_
