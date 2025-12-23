@@ -1,5 +1,5 @@
 {
-  "total_files": 106,
+  "total_files": 107,
   "filetypes": {
     ".md": 6,
     ".sln": 1,
@@ -16,6 +16,6 @@
     ".png": 38,
     ".tbin": 3,
     ".wav": 2,
-    "no_extension": 1
+    "no_extension": 2
   }
 }
