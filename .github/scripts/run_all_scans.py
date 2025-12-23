@@ -4,7 +4,7 @@ from datetime import datetime
 
 # === Setup ===
 BASE_DIR = os.getcwd()
-OUTPUT_DIR = os.path.join(BASE_DIR, "All_Code")
+OUTPUT_DIR = os.path.join(BASE_DIR, "other")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # === 1️⃣ FILETYPE SCAN ===
@@ -15,7 +15,7 @@ def run_filetype_scan():
     total_files = 0
 
     for root, _, files in os.walk(BASE_DIR):
-        if ".git" in root or ".github" in root:
+        if ".git" in root or ".github" in root or "other" in root:
             continue
         for file in files:
             ext = os.path.splitext(file)[1].lower() or "no_extension"
@@ -39,7 +39,7 @@ def run_linecount_scan():
     total_lines = 0
 
     for root, _, files in os.walk(BASE_DIR):
-        if ".git" in root or ".github" in root:
+        if ".git" in root or ".github" in root or "other" in root:
             continue
         for file in files:
             if file.endswith((".py", ".json", ".yml", ".yaml", ".js", ".ts", ".cs", ".cpp", ".java", ".html", ".css")):
@@ -80,7 +80,7 @@ def generate_filetype_markdown(file_data, total_files):
     md.append("")
     md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
 
-    output_path = os.path.join(BASE_DIR, "ALL_FILE_REPORT.md")
+    output_path = os.path.join(OUTPUT_DIR, "ALL_FILE_REPORT.md")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
 
@@ -107,7 +107,7 @@ def generate_linecount_markdown(line_data, total_lines):
     md.append("")
     md.append(f"_Generated on {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}_")
 
-    output_path = os.path.join(BASE_DIR, "FILECODE.md")
+    output_path = os.path.join(OUTPUT_DIR, "FILECODE.md")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
 
@@ -119,7 +119,7 @@ def generate_linecount_markdown(line_data, total_lines):
 if __name__ == "__main__":
     print("🚀 Starting all scans...")
 
-    # Run Linecount first (like original logic)
+    # Run Linecount first
     line_json, line_data, total_lines = run_linecount_scan()
     line_md = generate_linecount_markdown(line_data, total_lines)
 
