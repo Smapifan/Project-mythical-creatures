@@ -1,0 +1,78 @@
+name: Build SMAPI Mod
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # 1️⃣ Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # 2️⃣ .NET SDK installieren
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      # 3️⃣ Input finden (erstes ZIP oder Archiv in input/)
+      - name: Find input archive
+        id: input
+        run: |
+          $file = Get-ChildItem "DLL-Builder/input" -File | Select-Object -First 1
+          if (-not $file) { throw "Keine Input-Datei gefunden!" }
+          echo "INPUT_FILE=$($file.FullName)" >> $env:GITHUB_ENV
+          # Modname aus ZIP-Datei
+          $modname = [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
+          echo "MOD_NAME=$modname" >> $env:GITHUB_ENV
+
+      # 4️⃣ Archiv entpacken
+      - name: Extract archive
+        run: |
+          mkdir source
+          Expand-Archive -Path $env:INPUT_FILE -DestinationPath source
+          Remove-Item $env:INPUT_FILE
+
+      # 5️⃣ Projekt oder Solution bauen
+      - name: Build SMAPI DLL
+        run: |
+          cd source
+          $solution = Get-ChildItem -Recurse -Filter *.sln | Select-Object -First 1
+          if ($solution) {
+              dotnet build $solution.FullName -c Release
+          } else {
+              $proj = Get-ChildItem -Recurse -Filter *.csproj | Select-Object -First 1
+              dotnet build $proj.FullName -c Release
+          }
+
+      # 6️⃣ Fertige Mod vorbereiten (DLL + Assets + manifest.json)
+      - name: Prepare SMAPI Mod
+        run: |
+          mkdir ../mod_output
+          # DLL kopieren
+          $dll = Get-ChildItem -Recurse -Filter *.dll | Select-Object -First 1
+          Copy-Item $dll.FullName -Destination ../mod_output/
+          # Alles andere kopieren außer Quellcode und bin/obj
+          Get-ChildItem source | Where-Object { $_.Name -notin @('bin','obj') } | ForEach-Object {
+              if ($_.PSIsContainer) {
+                  Copy-Item $_.FullName -Destination ../mod_output/ -Recurse -Force
+              } else {
+                  Copy-Item $_.FullName -Destination ../mod_output/ -Force
+              }
+          }
+
+      # 7️⃣ ZIP erstellen im output/ Ordner
+      - name: Zip SMAPI Mod
+        run: |
+          $outputFolder = "..\DLL-Builder\output"
+          mkdir $outputFolder -ErrorAction SilentlyContinue
+          Compress-Archive -Path ../mod_output/* -DestinationPath "$outputFolder\$env:MOD_NAME.zip"
+
+      # 8️⃣ Cleanup
+      - name: Cleanup
+        run: |
+          Remove-Item -Recurse -Force source
+          Remove-Item -Recurse -Force ../mod_output
