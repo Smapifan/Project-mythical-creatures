@@ -34,7 +34,7 @@ jobs:
       # 5️⃣ run_all_scans.py ausführen
       - name: Run All Scans
         run: |
-          python scripts/run_all_scans.py
+          python .github/scripts/run_all_scans.py
 
       # 6️⃣ Ergebnisse als Artefakt hochladen 🆕 (v4!)
       - name: Upload Scan Reports
