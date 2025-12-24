@@ -1,0 +1,242 @@
+{
+  "Format": "2.7.0",
+
+  "ConfigSchema": {
+    // a section
+    "Always on spirit's eve": {
+      "Description": "If the configuration is set to true, Lara will always be a werewolf on Halloween.",
+      "AllowValues": "true, false",
+      "Default": "true",
+      "Section": "a"
+    },
+    "Eye color": {
+      "Description": "Select the Eye Color for Werewolf Lara.",
+      "AllowValues": "Yellow, Green",
+      "Default": "Yellow",
+      "Section": "a"
+    },
+    "Always werewolf": {
+      "Description": "If the configuration is set to true, Lara will always be a werewolf.",
+      "AllowValues": "true, false",
+      "Default": "false",
+      "Section": "a"
+    },
+    // b section
+    "Build Cost for Grey Wolf Cave": {
+      "Description": "You can change the build days for the Grey Wolf Cave here.",
+      "Default": "5000",
+      "Section": "b"
+    },
+    "Build Days for Grey Wolf Cave": {
+      "Description": "You can change the build days for the Grey Wolf Cave here.",
+      "Default": "5",
+      "Section": "b"
+    },
+    "Coal Cost for Grey Wolf Cave": {
+      "Description": "You can change the required coals for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    "Wood Cost for Grey Wolf Cave": {
+      "Description": "You can change the required woods for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    "Stone Cost for Grey Wolf Cave": {
+      "Description": "You can change the required stones for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    "Hardwood Cost for Grey Wolf Cave": {
+      "Description": "You can change the required hardwoods for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    "Fiber Cost for Grey Wolf Cave": {
+      "Description": "You can change the required fibers for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    "Moss Cost for Grey Wolf Cave": {
+      "Description": "You can change the required mosses for the Grey Wolf Cave here.",
+      "Default": "1",
+      "Section": "b"
+    },
+    // c section
+    "Build Cost for White Wolf Cave": {
+      "Description": "You can change the build cost for the White Wolf Cave here.",
+      "Default": "5000",
+      "Section": "c"
+    },
+    "Build Days for White Wolf Cave": {
+      "Description": "You can change the build cost for the White Wolf Cave here.",
+      "Default": "5",
+      "Section": "c"
+    },
+    "Quartz Cost for White Wolf Cave": {
+      "Description": "You can change the required quartz for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    },
+    "Wood Cost for White Wolf Cave": {
+      "Description": "You can change the required woods for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    },
+    "Stone Cost for White Wolf Cave": {
+      "Description": "You can change the required stones for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    },
+    "Hardwood Cost for White Wolf Cave": {
+      "Description": "You can change the required hardwoods for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    },
+    "Fiber Cost for White Wolf Cave": {
+      "Description": "You can change the required fibers for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    },
+    "Moss Cost for White Wolf Cave": {
+      "Description": "You can change the required mosses for the White Wolf Cave here.",
+      "Default": "1",
+      "Section": "c"
+    }
+  },
+
+  "Changes": [
+    {
+      "LogName": "Load Silvan",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Silvan/Silvan.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Lara",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Lara/Lara_Bleeding.json",
+      "When": {
+        "HasSeenEvent: CurrentPlayer |contains=Silvan_Forest": true,
+        "HasSeenEvent: CurrentPlayer |contains=Werewolf_Lara": false,
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Werewolf Lara",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Lara/Lara_Werewolf.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Werewolf Lara",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Lara/Lara_Werewolf.json",
+      "When": {
+        "HasSeenEvent: CurrentPlayer |contains=Silvan_Forest": true,
+        "HasSeenEvent: CurrentPlayer |contains=Werewolf_Lara": false,
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Bleeding Lara",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Lara/Lara_Bleeding.json",
+      "When": {
+        "HasSeenEvent: CurrentPlayer |contains=Werewolf_Lara": true,
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Items",
+      "Action": "Include",
+      "FromFile": "assets/Items/Items.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Maps",
+      "Action": "Include",
+      "FromFile": "assets/Maps/Maps.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Blank",
+      "Action": "Load",
+      "Target": "Data/Events/WerewolfForest, Characters/Dialogue/Silvan, Characters/Dialogue/Lara",
+      "FromFile": "assets/NpcData/Blank.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Sounds",
+      "Action": "Include",
+      "FromFile": "assets/Sounds/Sounds.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Mails",
+      "Action": "Include",
+      "FromFile": "assets/NPCData/Mails.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Shops",
+      "Action": "Include",
+      "FromFile": "assets/Shops/Shops.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Swords",
+      "Action": "Include",
+      "FromFile": "assets/Items/Swords.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Mounts and Caves",
+      "Action": "Include",
+      "FromFile": "assets/Another/MountsAndCavesOptions.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    },
+
+    {
+      "LogName": "Load Minecarts",
+      "Action": "Include",
+      "FromFile": "assets/Another/MountsAndCavesOptions.json",
+      "When": {
+        "HasMod: |contains=Smapifan.WerewolfStory": true
+      }
+    }
+
+  ]
+}

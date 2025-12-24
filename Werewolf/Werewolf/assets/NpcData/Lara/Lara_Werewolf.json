@@ -1,0 +1,429 @@
+{
+  "Changes": [
+    {
+      "Action": "Load",
+      "LogName": "Every Night Sprite(Yellow)",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Every Night Portrait(Yellow)",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "spirit's eve Sprite(true)(Yellow)",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Yellow",
+        "Always on spirit's eve": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "spirit's eve Portrait(true)(Yellow)",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Yellow",
+        "Always on spirit's eve": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Always Werewolf Sprite(Yellow)",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Always Werewolf Portrait(Yellow)",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "spirit's eve Sprite(false)(Yellow)",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Yellow",
+        "Always on spirit's eve": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "spirit's eve Portrait(false)(Yellow)",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Yellow",
+        "Always on spirit's eve": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Winter Sprite(Always Werewolf)(Yellow)",
+      "Target": "Characters/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y_W.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Winter Portrait(Always Werewolf)(Yellow)",
+      "Target": "Portraits/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y_W.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Winter Sprite(Every Night)(Yellow)",
+      "Target": "Characters/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y_W.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Winter Portrait(Every Night)(Yellow)",
+      "Target": "Portraits/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y_W.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Sprite (Every Night)(Yellow)",
+      "Target": "Characters/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Portrait (Every Night)(Yellow)",
+      "Target": "Portraits/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Yellow",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Sprite (Always Werewolf)(Yellow)",
+      "Target": "Characters/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_Y_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Portrait (Always Werewolf)(Yellow)",
+      "Target": "Portraits/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_Y_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Eye color": "Yellow",
+        "Always werewolf": "true"
+      }
+    },
+
+
+
+
+
+
+
+
+
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Green",
+        "Always on spirit's eve": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Green",
+        "Always on spirit's eve": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "DayEvent |contains=spirit's eve": false,
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Green",
+        "Always on spirit's eve": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "spring, summer, fall",
+        "Time": "{{Range: 1900, 2600}}",
+        "DayEvent |contains=spirit's eve": true,
+        "Eye color": "Green",
+        "Always on spirit's eve": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G_W.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G_W.png",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Characters/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G_W.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "Target": "Portraits/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G_W.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Season": "winter",
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+        {
+      "Action": "Load",
+      "LogName": "Beach Sprite (Every Night)(Green)",
+      "Target": "Characters/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Portrait (Every Night)(Green)",
+      "Target": "Portraits/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Time": "{{Range: 1900, 2600}}",
+        "Eye color": "Green",
+        "Always werewolf": "false"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Sprite (Always Werewolf)(Green)",
+      "Target": "Characters/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_G_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    },
+    {
+      "Action": "Load",
+      "LogName": "Beach Portrait (Always Werewolf)(Green)",
+      "Target": "Portraits/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_G_B.png",
+      "Update": "OnTimeChange",
+      "Priority": "High + 999999999",
+      "When": {
+        "Eye color": "Green",
+        "Always werewolf": "true"
+      }
+    }
+  ]
+}

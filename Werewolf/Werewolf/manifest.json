@@ -1,0 +1,12 @@
+{
+   "Name": "Werewolf Valley Expansion",
+   "Author": "Smapifan",
+   "Version": "1.0",
+   "Description": "Make A Werewolf Life Story In Stardew Valley(Content Patcher Part)",
+   "UniqueID": "Smapifan.WerewolfValleyExpansion",
+   "MinimumApiVersion": "4.0.0",
+   "UpdateKeys": [ "Nexus:" ],
+   "ContentPackFor": {
+      "UniqueID": "Pathoschild.ContentPatcher"
+   }
+}

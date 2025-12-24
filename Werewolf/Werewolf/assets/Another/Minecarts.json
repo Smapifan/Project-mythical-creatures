@@ -1,0 +1,46 @@
+{
+    "Changes": [
+        {
+            "Action": "EditData",
+            "Target": "Data/Minecarts",
+            "Entries": {
+                "Smapifan.Werewolf.Minecart_1": {
+                    // "UnlockCondition": "PLAYER_HAS_MAIL Current Minecarts",
+                    "UnlockCondition": null,
+                    "LockedMessage": null,
+                    "ChooseDestinationMessage": null,
+                    "BuyTicketMessage": null,
+                    "Destinations": [
+                        {
+                            "Id": "WerewolfDesert",
+                            "DisplayName": "{{i18n:Desert.0}}",
+                            "Price": 0,
+                            "BuyTicketMessage": null,
+                            "TargetLocation": "WerewolfDesert",
+                            "TargetTile": {
+                                "X": 14,
+                                "Y": 74
+                            },
+                            "TargetDirection": "left",
+                            "CustomFields": null
+                        },
+                        {
+                            "Id": "WerewolfForest",
+                            "DisplayName": "{{Forest.0}}",
+                            "Condition": null,
+                            "Price": 0,
+                            "BuyTicketMessage": null,
+                            "TargetLocation": "WerewolfForest",
+                            "TargetTile": {
+                                "X": 11,
+                                "Y": 8
+                            },
+                            "TargetDirection": "down",
+                            "CustomFields": null
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

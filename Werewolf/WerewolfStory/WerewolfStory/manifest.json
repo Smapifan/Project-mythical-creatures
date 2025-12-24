@@ -1,0 +1,10 @@
+{
+    "Name": "Werewolf Valley Expansion(C#)",
+    "Author": "Smapifan",
+    "Version": "1.0.0",
+    "Description": "C# code for the Werewolf mod",
+    "UniqueID": "Smapifan.WVECsharp",
+    "EntryDll": "WerewolfStory.dll",
+    "UpdateKeys": [ "Nexus:???" ],
+    "MinimumApiVersion": "4.0.0"
+}

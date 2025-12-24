@@ -1,0 +1,47 @@
+{
+    "Changes": [
+        { 
+            "LogName": "Bleeding Lara Sprite",
+            "Action": "Load",
+            "Target": "Characters/Lara",
+            "FromFile": "assets/NpcData/Lara/Characters/Lara_B.png"
+        },
+
+        {
+            "LogName": "Bleeding Lara Winter Sprite",
+            "Action": "Load",
+            "Target": "Characters/Lara_Winter",
+            "FromFile": "assets/NpcData/Lara/Characters/Lara_B_W.png"
+        },
+
+        {
+            "LogName": "Bleeding Lara Beach Sprite",
+            "Action": "Load",
+            "Target": "Characters/Lara_Beach",
+            "FromFile": "assets/NpcData/Lara/Characters/Lara_B_B.png"
+        },
+
+
+
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Lara Portrait",
+            "Target": "Portraits/Lara",
+            "FromFile": "assets/NpcData/Lara/Portraits/Lara_B.png"
+        },
+
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Lara Winter Portrait",
+            "Target": "Portraits/Lara_Winter",
+            "FromFile": "assets/NpcData/Lara/Portraits/Lara_B_W.png"
+        },
+        
+        {
+            "Action": "Load",
+            "LogName": "Bleeding Lara Beach Portrait",
+            "Target": "Portraits/Lara_Beach",
+            "FromFile": "assets/NpcData/Lara/Portraits/Lara_B_B.png"
+        }
+    ]
+}

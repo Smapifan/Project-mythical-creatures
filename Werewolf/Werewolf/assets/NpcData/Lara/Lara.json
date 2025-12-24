@@ -1,0 +1,104 @@
+{
+  "Changes": [
+    {
+      "LogName": "Load Lara",
+      "Action": "EditData",
+      "Target": "Data/Characters",
+      "Entries": {
+        "Lara": {
+          "DisplayName": "{{i18n:Lara}}",
+          "BirthSeason": "spring",
+          "BirthDay": 28,
+          "HomeRegion": "Town",
+          "Gender": "female",
+          "Age": "Adult",
+          "Manner": "Polite",
+          "SocialAnxiety": "outgoing",
+          "Optimism": "Positive",
+          "CanBeRomanced": true,
+          "CanVisitIsland": true,
+          "WinterStarParticipant": true,
+          "Home": [
+            {
+              "Id": "Default",
+              "Location": "secret_House",
+              "Tile": {
+                "X": 6,
+                "Y": 7
+              },
+              "Direction": "down"
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "LogName": "Load GiftTastes for Lara",
+      "Action": "EditData",
+      "Target": "Data/NPCGiftTastes",
+      "Entries": {
+        "Lara": "{{i18n:Lara.Love}}/Steak Meat/{{i18n:Lara.Like}}/74/{{i18n:Lara.Neutral}}//{{i18n:Lara.Dislike}}//{{i18n:Lara.Hate}}/"
+      }
+    },
+	
+	
+	
+	{
+	  "LogName": "Load Schedule for Lara",
+      "Target": "Characters/schedules/Lara",
+      "Action": "Load",
+      "FromFile": "assets/NpcData/Lara/schedule.json"
+    },
+	
+    {
+	  "LogName": "Load Dialogue for Lara",
+      "Action": "Include",
+      "FromFile": "assets/NpcData/Lara/dialogue.json"
+    },
+	
+	
+    
+
+    {
+      "LogName": "Load Portrait for Lara",
+      "Action": "Load",
+      "Target": "Portraits/Lara",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_H.png"
+    },
+	
+	{
+      "LogName": "Load sprite for Lara",
+      "Action": "Load",
+      "Target": "Characters/Lara",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_H.png"
+    },
+
+    {
+      "LogName": "Load Portrait for Lara Winter",
+      "Action": "Load",
+      "Target": "Portraits/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_H.png"
+    },
+	
+	{
+      "LogName": "Load sprite for Lara Winter",
+      "Action": "Load",
+      "Target": "Characters/Lara_Winter",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_H.png"
+    },
+    {
+      "LogName": "Load Portrait for Lara Beach",
+      "Action": "Load",
+      "Target": "Portraits/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Portraits/Lara_H.png"
+    },
+	
+	{
+      "LogName": "Load sprite for Lara Beach",
+      "Action": "Load",
+      "Target": "Characters/Lara_Beach",
+      "FromFile": "assets/NpcData/Lara/Characters/Lara_H.png"
+    }
+  ]
+}

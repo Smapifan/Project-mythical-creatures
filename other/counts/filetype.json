@@ -1,0 +1,20 @@
+{
+  "total_files": 310,
+  "filetypes": {
+    ".md": 4,
+    "no_extension": 2,
+    ".zip": 2,
+    ".dll": 260,
+    ".0": 1,
+    ".txt": 2,
+    ".dylib": 2,
+    ".exe": 1,
+    ".xml": 7,
+    ".cdx": 1,
+    ".json": 24,
+    ".config": 1,
+    ".ini": 1,
+    ".1": 1,
+    ".marker": 1
+  }
+}

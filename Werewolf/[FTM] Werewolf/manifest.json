@@ -1,0 +1,12 @@
+{
+   "Name": "Werewolf Valley Expansion(FTM)",
+   "Author": "Smapifan",
+   "Version": "1.0",
+   "Description": "The Farm Type Manager Part For Werewolf Valley Expanded",
+   "UniqueID": "Smapifan.WVEFTM",
+   "MinimumApiVersion": "4.0.0",
+   "UpdateKeys": [ "Nexus:???" ],
+	"ContentPackFor": {
+      "UniqueID": "Esca.FarmTypeManager"
+   }
+}
