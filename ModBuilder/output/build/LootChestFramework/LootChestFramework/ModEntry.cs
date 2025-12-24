@@ -1,19 +1,20 @@
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using LootChestFramework.Code;
 
 namespace WerewolfStory
 {
     public class ModEntry : Mod
     {
-        private LootChestFramework.LootManager lootManager = null!;
+        private LootManager lootManager = null!;
 
         public override void Entry(IModHelper helper)
         {
-            lootManager = new LootChestFramework.LootManager(this.Monitor, helper);
+            // LootManager initialisieren
+            lootManager = new LootManager(this.Monitor, helper);
             
-            // Events
+            // Events registrieren
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Display.MenuChanged += OnMenuChanged;
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
@@ -31,7 +32,7 @@ namespace WerewolfStory
 
         private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
-            lootManager.InitializeChests();
+            lootManager.OnSaveLoaded();
         }
     }
 }
