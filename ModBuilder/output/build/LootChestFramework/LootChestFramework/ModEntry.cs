@@ -7,14 +7,13 @@ namespace WerewolfStory
 {
     public class ModEntry : Mod
     {
-        private LootManager lootManager = null!;
+        private LootChestManager chestManager = null!;
 
         public override void Entry(IModHelper helper)
         {
-            // LootManager initialisieren
-            lootManager = new LootManager(this.Monitor, helper);
+            chestManager = new LootChestManager(Monitor, helper);
             
-            // Events registrieren
+            // Events
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Display.MenuChanged += OnMenuChanged;
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
@@ -22,17 +21,17 @@ namespace WerewolfStory
 
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
         {
-            lootManager.OnDayStarted();
+            chestManager.OnDayStarted();
         }
 
         private void OnMenuChanged(object? sender, MenuChangedEventArgs e)
         {
-            lootManager.OnMenuChanged(e);
+            chestManager.OnMenuChanged(e);
         }
 
         private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
-            lootManager.OnSaveLoaded();
+            chestManager.OnSaveLoaded();
         }
     }
 }
