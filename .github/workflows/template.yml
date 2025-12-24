@@ -7,6 +7,11 @@ jobs:
   generate:
     runs-on: ubuntu-latest
 
+    env:
+      MOD_NAME: LootChestFramework
+      OUTPUT_ROOT: ModBuilder/output
+      GAME_PATH: DLL-Builder/input/stardew
+
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -16,42 +21,44 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Prepare folders
+    - name: Prepare output folders
       run: |
-        mkdir -p ModBuilder/output/temp_build
-        mkdir -p ModBuilder/output/build
+        mkdir -p "$OUTPUT_ROOT/temp_build"
+        mkdir -p "$OUTPUT_ROOT/build"
 
-    - name: Create class library
+    - name: Create class library (csproj)
       run: |
-        cd ModBuilder/output/temp_build
-        dotnet new classlib -n MyModTemplate
+        cd "$OUTPUT_ROOT/temp_build"
+        dotnet new classlib -n "$MOD_NAME"
 
-    - name: Create solution and link project
+    - name: Create solution ABOVE project
       run: |
-        cd ModBuilder/output/temp_build
-        dotnet new sln -n MyModTemplate
-        dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
+        cd "$OUTPUT_ROOT/temp_build/$MOD_NAME"
+        dotnet new sln -n "$MOD_NAME"
+        dotnet sln "$MOD_NAME.sln" add "$MOD_NAME/$MOD_NAME.csproj"
 
     - name: Add SMAPI build package
       run: |
-        cd ModBuilder/output/temp_build/MyModTemplate
+        cd "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME"
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
     - name: Create empty SMAPI files
       run: |
-        touch ModBuilder/output/temp_build/MyModTemplate/ModEntry.cs
-        touch ModBuilder/output/temp_build/MyModTemplate/manifest.json
+        touch "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME/ModEntry.cs"
+        touch "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME/manifest.json"
 
-    - name: Copy template to output
+    - name: Copy result to build output
       run: |
-        cp -r ModBuilder/output/temp_build/MyModTemplate ModBuilder/output/build/
+        cp -r "$OUTPUT_ROOT/temp_build/$MOD_NAME" "$OUTPUT_ROOT/build/"
 
-    - name: Commit & push safely
+    - name: Commit and push result
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
+
         git fetch origin main
         git reset --hard origin/main
-        git add ModBuilder/output/build || true
-        git commit -m "Generate SMAPI mod template" || echo "Nothing to commit"
+
+        git add "$OUTPUT_ROOT/build"
+        git commit -m "Generate SMAPI mod template ($MOD_NAME)" || echo "Nothing to commit"
         git push origin main
