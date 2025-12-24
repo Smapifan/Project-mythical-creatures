@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 4502
+**Total Lines:** 9208
 
 | File | Lines |
 |------|--------|
@@ -26,7 +26,55 @@
 | `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
-| `other/counts/filetype.json` | 24 |
-| `other/counts/linecount.json` | 57 |
+| `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
+| `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
+| `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
+| `Werewolf/Werewolf/assets/Animails/Stable/Wolf.json` | 0 |
+| `Werewolf/Werewolf/assets/Another/Minecarts.json` | 46 |
+| `Werewolf/Werewolf/assets/Another/MountsAndCavesOptions.json` | 173 |
+| `Werewolf/Werewolf/assets/Buildings/Wolf_cave.json` | 116 |
+| `Werewolf/Werewolf/assets/Items/Items.json` | 174 |
+| `Werewolf/Werewolf/assets/Items/Swords.json` | 33 |
+| `Werewolf/Werewolf/assets/Maps/Maps.json` | 186 |
+| `Werewolf/Werewolf/assets/Maps/Overlay.json` | 199 |
+| `Werewolf/Werewolf/assets/NpcData/Adrian/Adrian.json` | 0 |
+| `Werewolf/Werewolf/assets/NpcData/Blank.json` | 1 |
+| `Werewolf/Werewolf/assets/NpcData/Lara/Lara.json` | 104 |
+| `Werewolf/Werewolf/assets/NpcData/Lara/Lara_Bleeding.json` | 47 |
+| `Werewolf/Werewolf/assets/NpcData/Lara/Lara_Werewolf.json` | 429 |
+| `Werewolf/Werewolf/assets/NpcData/Lara/dialogue.json` | 159 |
+| `Werewolf/Werewolf/assets/NpcData/Lauren/Lauren.json` | 0 |
+| `Werewolf/Werewolf/assets/NpcData/Luca/Luca.json` | 0 |
+| `Werewolf/Werewolf/assets/NpcData/Mails.json` | 24 |
+| `Werewolf/Werewolf/assets/NpcData/Rudolf/Rudolf.json` | 0 |
+| `Werewolf/Werewolf/assets/NpcData/Silvan/Silvan.json` | 97 |
+| `Werewolf/Werewolf/assets/NpcData/Silvan/dialogue.json` | 159 |
+| `Werewolf/Werewolf/assets/NpcData/Silvan/schedule.json` | 8 |
+| `Werewolf/Werewolf/assets/Shops/Shops.json` | 32 |
+| `Werewolf/Werewolf/assets/Sounds/Sounds.json` | 30 |
+| `Werewolf/Werewolf/config.json` | 26 |
+| `Werewolf/Werewolf/content.json` | 242 |
+| `Werewolf/Werewolf/i18n/default.json` | 341 |
+| `Werewolf/Werewolf/manifest.json` | 12 |
+| `Werewolf/WerewolfStory/WerewolfStory/Chests/BaseRewardChest.cs` | 272 |
+| `Werewolf/WerewolfStory/WerewolfStory/Chests/Chest1.cs` | 16 |
+| `Werewolf/WerewolfStory/WerewolfStory/Chests/Chest2.cs` | 16 |
+| `Werewolf/WerewolfStory/WerewolfStory/Chests/Chest3.cs` | 16 |
+| `Werewolf/WerewolfStory/WerewolfStory/Chests/ChestModMap.cs` | 16 |
+| `Werewolf/WerewolfStory/WerewolfStory/Code/FileChecker.cs` | 139 |
+| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Animails/Mounts/Wolf.json` | 341 |
+| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Another/MountsAndCavesOptions.json` | 173 |
+| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Buildings/Wolf_cave.json` | 116 |
+| `Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs` | 56 |
+| `Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.deps.json` | 34 |
+| `Werewolf/WerewolfStory/WerewolfStory/manifest.json` | 10 |
+| `Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs` | 4 |
+| `Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfo.cs` | 22 |
+| `Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json` | 79 |
+| `Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json` | 115 |
+| `Werewolf/[FTM] Werewolf/content.json` | 322 |
+| `Werewolf/[FTM] Werewolf/manifest.json` | 12 |
+| `other/counts/filetype.json` | 20 |
+| `other/counts/linecount.json` | 29 |
 
-_Generated on 2025-12-24 08:38:40 UTC_
+_Generated on 2025-12-24 13:21:52 UTC_
