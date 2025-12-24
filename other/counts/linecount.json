@@ -1,5 +1,5 @@
 {
-  "total_lines": 9264,
+  "total_lines": 9266,
   "files": {
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
     "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 56,
@@ -71,7 +71,7 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/es.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
-    "other/counts/linecount.json": 75,
+    "other/counts/linecount.json": 77,
     "other/counts/filetype.json": 30
   }
 }
