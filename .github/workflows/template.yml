@@ -1,4 +1,4 @@
-name: SMAPI Mod Template Generator
+name: SMAPI Mod Framework Generator
 
 on:
   workflow_dispatch:
@@ -21,37 +21,37 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    - name: Prepare output folders
+    - name: Prepare folders
       run: |
-        mkdir -p "$OUTPUT_ROOT/temp_build"
-        mkdir -p "$OUTPUT_ROOT/build"
+        mkdir -p "$OUTPUT_ROOT/build/$MOD_NAME"
+        mkdir -p "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
 
-    - name: Create class library (csproj)
+    - name: Create class library (NO nested folders)
       run: |
-        cd "$OUTPUT_ROOT/temp_build"
-        dotnet new classlib -n "$MOD_NAME"
+        cd "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
+        dotnet new classlib --name "$MOD_NAME" --force
 
-    - name: Create solution ABOVE project
+    - name: Create solution on top level
       run: |
-        cd "$OUTPUT_ROOT/temp_build/$MOD_NAME"
-        dotnet new sln -n "$MOD_NAME"
+        cd "$OUTPUT_ROOT/build/$MOD_NAME"
+        dotnet new sln --name "$MOD_NAME"
+
+    - name: Link csproj to solution
+      run: |
+        cd "$OUTPUT_ROOT/build/$MOD_NAME"
         dotnet sln "$MOD_NAME.sln" add "$MOD_NAME/$MOD_NAME.csproj"
 
     - name: Add SMAPI build package
       run: |
-        cd "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME"
+        cd "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
     - name: Create empty SMAPI files
       run: |
-        touch "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME/ModEntry.cs"
-        touch "$OUTPUT_ROOT/temp_build/$MOD_NAME/$MOD_NAME/manifest.json"
+        touch "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/ModEntry.cs"
+        touch "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/manifest.json"
 
-    - name: Copy result to build output
-      run: |
-        cp -r "$OUTPUT_ROOT/temp_build/$MOD_NAME" "$OUTPUT_ROOT/build/"
-
-    - name: Commit and push result
+    - name: Commit and push
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -59,6 +59,6 @@ jobs:
         git fetch origin main
         git reset --hard origin/main
 
-        git add "$OUTPUT_ROOT/build"
-        git commit -m "Generate SMAPI mod template ($MOD_NAME)" || echo "Nothing to commit"
+        git add "$OUTPUT_ROOT/build/$MOD_NAME"
+        git commit -m "Generate SMAPI framework ($MOD_NAME)" || echo "Nothing to commit"
         git push origin main
