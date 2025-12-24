@@ -1,16 +1,6 @@
 {
-  "total_lines": 8219,
+  "total_lines": 7214,
   "files": {
-    "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
-    "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 25,
-    "Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json": 115,
-    "Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json": 79,
-    "Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfo.cs": 22,
-    "Werewolf/WerewolfStory/WerewolfStory/Code/FileChecker.cs": 90,
-    "Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.deps.json": 34,
-    "Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Animails/Mounts/Wolf.json": 341,
-    "Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Another/MountsAndCavesOptions.json": 173,
-    "Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Buildings/Wolf_cave.json": 116,
     "Werewolf/Werewolf/config.json": 26,
     "Werewolf/Werewolf/manifest.json": 12,
     "Werewolf/Werewolf/content.json": 213,

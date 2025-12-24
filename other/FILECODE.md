@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 8219
+**Total Lines:** 7214
 
 | File | Lines |
 |------|--------|
@@ -54,17 +54,7 @@
 | `Werewolf/Werewolf/i18n/de.json` | 213 |
 | `Werewolf/Werewolf/i18n/default.json` | 225 |
 | `Werewolf/Werewolf/manifest.json` | 12 |
-| `Werewolf/WerewolfStory/WerewolfStory/Code/FileChecker.cs` | 90 |
-| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Animails/Mounts/Wolf.json` | 341 |
-| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Another/MountsAndCavesOptions.json` | 173 |
-| `Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Buildings/Wolf_cave.json` | 116 |
-| `Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs` | 25 |
-| `Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.deps.json` | 34 |
-| `Werewolf/WerewolfStory/WerewolfStory/manifest.json` | 10 |
-| `Werewolf/WerewolfStory/WerewolfStory/obj/Debug/net6.0/WerewolfStory.AssemblyInfo.cs` | 22 |
-| `Werewolf/WerewolfStory/WerewolfStory/obj/WerewolfStory.csproj.nuget.dgspec.json` | 79 |
-| `Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json` | 115 |
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 67 |
 
-_Generated on 2025-12-23 22:55:11 UTC_
+_Generated on 2025-12-24 08:37:49 UTC_
