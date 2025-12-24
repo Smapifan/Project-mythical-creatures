@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 9266
+**Total Lines:** 9466
 
 | File | Lines |
 |------|--------|
@@ -26,6 +26,9 @@
 | `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 19 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json` | 73 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json` | 108 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -77,4 +80,4 @@
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 77 |
 
-_Generated on 2025-12-24 21:45:11 UTC_
+_Generated on 2025-12-24 21:48:44 UTC_
