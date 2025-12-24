@@ -1,29 +1,24 @@
-using Microsoft.Xna.Framework;
-using StardewValley;
-using StardewValley.Menus;
 using System.Collections.Generic;
 
-namespace LootChestFramework.Code
+namespace WerewolfStory.Code
 {
     public interface ILootChest
     {
-        string ChestKey { get; }
-        Vector2 Position { get; set; }
-        string MapID { get; set; }
+        string ChestKey { get; } // Will be set from JSON entry key
+        string MapID { get; }
+        int TileX { get; }
+        int TileY { get; }
         bool Unbreakable { get; }
         bool ForWorld { get; }
         bool ForPlayer { get; }
-        int PlayerCount { get; }
+        int PlayerCount { get; } 
         bool CanStoreItems { get; }
-
-        List<LootItem> GetItemsForPlayer(Farmer player);
-        void OnMenuOpened(ItemGrabMenu menu, Farmer player);
-        void OnMenuClosed(ItemGrabMenu menu, Farmer player);
+        List<LootItem> Items { get; }
     }
 
     public class LootItem
     {
         public string ID { get; set; } = "";
-        public int Count { get; set; } = 0;
+        public int Count { get; set; }
     }
 }
