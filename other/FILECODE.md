@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 9675
+**Total Lines:** 9728
 
 | File | Lines |
 |------|--------|
@@ -32,7 +32,7 @@
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 37 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json` | 73 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json` | 108 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json` | 24 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json` | 77 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -84,4 +84,4 @@
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 84 |
 
-_Generated on 2025-12-24 22:10:43 UTC_
+_Generated on 2025-12-24 22:14:35 UTC_
