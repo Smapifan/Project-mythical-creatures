@@ -1,0 +1,30 @@
+{
+  "total_files": 421,
+  "filetypes": {
+    ".md": 6,
+    ".sln": 1,
+    ".json": 62,
+    ".csproj": 1,
+    ".cs": 9,
+    ".targets": 1,
+    ".props": 1,
+    ".cache": 5,
+    ".dll": 262,
+    ".txt": 5,
+    ".editorconfig": 1,
+    ".zip": 3,
+    ".png": 40,
+    ".tbin": 4,
+    ".wav": 2,
+    "no_extension": 2,
+    ".0": 1,
+    ".dylib": 2,
+    ".exe": 1,
+    ".xml": 7,
+    ".cdx": 1,
+    ".config": 1,
+    ".ini": 1,
+    ".1": 1,
+    ".marker": 1
+  }
+}
