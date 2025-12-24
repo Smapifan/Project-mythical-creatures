@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WerewolfStory.Code
+namespace LootChestFramework.Code
 {
     public interface ILootChest
     {
