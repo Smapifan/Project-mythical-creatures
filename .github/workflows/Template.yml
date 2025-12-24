@@ -2,60 +2,62 @@ name: Build Mod Template
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-template:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      # 1️⃣ Checkout repo
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
+          submodules: false
           fetch-depth: 0
 
-      # 2️⃣ Set Git user (für commit falls nötig)
-      - name: Set Git user
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      # 3️⃣ Setup .NET 6
-      - name: Setup .NET
+      # 2️⃣ Setup .NET 6
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 6.0.x
 
-      # 4️⃣ Prepare fake GamePath (wie DLL-Builder)
-      - name: Prepare GamePath
-        run: mkdir -p DLL-Builder/input/stardew
-
-      # 5️⃣ Restore NuGet packages
-      - name: Restore packages
+      # 3️⃣ Create FAKE Stardew Valley folder
+      - name: Create fake Stardew Valley folder
         run: |
-          sln_file=$(find . -name "*.sln" | head -n 1)
-          dotnet restore "$sln_file"
+          mkdir -p fake-stardew
+          touch fake-stardew/StardewValley.dll
+          touch fake-stardew/MonoGame.Framework.dll
 
-      # 6️⃣ Build solution
-      - name: Build solution
+      # 4️⃣ EXPORT GAME PATH (DAS FEHLT BEI DIR!)
+      - name: Set SDV_GAME_PATH
+        run: echo "SDV_GAME_PATH=$PWD/fake-stardew" >> $GITHUB_ENV
+
+      # 5️⃣ Restore
+      - name: Restore
         run: |
-          sln_file=$(find . -name "*.sln" | head -n 1)
-          dotnet build "$sln_file" -c Release /p:GameFolder="$PWD/DLL-Builder/input/stardew"
+          sln=$(find . -name "*.sln" | head -n 1)
+          dotnet restore "$sln"
 
-      # 7️⃣ Save build logs
-      - name: Save logs
+      # 6️⃣ Build (MIT StardewGamePath)
+      - name: Build
         run: |
-          mkdir -p build-logs
-          dotnet build $(find . -name "*.sln" | head -n 1) -c Release > build-logs/log.txt 2>&1
+          sln=$(find . -name "*.sln" | head -n 1)
+          dotnet build "$sln" -c Release /p:StardewGamePath="$SDV_GAME_PATH"
 
-      # 8️⃣ Upload build artifacts
-      - name: Upload build artifacts
+      # 7️⃣ Collect logs
+      - name: Collect logs
+        if: always()
+        run: |
+          mkdir -p logs
+          echo "SDV_GAME_PATH=$SDV_GAME_PATH" > logs/info.txt
+
+      # 8️⃣ Upload artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ModTemplate
+          name: build-output
           path: |
-            $(find . -name "*.dll" -o -name "*.pdb")
-            build-logs/log.txt
+            **/bin/Release/**/*.dll
+            logs
