@@ -1,98 +1,67 @@
 name: SMAPI Mod Template Builder
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   build-template:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Repo klonen
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
+      # 2️⃣ .NET 6 installieren
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
+      # 3️⃣ Ordner vorbereiten
       - name: Prepare folders
         run: |
           rm -rf ModBuilder/output
           mkdir -p ModBuilder/output/temp_build
           mkdir -p ModBuilder/output/logs
+          mkdir -p DLL-Builder/input/stardew  # GamePath imitation
 
-      - name: Generate Mod Template
+      # 4️⃣ Template erstellen (ClassLib, SLN, CSProj)
+      - name: Generate template using dotnet commands
         run: |
-          set -e
           MOD_NAME="MyModTemplate"
           MOD_PATH="ModBuilder/output/temp_build/$MOD_NAME"
           mkdir -p "$MOD_PATH"
+          cd "$MOD_PATH"
 
-          # ModEntry.cs erstellen
-          cat > "$MOD_PATH/ModEntry.cs" <<'EOF'
-using StardewModdingAPI;
-namespace MyModTemplate {
-    public class ModEntry : Mod {
-        public override void Entry(IModHelper helper) {
-            Monitor.Log("Mod gestartet!", LogLevel.Info);
-        }
-    }
-}
-EOF
+          # 4.1️⃣ Leere Class Library erzeugen
+          dotnet new classlib -n "$MOD_NAME"
 
-          # manifest.json erstellen
-          cat > "$MOD_PATH/manifest.json" <<EOF
-{
-  "Name": "$MOD_NAME",
-  "Author": "Smapifan",
-  "Version": "1.0.0",
-  "Description": "Automatisch erstellte Mod Vorlage",
-  "UniqueID": "Smapifan.$MOD_NAME",
-  "EntryDll": "$MOD_NAME.dll",
-  "MinimumApiVersion": "3.0.0"
-}
-EOF
+          # 4.2️⃣ SLN erstellen
+          dotnet new sln -n "$MOD_NAME"
 
-          # CSProj erstellen
-          cat > "$MOD_PATH/$MOD_NAME.csproj" <<EOF
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <OutputType>Library</OutputType>
-    <GamePath>$GITHUB_WORKSPACE/DLL-Builder/input/stardew</GamePath>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
-    <PackageReference Include="StardewModdingAPI" Version="3.17.0" />
-  </ItemGroup>
-</Project>
-EOF
-
-          # Solution erstellen und CSProj hinzufügen
-          pushd "$MOD_PATH"
-          dotnet new sln --name "$MOD_NAME"
+          # 4.3️⃣ CSProj zur SLN hinzufügen
           dotnet sln add "$MOD_NAME.csproj"
-          popd
 
+          # 4.4️⃣ Packages hinzufügen
+          dotnet add "$MOD_NAME.csproj" package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
+          dotnet add "$MOD_NAME.csproj" package StardewModdingAPI --version 3.17.0
+
+          cd - > /dev/null
+
+      # 5️⃣ Build mit GamePath
       - name: Build Mod Template
         run: |
-          set -e
           CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
-          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log || true
+          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
+            | tee ModBuilder/output/logs/build.log || true
 
-      - name: Collect Mod Files
+      # 6️⃣ Build Output sammeln
+      - name: Collect Mod Template Files
         run: |
-          set -e
           MOD_PATH=$(dirname $(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1))
-          BUILD_OUT=ModBuilder/output/build
-          mkdir -p "$BUILD_OUT/$MOD_NAME"
-          cp "$MOD_PATH/ModEntry.cs" "$BUILD_OUT/$MOD_NAME/"
-          cp "$MOD_PATH/manifest.json" "$BUILD_OUT/$MOD_NAME/"
-          cp "$MOD_PATH/$MOD_NAME.csproj" "$BUILD_OUT/$MOD_NAME/"
-          cp "$MOD_PATH/$MOD_NAME.sln" "$BUILD_OUT/$MOD_NAME/"
+          BUILD_OUT=ModBuilder/output/build/MyModTemplate
+          mkdir -p "$BUILD_OUT"
+          cp -r "$MOD_PATH"/* "$BUILD_OUT/"
