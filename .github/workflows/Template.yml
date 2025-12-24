@@ -43,7 +43,7 @@ jobs:
     - name: Debug GamePath
       run: |
         echo "GamePath contents:"
-        ls ModBuilder/input/stardew
+        ls DLL-Builder/input/stardew
 
     # 7️⃣ CSProj finden
     - name: Find csproj
@@ -56,7 +56,7 @@ jobs:
     - name: Build SMAPI Mod
       run: |
         dotnet build "$CS_PROJECT" -c Release \
-          -p:GamePath="$GITHUB_WORKSPACE/ModBuilder/input/stardew" \
+          -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
           | tee ModBuilder/output/logs/build.log
 
     # 9️⃣ Mod-Name aus manifest.json lesen
