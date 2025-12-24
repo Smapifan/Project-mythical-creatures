@@ -10,54 +10,66 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    # 1️⃣ Repo klonen
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup .NET 6
+    # 2️⃣ Setup .NET 6
+    - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
+    # 3️⃣ Tools installieren
     - name: Install tools
       run: sudo apt-get update && sudo apt-get install -y unzip jq
 
+    # 4️⃣ Folders vorbereiten
     - name: Prepare folders
       run: |
         mkdir -p ModBuilder/output/temp_build
-        mkdir -p ModBuilder/output/build
+        mkdir -p ModBuilder/output/logs
 
-    - name: Create Class Library and SLN
+    # 5️⃣ Mod Template erstellen (Class Library + sln)
+    - name: Create Class Library & Solution
       run: |
         MOD_NAME="MyModTemplate"
         cd ModBuilder/output/temp_build
-
-        # Class Library erstellen
-        dotnet new classlib -n $MOD_NAME --force
-
-        # Solution erstellen
-        dotnet new sln -n $MOD_NAME --force
-
-        # Projekt zur Solution hinzufügen
+        dotnet new classlib -n $MOD_NAME
+        dotnet new sln -n $MOD_NAME
         dotnet sln $MOD_NAME.sln add $MOD_NAME/$MOD_NAME.csproj
 
-        # Package installieren
-        cd $MOD_NAME
-        dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
-
-    - name: Build Mod
+    # 6️⃣ Package Pathoschild Stardew ModBuildConfig installieren
+    - name: Install NuGet Package
       run: |
-        MOD_NAME="MyModTemplate"
-        CS_PROJECT="ModBuilder/output/temp_build/$MOD_NAME/$MOD_NAME/$MOD_NAME.csproj"
-        dotnet build "$CS_PROJECT" -c Release \
-          -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
-          | tee ModBuilder/output/build/build.log
+        MOD_PATH="ModBuilder/output/temp_build/MyModTemplate/MyModTemplate"
+        dotnet add $MOD_PATH package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    - name: Collect build output
+    # 7️⃣ GamePath setzen (wie DLL-Builder)
+    - name: Build mod with GamePath
       run: |
-        MOD_NAME="MyModTemplate"
-        MOD_DIR="ModBuilder/output/temp_build/$MOD_NAME/$MOD_NAME"
-        BUILD_OUT="ModBuilder/output/build/$MOD_NAME"
+        CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
+        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log
+
+    # 8️⃣ Ausgabe Ordner vorbereiten
+    - name: Prepare build output
+      run: |
+        BUILD_OUT=ModBuilder/output/build
         mkdir -p "$BUILD_OUT"
+        CS_PROJECT_DIR=$(dirname "$CS_PROJECT")
 
         # DLL kopieren
-        find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \; || echo "No DLLs yet"
+        find "$CS_PROJECT_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
+
+        # leere ModEntry.cs und manifest.json anlegen
+        echo "namespace MyModTemplate { public class ModEntry {} }" > "$BUILD_OUT/ModEntry.cs"
+        echo '{"Name":"MyModTemplate","Version":"1.0.0"}' > "$BUILD_OUT/manifest.json"
+
+    # 9️⃣ Commit & Push der generierten Dateien
+    - name: Commit & Push output
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add ModBuilder/output/build
+        git commit -m "Generated MyModTemplate at $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nothing to commit"
+        git push origin main || echo "Push skipped or already up-to-date"
