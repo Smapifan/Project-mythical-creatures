@@ -1,63 +1,92 @@
-name: Build Mod Template
+name: SMAPI Mod Template Builder
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build:
+  template:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: false
-          fetch-depth: 0
+    # 1️⃣ Repo klonen
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      # 2️⃣ Setup .NET 6
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
+    # 2️⃣ .NET 6
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
 
-      # 3️⃣ Create FAKE Stardew Valley folder
-      - name: Create fake Stardew Valley folder
-        run: |
-          mkdir -p fake-stardew
-          touch fake-stardew/StardewValley.dll
-          touch fake-stardew/MonoGame.Framework.dll
+    # 3️⃣ Mod-Name
+    - name: Set mod name
+      run: |
+        echo "MOD_NAME=MySmapiMod" >> $GITHUB_ENV
+        echo "AUTHOR=Smapifan" >> $GITHUB_ENV
 
-      # 4️⃣ EXPORT GAME PATH (DAS FEHLT BEI DIR!)
-      - name: Set SDV_GAME_PATH
-        run: echo "SDV_GAME_PATH=$PWD/fake-stardew" >> $GITHUB_ENV
+    # 4️⃣ Ordner anlegen
+    - name: Create structure
+      run: |
+        mkdir -p output/$MOD_NAME
+        cd output
+        dotnet new sln -n $MOD_NAME
+        cd $MOD_NAME
+        dotnet new classlib -n $MOD_NAME
 
-      # 5️⃣ Restore
-      - name: Restore
-        run: |
-          sln=$(find . -name "*.sln" | head -n 1)
-          dotnet restore "$sln"
+    # 5️⃣ Solution mit Projekt verknüpfen
+    - name: Link csproj to sln
+      run: |
+        cd output/$MOD_NAME
+        dotnet sln add $MOD_NAME/$MOD_NAME.csproj
 
-      # 6️⃣ Build (MIT StardewGamePath)
-      - name: Build
-        run: |
-          sln=$(find . -name "*.sln" | head -n 1)
-          dotnet build "$sln" -c Release /p:StardewGamePath="$SDV_GAME_PATH"
+    # 6️⃣ SMAPI NuGet installieren
+    - name: Add SMAPI build package
+      run: |
+        cd output/$MOD_NAME/$MOD_NAME
+        dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-      # 7️⃣ Collect logs
-      - name: Collect logs
-        if: always()
-        run: |
-          mkdir -p logs
-          echo "SDV_GAME_PATH=$SDV_GAME_PATH" > logs/info.txt
+    # 7️⃣ ModEntry.cs erzeugen
+    - name: Create ModEntry.cs
+      run: |
+        cat <<EOF > output/$MOD_NAME/$MOD_NAME/ModEntry.cs
+using StardewModdingAPI;
 
-      # 8️⃣ Upload artifacts
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-output
-          path: |
-            **/bin/Release/**/*.dll
-            logs
+namespace $MOD_NAME
+{
+    public class ModEntry : Mod
+    {
+        public override void Entry(IModHelper helper)
+        {
+            Monitor.Log("Mod loaded successfully!", LogLevel.Info);
+        }
+    }
+}
+EOF
+
+    # 8️⃣ manifest.json erzeugen
+    - name: Create manifest.json
+      run: |
+        cat <<EOF > output/$MOD_NAME/$MOD_NAME/manifest.json
+{
+  "Name": "$MOD_NAME",
+  "Author": "$AUTHOR",
+  "Version": "1.0.0",
+  "Description": "Generated SMAPI mod template",
+  "UniqueID": "$AUTHOR.$MOD_NAME",
+  "EntryDll": "$MOD_NAME.dll",
+  "MinimumApiVersion": "4.0.0"
+}
+EOF
+
+    # 9️⃣ ZIP bauen
+    - name: Zip template
+      run: |
+        cd output
+        zip -r "$MOD_NAME-template.zip" "$MOD_NAME"
+
+    # 🔟 Artifact hochladen
+    - name: Upload template
+      uses: actions/upload-artifact@v4
+      with:
+        name: smapi-mod-template
+        path: output/*.zip
