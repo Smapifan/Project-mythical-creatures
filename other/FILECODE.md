@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 9728
+**Total Lines:** 9723
 
 | File | Lines |
 |------|--------|
@@ -26,7 +26,7 @@
 | `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ILootChest.cs` | 29 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ILootChest.cs` | 24 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/JsonLootChest.cs` | 29 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestManager.cs` | 102 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 37 |
@@ -84,4 +84,4 @@
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 84 |
 
-_Generated on 2025-12-24 22:14:35 UTC_
+_Generated on 2025-12-24 22:15:29 UTC_
