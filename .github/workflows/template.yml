@@ -22,46 +22,59 @@ jobs:
 
     # 3️⃣ Tools installieren
     - name: Install tools
-      run: sudo apt-get update && sudo apt-get install -y unzip jq git
+      run: sudo apt-get update && sudo apt-get install -y unzip jq
 
     # 4️⃣ Ordner vorbereiten
     - name: Prepare folders
       run: |
+        rm -rf ModBuilder/output/temp_build
         mkdir -p ModBuilder/output/temp_build
         mkdir -p ModBuilder/output/build
+        mkdir -p ModBuilder/output/logs
 
-    # 5️⃣ Safe directory setzen (verhindert Git exit 128)
-    - name: Configure Git safe directory
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-    # 6️⃣ Mod Template erstellen
-    - name: Create Class Library + Solution
+    # 5️⃣ Class Library erstellen
+    - name: Create Class Library
       run: |
         cd ModBuilder/output/temp_build
         dotnet new classlib -n MyModTemplate
+
+    # 6️⃣ Solution erstellen und Projekt hinzufügen
+    - name: Create Solution and add project
+      run: |
+        cd ModBuilder/output/temp_build
         dotnet new sln -n MyModTemplate
         dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
-        cd MyModTemplate
+
+    # 7️⃣ Pathoschild Package hinzufügen (SMAPI Mod Build)
+    - name: Add SMAPI ModBuildConfig
+      run: |
+        cd ModBuilder/output/temp_build/MyModTemplate
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    # 7️⃣ Build durchführen mit GamePath
-    - name: Build SMAPI Mod
+    # 8️⃣ Build ausführen mit GamePath
+    - name: Build project
       run: |
         CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
-        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/build/build.log
+        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log
 
-    # 8️⃣ Output-Ordner vorbereiten
-    - name: Prepare final output
+    # 9️⃣ Ordnerstruktur für Ausgabe
+    - name: Collect output
       run: |
-        BUILD_OUT=ModBuilder/output/build/MyModTemplate
+        CS_PROJECT_DIR=$(dirname "$CS_PROJECT")
+        BUILD_OUT=ModBuilder/output/build
         mkdir -p "$BUILD_OUT"
-        cp -r ModBuilder/output/temp_build/MyModTemplate/bin/Release/* "$BUILD_OUT" || true
+        cp "$CS_PROJECT_DIR/bin/Release/net6.0/"*.dll "$BUILD_OUT"
+        cp "$CS_PROJECT_DIR/MyModTemplate.csproj" "$BUILD_OUT"
+        cp "$CS_PROJECT_DIR/../MyModTemplate.sln" "$BUILD_OUT"
 
-    # 9️⃣ Git Commit + Push nur wenn Änderungen
+    # 🔟 Commit und push (sicher, ohne exit code 128)
     - name: Commit and push output
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
+        cd $GITHUB_WORKSPACE
+        git fetch origin main
+        git reset --hard origin/main
         if [ -n "$(git status --porcelain ModBuilder/output/build)" ]; then
           git add ModBuilder/output/build
           git commit -m "Generated MyModTemplate at $(date +'%Y-%m-%d %H:%M:%S')"
