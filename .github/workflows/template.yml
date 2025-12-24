@@ -11,65 +11,61 @@ jobs:
 
     steps:
     # 1️⃣ Repo klonen
-    - name: Checkout repository
+    - name: Checkout repo
       uses: actions/checkout@v4
 
-    # 2️⃣ Setup .NET 6
-    - name: Setup .NET
+    # 2️⃣ .NET 6 installieren
+    - name: Setup .NET 6
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
     # 3️⃣ Tools installieren
     - name: Install tools
-      run: sudo apt-get update && sudo apt-get install -y unzip jq
+      run: sudo apt-get update && sudo apt-get install -y unzip jq git
 
-    # 4️⃣ Folders vorbereiten
+    # 4️⃣ Ordner vorbereiten
     - name: Prepare folders
       run: |
         mkdir -p ModBuilder/output/temp_build
-        mkdir -p ModBuilder/output/logs
+        mkdir -p ModBuilder/output/build
 
-    # 5️⃣ Mod Template erstellen (Class Library + sln)
-    - name: Create Class Library & Solution
+    # 5️⃣ Safe directory setzen (verhindert Git exit 128)
+    - name: Configure Git safe directory
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+    # 6️⃣ Mod Template erstellen
+    - name: Create Class Library + Solution
       run: |
-        MOD_NAME="MyModTemplate"
         cd ModBuilder/output/temp_build
-        dotnet new classlib -n $MOD_NAME
-        dotnet new sln -n $MOD_NAME
-        dotnet sln $MOD_NAME.sln add $MOD_NAME/$MOD_NAME.csproj
+        dotnet new classlib -n MyModTemplate
+        dotnet new sln -n MyModTemplate
+        dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
+        cd MyModTemplate
+        dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    # 6️⃣ Package Pathoschild Stardew ModBuildConfig installieren
-    - name: Install NuGet Package
-      run: |
-        MOD_PATH="ModBuilder/output/temp_build/MyModTemplate/MyModTemplate"
-        dotnet add $MOD_PATH package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
-
-    # 7️⃣ GamePath setzen (wie DLL-Builder)
-    - name: Build mod with GamePath
+    # 7️⃣ Build durchführen mit GamePath
+    - name: Build SMAPI Mod
       run: |
         CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
-        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log
+        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/build/build.log
 
-    # 8️⃣ Ausgabe Ordner vorbereiten
-    - name: Prepare build output
+    # 8️⃣ Output-Ordner vorbereiten
+    - name: Prepare final output
       run: |
-        BUILD_OUT=ModBuilder/output/build
+        BUILD_OUT=ModBuilder/output/build/MyModTemplate
         mkdir -p "$BUILD_OUT"
-        CS_PROJECT_DIR=$(dirname "$CS_PROJECT")
+        cp -r ModBuilder/output/temp_build/MyModTemplate/bin/Release/* "$BUILD_OUT" || true
 
-        # DLL kopieren
-        find "$CS_PROJECT_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
-
-        # leere ModEntry.cs und manifest.json anlegen
-        echo "namespace MyModTemplate { public class ModEntry {} }" > "$BUILD_OUT/ModEntry.cs"
-        echo '{"Name":"MyModTemplate","Version":"1.0.0"}' > "$BUILD_OUT/manifest.json"
-
-    # 9️⃣ Commit & Push der generierten Dateien
-    - name: Commit & Push output
+    # 9️⃣ Git Commit + Push nur wenn Änderungen
+    - name: Commit and push output
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add ModBuilder/output/build
-        git commit -m "Generated MyModTemplate at $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nothing to commit"
-        git push origin main || echo "Push skipped or already up-to-date"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        if [ -n "$(git status --porcelain ModBuilder/output/build)" ]; then
+          git add ModBuilder/output/build
+          git commit -m "Generated MyModTemplate at $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin main
+        else
+          echo "Nothing to commit"
+        fi
