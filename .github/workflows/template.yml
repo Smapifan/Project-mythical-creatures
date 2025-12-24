@@ -1,4 +1,4 @@
-name: SMAPI Mod Framework Generator
+name: SMAPI Mod Template Generator
 
 on:
   workflow_dispatch:
@@ -13,52 +13,55 @@ jobs:
       GAME_PATH: DLL-Builder/input/stardew
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Prepare folders
-      run: |
-        mkdir -p "$OUTPUT_ROOT/build/$MOD_NAME"
-        mkdir -p "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
+      - name: Configure git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Create class library (NO nested folders)
-      run: |
-        cd "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
-        dotnet new classlib --name "$MOD_NAME" --force
+      - name: Prepare output folders
+        run: |
+          rm -rf "$OUTPUT_ROOT"
+          mkdir -p "$OUTPUT_ROOT/build/$MOD_NAME"
+          mkdir -p "$OUTPUT_ROOT/logs"
 
-    - name: Create solution on top level
-      run: |
-        cd "$OUTPUT_ROOT/build/$MOD_NAME"
-        dotnet new sln --name "$MOD_NAME"
+      - name: Create class library
+        run: |
+          cd "$OUTPUT_ROOT/build/$MOD_NAME"
+          dotnet new classlib --name "$MOD_NAME" --framework net6.0
 
-    - name: Link csproj to solution
-      run: |
-        cd "$OUTPUT_ROOT/build/$MOD_NAME"
-        dotnet sln "$MOD_NAME.sln" add "$MOD_NAME/$MOD_NAME.csproj"
+      - name: Create solution
+        run: |
+          cd "$OUTPUT_ROOT/build/$MOD_NAME"
+          dotnet new sln --name "$MOD_NAME"
 
-    - name: Add SMAPI build package
-      run: |
-        cd "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME"
-        dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
+      - name: Link csproj to solution
+        run: |
+          dotnet sln "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME.sln" add \
+            "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/$MOD_NAME.csproj"
 
-    - name: Create empty SMAPI files
-      run: |
-        touch "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/ModEntry.cs"
-        touch "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/manifest.json"
+      - name: Add SMAPI ModBuildConfig package
+        run: |
+          dotnet add "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/$MOD_NAME.csproj" \
+            package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    - name: Commit and push
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Inject GamePath property
+        run: |
+          dotnet msbuild "$OUTPUT_ROOT/build/$MOD_NAME/$MOD_NAME/$MOD_NAME.csproj" \
+            -p:GamePath="$GITHUB_WORKSPACE/$GAME_PATH" \
+            -t:Restore
 
-        git fetch origin main
-        git reset --hard origin/main
-
-        git add "$OUTPUT_ROOT/build/$MOD_NAME"
-        git commit -m "Generate SMAPI framework ($MOD_NAME)" || echo "Nothing to commit"
-        git push origin main
+      - name: Commit and push
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          git add "$OUTPUT_ROOT"
+          git commit -m "Generate SMAPI mod template: $MOD_NAME" || echo "Nothing to commit"
+          git push origin main
