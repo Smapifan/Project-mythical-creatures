@@ -1,9 +1,10 @@
 {
-  "total_lines": 9618,
+  "total_lines": 9643,
   "files": {
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 38,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
+    "ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json": 24,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChest.cs": 53,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestConfig.cs": 11,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootManager.cs": 64,
@@ -77,7 +78,7 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/es.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
-    "other/counts/linecount.json": 82,
+    "other/counts/linecount.json": 83,
     "other/counts/filetype.json": 30
   }
 }
