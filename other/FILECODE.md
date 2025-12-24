@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 7214
+**Total Lines:** 7198
 
 | File | Lines |
 |------|--------|
@@ -54,7 +54,7 @@
 | `Werewolf/Werewolf/i18n/de.json` | 213 |
 | `Werewolf/Werewolf/i18n/default.json` | 225 |
 | `Werewolf/Werewolf/manifest.json` | 12 |
-| `other/counts/filetype.json` | 30 |
-| `other/counts/linecount.json` | 67 |
+| `other/counts/filetype.json` | 24 |
+| `other/counts/linecount.json` | 57 |
 
-_Generated on 2025-12-24 08:37:49 UTC_
+_Generated on 2025-12-24 08:38:18 UTC_

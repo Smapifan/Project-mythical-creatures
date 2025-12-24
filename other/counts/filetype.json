@@ -1,14 +1,14 @@
 {
-  "total_files": 386,
+  "total_files": 387,
   "filetypes": {
     ".md": 6,
     ".sln": 1,
+    "no_extension": 3,
     ".json": 52,
     ".txt": 4,
     ".png": 38,
     ".tbin": 3,
     ".wav": 2,
-    "no_extension": 2,
     ".zip": 2,
     ".dll": 260,
     ".0": 1,

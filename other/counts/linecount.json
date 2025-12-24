@@ -1,5 +1,5 @@
 {
-  "total_lines": 7214,
+  "total_lines": 7198,
   "files": {
     "Werewolf/Werewolf/config.json": 26,
     "Werewolf/Werewolf/manifest.json": 12,
@@ -51,7 +51,7 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/es.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
-    "other/counts/linecount.json": 67,
-    "other/counts/filetype.json": 30
+    "other/counts/linecount.json": 57,
+    "other/counts/filetype.json": 24
   }
 }
