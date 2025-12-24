@@ -1,6 +1,8 @@
 name: SMAPI Mod Builder
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -8,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1️⃣ Repo auschecken
+    # 1️⃣ Repo klonen
     - name: Checkout repo
       uses: actions/checkout@v4
 
@@ -18,28 +20,78 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    # 3️⃣ Tools installieren
+    # 3️⃣ Tools
     - name: Install tools
       run: sudo apt-get update && sudo apt-get install -y unzip jq
 
-    # 4️⃣ Output-Ordnerstruktur vorbereiten (alles wird erstellt)
-    - name: Prepare output folders
+    # 4️⃣ Ordner vorbereiten
+    - name: Prepare folders
       run: |
-        mkdir -p ModBuilder/output/temp_build/MyModTemplate
+        mkdir -p ModBuilder/output/temp_build
         mkdir -p ModBuilder/output/build
-        mkdir -p ModBuilder/output/logs
 
-    # 5️⃣ Class Library + SLN erzeugen + Package hinzufügen
-    - name: Create .NET Class Library and SLN
+    # 5️⃣ Mod Template erstellen
+    - name: Create Class Library and SLN
       run: |
-        cd ModBuilder/output/temp_build/MyModTemplate
-        dotnet new classlib -n MyModTemplate --force
-        dotnet new sln -n MyModTemplate --force
-        dotnet sln ../MyModTemplate.sln add MyModTemplate.csproj
+        MOD_NAME="MyModTemplate"
+        cd ModBuilder/output/temp_build
+
+        # Class Library erstellen (erstellt Unterordner MOD_NAME)
+        dotnet new classlib -n $MOD_NAME --force
+
+        # SLN erstellen im Temp-Ordner
+        dotnet new sln -n $MOD_NAME --force
+
+        # Projekt zur SLN hinzufügen
+        dotnet sln $MOD_NAME.sln add $MOD_NAME/$MOD_NAME.csproj
+
+        # In Projekt wechseln und Pathoschild Package installieren
+        cd $MOD_NAME
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    # 6️⃣ Debug: Verzeichnisstruktur anzeigen
-    - name: Show folder structure
+    # 6️⃣ ModEntry.cs und manifest.json leere Dateien erstellen
+    - name: Create empty ModEntry and manifest
       run: |
-        echo "=== Temp Build Folder ==="
-        ls -R ModBuilder/output/temp_build
+        MOD_NAME="MyModTemplate"
+        OUTPUT_DIR="ModBuilder/output/temp_build/$MOD_NAME/$MOD_NAME"
+        touch "$OUTPUT_DIR/ModEntry.cs"
+        cat > "$OUTPUT_DIR/manifest.json" << EOL
+{
+  "Name": "$MOD_NAME",
+  "Author": "Smapifan",
+  "Version": "1.0.0",
+  "Description": "",
+  "UniqueID": "Smapifan.$MOD_NAME"
+}
+EOL
+
+    # 7️⃣ Build Mod (GamePath imitieren wie DLL-Builder)
+    - name: Build SMAPI Mod
+      run: |
+        MOD_NAME="MyModTemplate"
+        CS_PROJECT="ModBuilder/output/temp_build/$MOD_NAME/$MOD_NAME/$MOD_NAME.csproj"
+        dotnet build "$CS_PROJECT" -c Release \
+          -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
+          | tee ModBuilder/output/build/build.log
+
+    # 8️⃣ Alle Dateien sammeln
+    - name: Collect build output
+      run: |
+        MOD_NAME="MyModTemplate"
+        MOD_DIR="ModBuilder/output/temp_build/$MOD_NAME/$MOD_NAME"
+        BUILD_OUT="ModBuilder/output/build/$MOD_NAME"
+        mkdir -p "$BUILD_OUT"
+
+        # DLL kopieren
+        find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \; || echo "No DLLs yet"
+
+        # ModEntry und manifest.json
+        cp "$MOD_DIR/ModEntry.cs" "$BUILD_OUT"
+        cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
+
+    # 9️⃣ Artifact hochladen
+    - name: Upload build
+      uses: actions/upload-artifact@v4
+      with:
+        name: smapi-mod
+        path: ModBuilder/output/build/
