@@ -1,6 +1,11 @@
 {
-  "total_lines": 9266,
+  "total_lines": 10001,
   "files": {
+    "ModBuilder/output/build/MyModTemplate/manifest.json": 0,
+    "ModBuilder/output/build/MyModTemplate/Class1.cs": 6,
+    "ModBuilder/output/build/MyModTemplate/ModEntry.cs": 0,
+    "ModBuilder/output/build/MyModTemplate/obj/project.assets.json": 382,
+    "ModBuilder/output/build/MyModTemplate/obj/MyModTemplate.csproj.nuget.dgspec.json": 347,
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
     "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 56,
     "Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json": 115,
