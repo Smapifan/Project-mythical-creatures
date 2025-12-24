@@ -8,32 +8,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1️⃣ Repo auschecken
     - name: Checkout repo
       uses: actions/checkout@v4
 
+    # 2️⃣ .NET 6 installieren
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
+    # 3️⃣ Tools installieren
     - name: Install tools
       run: sudo apt-get update && sudo apt-get install -y unzip jq
 
-    - name: Prepare folders
+    # 4️⃣ Output-Ordnerstruktur vorbereiten (alles wird erstellt)
+    - name: Prepare output folders
       run: |
-        mkdir -p ModBuilder/output/temp_build
+        mkdir -p ModBuilder/output/temp_build/MyModTemplate
         mkdir -p ModBuilder/output/build
         mkdir -p ModBuilder/output/logs
 
-    - name: Create Class Library
+    # 5️⃣ Class Library + SLN erzeugen + Package hinzufügen
+    - name: Create .NET Class Library and SLN
       run: |
-        cd ModBuilder/output/temp_build
-        dotnet new classlib -n MyModTemplate
-        dotnet new sln -n MyModTemplate
-        dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
-        cd MyModTemplate
+        cd ModBuilder/output/temp_build/MyModTemplate
+        dotnet new classlib -n MyModTemplate --force
+        dotnet new sln -n MyModTemplate --force
+        dotnet sln ../MyModTemplate.sln add MyModTemplate.csproj
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
+    # 6️⃣ Debug: Verzeichnisstruktur anzeigen
     - name: Show folder structure
       run: |
         echo "=== Temp Build Folder ==="
