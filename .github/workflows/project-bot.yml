@@ -1,0 +1,61 @@
+name: Project Bot
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  projectbot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # 1️⃣ Checkout code
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2️⃣ Set Git user
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # 3️⃣ Setup Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 4️⃣ Ensure output folder exists
+      - name: Prepare Other Folder
+        run: mkdir -p other
+
+      # 5️⃣ Run combined scan script
+      - name: Run all scans
+        run: |
+          python .github/scripts/run_all_scans.py
+        env:
+          BASE_DIR: ${{ github.workspace }}
+          OUTPUT_DIR: ${{ github.workspace }}/other
+
+      # 6️⃣ Check generated files exist
+      - name: Check generated markdown files
+        run: |
+          [ -f other/FILECODE.md ] && echo "FILECODE.md exists" || echo "ERROR: FILECODE.md missing!"
+          [ -f other/ALL_FILE_REPORT.md ] && echo "ALL_FILE_REPORT.md exists" || echo "ERROR: ALL_FILE_REPORT.md missing!"
+
+      # 7️⃣ Commit and push results
+      - name: Commit and push results
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add other/*.json || echo "No JSON files found"
+          [ -f other/FILECODE.md ] && git add other/FILECODE.md || echo "FILECODE.md does not exist"
+          [ -f other/ALL_FILE_REPORT.md ] && git add other/ALL_FILE_REPORT.md || echo "ALL_FILE_REPORT.md does not exist"
+          git commit -m "Update line count & filetype JSONs and Markdown in other/ [skip ci]" || echo "Nothing to commit"
+          git push origin main
