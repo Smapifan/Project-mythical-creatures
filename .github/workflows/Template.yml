@@ -1,4 +1,4 @@
-name: Build MyModTemplate
+name: Build .NET Template
 
 on:
   push:
@@ -8,60 +8,55 @@ on:
 jobs:
   build-template:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      # 1️⃣ Checkout repository
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ Set GitHub Actions user
-      - name: Set Git user
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      # 3️⃣ Setup .NET 6
-      - name: Setup .NET
+      # 2️⃣ Setup .NET
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 6.0.x
 
-      # 4️⃣ Prepare output folder
-      - name: Prepare output
+      # 3️⃣ Restore NuGet packages (including Pathoschild)
+      - name: Restore dependencies
         run: |
-          mkdir -p TemplateOutput/DLL
-          echo "" > TemplateOutput/build.log
+          sln_file=$(find . -name "*.sln" | head -n 1)
+          if [ -z "$sln_file" ]; then
+            echo "❌ No .sln found!"
+            exit 1
+          fi
+          echo "✅ Found SLN: $sln_file"
+          dotnet restore "$sln_file"
 
-      # 5️⃣ Restore NuGet packages
-      - name: Restore NuGet packages
-        run: |
-          dotnet restore MyModTemplate/MyModTemplate.sln >> TemplateOutput/build.log 2>&1
-        continue-on-error: true
-
-      # 6️⃣ Build solution
+      # 4️⃣ Build the solution
       - name: Build solution
         run: |
-          dotnet build MyModTemplate/MyModTemplate.sln --configuration Release >> TemplateOutput/build.log 2>&1
-        continue-on-error: true
+          sln_file=$(find . -name "*.sln" | head -n 1)
+          dotnet build "$sln_file" -c Release --no-restore
 
-      # 7️⃣ Copy DLLs to output folder
-      - name: Copy DLLs
+      # 5️⃣ Prepare output folder
+      - name: Prepare output
         run: |
-          cp MyModTemplate/bin/Release/net6.0/*.dll TemplateOutput/DLL/ || echo "No DLLs found"
+          mkdir -p build-output
 
-      # 8️⃣ Create ZIP
+      # 6️⃣ Copy DLLs
+      - name: Copy DLLs to output
+        run: |
+          find . -type f -name "*.dll" -path "*/bin/Release/*" -exec cp {} build-output/ \;
+
+      # 7️⃣ Zip output
       - name: Create ZIP
         run: |
-          cd TemplateOutput
-          zip -r MyModTemplate.zip DLL build.log
-          cd ..
+          zip -r build-output.zip build-output
 
-      # 9️⃣ Upload artifact (v4)
-      - name: Upload template artifact
+      # 8️⃣ Upload artifact (v4!)
+      - name: Upload ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: MyModTemplate
-          path: TemplateOutput/MyModTemplate.zip
+          name: Build-Template
+          path: build-output.zip
