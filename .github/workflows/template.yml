@@ -1,8 +1,6 @@
-name: SMAPI Mod Template Builder
+name: SMAPI Mod Builder
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -10,76 +8,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Repo klonen
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-      # 2️⃣ .NET 6 installieren
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
 
-      # 3️⃣ Tools installieren
-      - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y unzip jq
+    - name: Install tools
+      run: sudo apt-get update && sudo apt-get install -y unzip jq
 
-      # 4️⃣ Folders vorbereiten
-      - name: Prepare folders
-        run: |
-          rm -rf ModBuilder/temp_build
-          mkdir -p ModBuilder/temp_build
-          mkdir -p ModBuilder/output/build
-          mkdir -p DLL-Builder/input/stardew   # GamePath
+    - name: Prepare folders
+      run: |
+        mkdir -p ModBuilder/output/temp_build
+        mkdir -p ModBuilder/output/build
+        mkdir -p ModBuilder/output/logs
 
-      # 5️⃣ Template erstellen (CSProj + SLN)
-      - name: Create ClassLib and SLN
-        run: |
-          MOD_NAME="MyModTemplate"
-          MOD_PATH="$GITHUB_WORKSPACE/ModBuilder/output/temp_build/$MOD_NAME"
+    - name: Create Class Library
+      run: |
+        cd ModBuilder/output/temp_build
+        dotnet new classlib -n MyModTemplate
+        dotnet new sln -n MyModTemplate
+        dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
+        cd MyModTemplate
+        dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-          # Template Ordner erstellen
-          mkdir -p "$MOD_PATH"
-
-          # Class Library erzeugen
-          dotnet new classlib -n "$MOD_NAME" -o "$MOD_PATH"
-
-          # Solution erzeugen
-          dotnet new sln -n "$MOD_NAME" -o "$GITHUB_WORKSPACE/ModBuilder/output/temp_build"
-
-          # CSProj zur SLN hinzufügen
-          dotnet sln "$GITHUB_WORKSPACE/ModBuilder/output/temp_build/$MOD_NAME.sln" add "$MOD_PATH/$MOD_NAME.csproj"
-
-          # Packages hinzufügen (Pathoschild für SMAPI)
-          dotnet add "$MOD_PATH/$MOD_NAME.csproj" package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
-
-      # 6️⃣ Build mit GamePath
-      - name: Build Mod Template
-        run: |
-          MOD_NAME="MyModTemplate"
-          MOD_PATH="$GITHUB_WORKSPACE/ModBuilder/output/temp_build/$MOD_NAME"
-          dotnet build "$MOD_PATH/$MOD_NAME.csproj" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee "$GITHUB_WORKSPACE/ModBuilder/output/build/build.log"
-
-      # 7️⃣ Output vorbereiten
-      - name: Collect build output
-        run: |
-          MOD_NAME="MyModTemplate"
-          MOD_PATH="$GITHUB_WORKSPACE/ModBuilder/output/temp_build/$MOD_NAME"
-          BUILD_OUT="$GITHUB_WORKSPACE/ModBuilder/output/build/$MOD_NAME"
-          mkdir -p "$BUILD_OUT"
-
-          # DLL kopieren
-          find "$MOD_PATH/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
-
-          # CSProj und SLN kopieren
-          cp "$MOD_PATH/$MOD_NAME.csproj" "$BUILD_OUT"
-          cp "$GITHUB_WORKSPACE/ModBuilder/output/temp_build/$MOD_NAME.sln" "$BUILD_OUT"
-
-      # 8️⃣ Log + Output als Artifact hochladen
-      - name: Upload result
-        uses: actions/upload-artifact@v4
-        with:
-          name: smapi-mod-template
-          path: |
-            ModBuilder/output/build/*
-            ModBuilder/output/build/build.log
+    - name: Show folder structure
+      run: |
+        echo "=== Temp Build Folder ==="
+        ls -R ModBuilder/output/temp_build
