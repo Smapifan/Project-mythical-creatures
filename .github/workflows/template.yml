@@ -2,7 +2,8 @@ name: SMAPI Mod Template Builder
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
