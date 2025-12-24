@@ -10,21 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1️⃣ Repo klonen
     - name: Checkout repo
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    # 2️⃣ .NET 6 installieren
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
-    # 3️⃣ Tools installieren
     - name: Install tools
       run: sudo apt-get update && sudo apt-get install -y jq
 
-    # 4️⃣ Ordner vorbereiten
     - name: Prepare folders
       run: |
         rm -rf ModBuilder/temp_build
@@ -32,28 +30,22 @@ jobs:
         mkdir -p ModBuilder/output/logs
         mkdir -p ModBuilder/output/build
 
-    # 5️⃣ ModEntry.cs erstellen
     - name: Generate ModEntry.cs
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/ModEntry.cs << 'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/ModEntry.cs <<'EOF'
 using StardewModdingAPI;
-
-namespace MyModTemplate
-{
-    public class ModEntry : Mod
-    {
-        public override void Entry(IModHelper helper)
-        {
+namespace MyModTemplate {
+    public class ModEntry : Mod {
+        public override void Entry(IModHelper helper) {
             Monitor.Log("Mod gestartet!", LogLevel.Info);
         }
     }
 }
 EOF
 
-    # 6️⃣ manifest.json erstellen
     - name: Generate manifest.json
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/manifest.json << 'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/manifest.json <<'EOF'
 {
   "Name": "MyModTemplate",
   "Author": "Smapifan",
@@ -65,10 +57,9 @@ EOF
 }
 EOF
 
-    # 7️⃣ CSProj erstellen
     - name: Generate csproj
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/MyModTemplate.csproj << 'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/MyModTemplate.csproj <<'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -82,37 +73,28 @@ EOF
 </Project>
 EOF
 
-    # 8️⃣ SLN erstellen und CSProj hinzufügen
     - name: Generate SLN
       run: |
         cd ModBuilder/temp_build/ModTemplate
         dotnet new sln --name MyModTemplate
         dotnet sln add MyModTemplate.csproj
 
-    # 9️⃣ Build mit GamePath und Log
     - name: Build SMAPI Mod
       run: |
         CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
-        dotnet build "$CS_PROJECT" -c Release \
-          -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
-          | tee ModBuilder/output/logs/build.log || true
+        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log || true
 
-    # 🔟 Mod-Dateien sammeln
     - name: Collect mod output
       run: |
+        CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
         MOD_DIR=$(dirname "$CS_PROJECT")
         BUILD_OUT=ModBuilder/output/build/MyModTemplate
         mkdir -p "$BUILD_OUT"
-
-        # DLL kopieren
         find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
-
-        # manifest.json kopieren
         cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
 
-    # 1️⃣1️⃣ Logs hochladen
-    - name: Upload logs
+    - name: Upload build files
       uses: actions/upload-artifact@v4
       with:
-        name: smapi-mod-logs
-        path: ModBuilder/output/logs
+        name: smapi-mod-files
+        path: ModBuilder/output/build
