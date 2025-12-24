@@ -1,5 +1,5 @@
 {
-  "total_lines": 10001,
+  "total_lines": 10006,
   "files": {
     "ModBuilder/output/build/MyModTemplate/manifest.json": 0,
     "ModBuilder/output/build/MyModTemplate/Class1.cs": 6,
@@ -76,7 +76,7 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/es.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
-    "other/counts/linecount.json": 77,
+    "other/counts/linecount.json": 82,
     "other/counts/filetype.json": 30
   }
 }
