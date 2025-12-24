@@ -8,67 +8,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1️⃣ Repo klonen
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    # 2️⃣ .NET 6 installieren
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
 
-    # 3️⃣ Tools installieren
-    - name: Install tools
-      run: sudo apt-get update && sudo apt-get install -y jq
-
-    # 4️⃣ Output Ordner vorbereiten
     - name: Prepare folders
       run: |
         mkdir -p ModBuilder/output/temp_build
         mkdir -p ModBuilder/output/build
 
-    # 5️⃣ Class Library erstellen (leer)
     - name: Create class library
       run: |
         cd ModBuilder/output/temp_build
         dotnet new classlib -n MyModTemplate
 
-    # 6️⃣ Solution erstellen und Projekt hinzufügen
-    - name: Create solution and add project
+    - name: Create solution and link project
       run: |
         cd ModBuilder/output/temp_build
         dotnet new sln -n MyModTemplate
         dotnet sln MyModTemplate.sln add MyModTemplate/MyModTemplate.csproj
 
-    # 7️⃣ Pathoschild Package hinzufügen
-    - name: Add SMAPI ModBuildConfig package
+    - name: Add SMAPI build package
       run: |
         cd ModBuilder/output/temp_build/MyModTemplate
         dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-    # 8️⃣ Leere Dateien erzeugen (ModEntry.cs und manifest.json)
-    - name: Create empty ModEntry.cs and manifest.json
+    - name: Create empty SMAPI files
       run: |
         touch ModBuilder/output/temp_build/MyModTemplate/ModEntry.cs
         touch ModBuilder/output/temp_build/MyModTemplate/manifest.json
 
-    # 9️⃣ Alles in den finalen Output kopieren
-    - name: Copy template to build output
+    - name: Copy template to output
       run: |
         cp -r ModBuilder/output/temp_build/MyModTemplate ModBuilder/output/build/
 
-    # 🔟 Optional: Commit & Push (sicher)
-    - name: Commit and push template
+    - name: Commit & push safely
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        cd $GITHUB_WORKSPACE
         git fetch origin main
         git reset --hard origin/main
-        if [ -n "$(git status --porcelain ModBuilder/output/build)" ]; then
-          git add ModBuilder/output/build
-          git commit -m "Generated MyModTemplate template at $(date +'%Y-%m-%d %H:%M:%S')"
-          git push origin main
-        else
-          echo "Nothing to commit"
+        git add ModBuilder/output/build || true
+        git commit -m "Generate SMAPI mod template" || echo "Nothing to commit"
+        git push origin main
