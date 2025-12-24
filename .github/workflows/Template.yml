@@ -8,79 +8,65 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ .NET 6
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 3️⃣ Variablen
-      - name: Set variables
+      - name: Create structure
         run: |
-          echo "MOD_NAME=MySmapiMod" >> $GITHUB_ENV
-          echo "AUTHOR=Smapifan" >> $GITHUB_ENV
-
-      # 4️⃣ Struktur + Solution
-      - name: Create solution and project
-        run: |
-          mkdir -p output
+          mkdir -p output/MySmapiMod
           cd output
-          dotnet new sln -n $MOD_NAME
-          dotnet new classlib -n $MOD_NAME
-          dotnet sln $MOD_NAME.sln add $MOD_NAME/$MOD_NAME.csproj
+          dotnet new sln -n MySmapiMod
+          dotnet new classlib -n MySmapiMod
+          dotnet sln MySmapiMod.sln add MySmapiMod/MySmapiMod.csproj
 
-      # 5️⃣ SMAPI NuGet
-      - name: Add SMAPI build package
+      - name: Add SMAPI package
         run: |
-          cd output/$MOD_NAME
+          cd output/MySmapiMod
           dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
 
-      # 6️⃣ ModEntry.cs
       - name: Create ModEntry.cs
         run: |
-          cat > output/$MOD_NAME/ModEntry.cs <<'EOF'
-using StardewModdingAPI;
+          printf '%s\n' \
+          'using StardewModdingAPI;' \
+          '' \
+          'namespace MySmapiMod' \
+          '{' \
+          '    public class ModEntry : Mod' \
+          '    {' \
+          '        public override void Entry(IModHelper helper)' \
+          '        {' \
+          '            Monitor.Log("Mod loaded!", LogLevel.Info);' \
+          '        }' \
+          '    }' \
+          '}' \
+          > output/MySmapiMod/ModEntry.cs
 
-namespace MySmapiMod
-{
-    public class ModEntry : Mod
-    {
-        public override void Entry(IModHelper helper)
-        {
-            Monitor.Log("Mod loaded successfully!", LogLevel.Info);
-        }
-    }
-}
-EOF
-
-      # 7️⃣ manifest.json
       - name: Create manifest.json
         run: |
-          cat > output/$MOD_NAME/manifest.json <<'EOF'
-{
-  "Name": "MySmapiMod",
-  "Author": "Smapifan",
-  "Version": "1.0.0",
-  "Description": "Generated SMAPI mod template",
-  "UniqueID": "Smapifan.MySmapiMod",
-  "EntryDll": "MySmapiMod.dll",
-  "MinimumApiVersion": "4.0.0"
-}
-EOF
+          printf '%s\n' \
+          '{' \
+          '  "Name": "MySmapiMod",' \
+          '  "Author": "Smapifan",' \
+          '  "Version": "1.0.0",' \
+          '  "Description": "Generated SMAPI mod template",' \
+          '  "UniqueID": "Smapifan.MySmapiMod",' \
+          '  "EntryDll": "MySmapiMod.dll",' \
+          '  "MinimumApiVersion": "4.0.0"' \
+          '}' \
+          > output/MySmapiMod/manifest.json
 
-      # 8️⃣ ZIP
-      - name: Zip template
+      - name: Zip result
         run: |
           cd output
           zip -r MySmapiMod-template.zip MySmapiMod MySmapiMod.sln
 
-      # 9️⃣ Upload
-      - name: Upload template
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: smapi-mod-template
-          path: output/*.zip
+          path: output/MySmapiMod-template.zip
