@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: '6.0.x'
 
-    # 3️⃣ Tools
+    # 3️⃣ Tools installieren
     - name: Install tools
       run: sudo apt-get update && sudo apt-get install -y jq
 
@@ -32,10 +32,10 @@ jobs:
         mkdir -p ModBuilder/output/logs
         mkdir -p ModBuilder/output/build
 
-    # 5️⃣ Mod-Dateien erstellen
+    # 5️⃣ ModEntry.cs erstellen
     - name: Generate ModEntry.cs
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/ModEntry.cs <<'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/ModEntry.cs << 'EOF'
 using StardewModdingAPI;
 
 namespace MyModTemplate
@@ -50,9 +50,10 @@ namespace MyModTemplate
 }
 EOF
 
+    # 6️⃣ manifest.json erstellen
     - name: Generate manifest.json
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/manifest.json <<'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/manifest.json << 'EOF'
 {
   "Name": "MyModTemplate",
   "Author": "Smapifan",
@@ -64,9 +65,10 @@ EOF
 }
 EOF
 
+    # 7️⃣ CSProj erstellen
     - name: Generate csproj
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/MyModTemplate.csproj <<'EOF'
+        cat > ModBuilder/temp_build/ModTemplate/MyModTemplate.csproj << 'EOF'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -80,13 +82,14 @@ EOF
 </Project>
 EOF
 
+    # 8️⃣ SLN erstellen und CSProj hinzufügen
     - name: Generate SLN
       run: |
         cd ModBuilder/temp_build/ModTemplate
         dotnet new sln --name MyModTemplate
         dotnet sln add MyModTemplate.csproj
 
-    # 6️⃣ Build mit GamePath + Log
+    # 9️⃣ Build mit GamePath und Log
     - name: Build SMAPI Mod
       run: |
         CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
@@ -94,7 +97,7 @@ EOF
           -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
           | tee ModBuilder/output/logs/build.log || true
 
-    # 7️⃣ Mod-Dateien sammeln
+    # 🔟 Mod-Dateien sammeln
     - name: Collect mod output
       run: |
         MOD_DIR=$(dirname "$CS_PROJECT")
@@ -107,7 +110,7 @@ EOF
         # manifest.json kopieren
         cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
 
-    # 8️⃣ Logs hochladen
+    # 1️⃣1️⃣ Logs hochladen
     - name: Upload logs
       uses: actions/upload-artifact@v4
       with:
