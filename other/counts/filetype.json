@@ -1,9 +1,9 @@
 {
-  "total_files": 421,
+  "total_files": 423,
   "filetypes": {
-    ".md": 6,
+    ".md": 7,
     ".sln": 1,
-    ".json": 62,
+    ".json": 63,
     ".csproj": 1,
     ".cs": 9,
     ".targets": 1,
