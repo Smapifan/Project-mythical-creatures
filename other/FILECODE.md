@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 10006
+**Total Lines:** 9271
 
 | File | Lines |
 |------|--------|
@@ -26,11 +26,6 @@
 | `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
-| `ModBuilder/output/build/MyModTemplate/Class1.cs` | 6 |
-| `ModBuilder/output/build/MyModTemplate/ModEntry.cs` | 0 |
-| `ModBuilder/output/build/MyModTemplate/manifest.json` | 0 |
-| `ModBuilder/output/build/MyModTemplate/obj/MyModTemplate.csproj.nuget.dgspec.json` | 347 |
-| `ModBuilder/output/build/MyModTemplate/obj/project.assets.json` | 382 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -82,4 +77,4 @@
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 82 |
 
-_Generated on 2025-12-24 18:46:50 UTC_
+_Generated on 2025-12-24 21:34:51 UTC_
