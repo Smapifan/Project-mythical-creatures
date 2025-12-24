@@ -1,4 +1,4 @@
-name: Build .NET Template
+name: Build Mod Template
 
 on:
   push:
@@ -8,55 +8,54 @@ on:
 jobs:
   build-template:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      # 1️⃣ Checkout code
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # 1️⃣ Checkout repo
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ Setup .NET
-      - name: Setup .NET 6
+      # 2️⃣ Set Git user (für commit falls nötig)
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # 3️⃣ Setup .NET 6
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: '6.0.x'
 
-      # 3️⃣ Restore NuGet packages (including Pathoschild)
-      - name: Restore dependencies
+      # 4️⃣ Prepare fake GamePath (wie DLL-Builder)
+      - name: Prepare GamePath
+        run: mkdir -p DLL-Builder/input/stardew
+
+      # 5️⃣ Restore NuGet packages
+      - name: Restore packages
         run: |
           sln_file=$(find . -name "*.sln" | head -n 1)
-          if [ -z "$sln_file" ]; then
-            echo "❌ No .sln found!"
-            exit 1
-          fi
-          echo "✅ Found SLN: $sln_file"
           dotnet restore "$sln_file"
 
-      # 4️⃣ Build the solution
+      # 6️⃣ Build solution
       - name: Build solution
         run: |
           sln_file=$(find . -name "*.sln" | head -n 1)
-          dotnet build "$sln_file" -c Release --no-restore
+          dotnet build "$sln_file" -c Release /p:GameFolder="$PWD/DLL-Builder/input/stardew"
 
-      # 5️⃣ Prepare output folder
-      - name: Prepare output
+      # 7️⃣ Save build logs
+      - name: Save logs
         run: |
-          mkdir -p build-output
+          mkdir -p build-logs
+          dotnet build $(find . -name "*.sln" | head -n 1) -c Release > build-logs/log.txt 2>&1
 
-      # 6️⃣ Copy DLLs
-      - name: Copy DLLs to output
-        run: |
-          find . -type f -name "*.dll" -path "*/bin/Release/*" -exec cp {} build-output/ \;
-
-      # 7️⃣ Zip output
-      - name: Create ZIP
-        run: |
-          zip -r build-output.zip build-output
-
-      # 8️⃣ Upload artifact (v4!)
-      - name: Upload ZIP
+      # 8️⃣ Upload build artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build-Template
-          path: build-output.zip
+          name: ModTemplate
+          path: |
+            $(find . -name "*.dll" -o -name "*.pdb")
+            build-logs/log.txt
