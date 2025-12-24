@@ -1,76 +1,32 @@
 {
-  "LogName": "ExampleChests", // Optional: For logging identification
-  "Target": "Smapifan/LootChest.Framework", // Framework responsible for reading this file
+  "LogName": "ExampleChests",
+  "Target": "Smapifan/LootChest.Framework",
   "Entries": {
-    "Chest1": { // Chest Key / ID
-      "Location": { // Chest position in the game world
-        "MapID": "Farm", // Map/area where the chest is placed
-        "TileX": 30, // X coordinate on the tile grid
-        "TileY": 30  // Y coordinate on the tile grid
-      },
-      "Unbreakable": true, // If true, chest cannot be destroyed
-      "ForWorld": true, // All players share the same loot
-      "ForPlayer": false, // Ignored because ForWorld is true
-      "PlayerCount": 1, // Not relevant for ForWorld
-      "CanStoreItems": false, // Players cannot deposit items into the chest
-      "Items": [ // Predefined loot inside the chest
-        { "ID": "388", "Count": 10 }, // Wood
-        { "ID": "390", "Count": 5 },  // Stone
-        { "ID": "Steak", "Count": 3 } // Steak
-      ]
-    },
-
-    "Chest2": {
-      "Location": {
-        "MapID": "SilvansHome",
-        "TileX": 8,
-        "TileY": 8
-      },
-      "Unbreakable": true,
-      "ForWorld": false, // Loot is distributed per player groups
-      "ForPlayer": true, 
-      "PlayerCount": 2, // Two players share one loot instance
-      "CanStoreItems": true, // Players can put items into the chest
-      "Items": [
-        { "ID": "382", "Count": 10 }, // Coal
-        { "ID": "334", "Count": 5 },  // Iron Bar
-        { "ID": "33", "Count": 3 }    // Example item ID
-      ]
-    },
-
-    "Chest3": {
-      "Location": {
-        "MapID": "Farm",
-        "TileX": 15,
-        "TileY": 20
-      },
-      "Unbreakable": false, // Can be destroyed by the player
-      "ForWorld": false,
-      "ForPlayer": true,
-      "PlayerCount": 3, // Three players share one loot instance
-      "CanStoreItems": false, // Only loot can be taken out
-      "Items": [
-        { "ID": "388", "Count": 5 }, // Wood
-        { "ID": "390", "Count": 2 }, // Stone
-        { "ID": "Steak", "Count": 5 }
-      ]
-    },
-
-    "ChestModMap": {
-      "Location": {
-        "MapID": "SilvansHome",
-        "TileX": 53,
-        "TileY": 13
-      },
+    "Chest1": {
+      "Location": { "MapID": "Farm", "TileX": 30, "TileY": 30 },
       "Unbreakable": true,
       "ForWorld": true,
       "ForPlayer": false,
       "PlayerCount": 1,
+      "CanStoreItems": false,
+      "Items": [
+        { "ID": "388", "Count": 10 },
+        { "ID": "390", "Count": 5 },
+        { "ID": "Steak", "Count": 3 }
+      ]
+    },
+    
+    "Chest2": {
+      "Location": { "MapID": "SilvansHome", "TileX": 8, "TileY": 8 },
+      "Unbreakable": true,
+      "ForWorld": false,
+      "ForPlayer": true,
+      "PlayerCount": 2,
       "CanStoreItems": true,
       "Items": [
-        { "ID": "335", "Count": 5 },  // Gold Bar
-        { "ID": "337", "Count": 3 },  // Refined Quartz
-        { "ID": "93", "Count": 5 }    // Example item ID
+        { "ID": "382", "Count": 10 },
+        { "ID": "334", "Count": 5 },
+        { "ID": "33", "Count": 3 }
       ]
     }
   }
