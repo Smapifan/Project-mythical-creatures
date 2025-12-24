@@ -32,37 +32,36 @@ jobs:
       # 4️⃣ Prepare output folder
       - name: Prepare output
         run: |
-          mkdir -p TemplateOutput
+          mkdir -p TemplateOutput/DLL
           echo "" > TemplateOutput/build.log
 
-      # 5️⃣ Restore NuGet packages (Pathoschild SMAPI)
+      # 5️⃣ Restore NuGet packages
       - name: Restore NuGet packages
         run: |
           dotnet restore MyModTemplate/MyModTemplate.sln >> TemplateOutput/build.log 2>&1
         continue-on-error: true
 
-      # 6️⃣ Build the solution
+      # 6️⃣ Build solution
       - name: Build solution
         run: |
           dotnet build MyModTemplate/MyModTemplate.sln --configuration Release >> TemplateOutput/build.log 2>&1
         continue-on-error: true
 
-      # 7️⃣ Copy built DLLs
-      - name: Copy output DLLs
+      # 7️⃣ Copy DLLs to output folder
+      - name: Copy DLLs
         run: |
-          mkdir -p TemplateOutput/DLL
           cp MyModTemplate/bin/Release/net6.0/*.dll TemplateOutput/DLL/ || echo "No DLLs found"
 
-      # 8️⃣ Zip the template
+      # 8️⃣ Create ZIP
       - name: Create ZIP
         run: |
           cd TemplateOutput
           zip -r MyModTemplate.zip DLL build.log
           cd ..
 
-      # 9️⃣ Upload artifact
+      # 9️⃣ Upload artifact (v4)
       - name: Upload template artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: MyModTemplate
           path: TemplateOutput/MyModTemplate.zip
