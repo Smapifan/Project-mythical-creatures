@@ -1,10 +1,10 @@
 {
-  "total_lines": 9736,
+  "total_lines": 9692,
   "files": {
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 37,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json": 77,
+    "ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json": 33,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestFramework.cs": 109,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ILootChest.cs": 24,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestHelper.cs": 35,
