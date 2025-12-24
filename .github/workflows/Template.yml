@@ -6,39 +6,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-mods:
+  build-template:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Install tools
-      run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Prepare folders
+        run: |
+          rm -rf ModBuilder/output
+          mkdir -p ModBuilder/output/temp_build
+          mkdir -p ModBuilder/output/logs
 
-    - name: Prepare folders
-      run: |
-        rm -rf ModBuilder/temp_build
-        mkdir -p ModBuilder/temp_build
-        mkdir -p ModBuilder/output/logs
-        mkdir -p ModBuilder/output/build
-
-    - name: Generate multiple Mod Templates
-      run: |
-        MOD_COUNT=3
-        for i in $(seq 1 $MOD_COUNT); do
-          MOD_NAME="MyModTemplate_$i"
-          MOD_PATH="ModBuilder/temp_build/$MOD_NAME"
+      - name: Generate Mod Template
+        run: |
+          MOD_NAME="MyModTemplate"
+          MOD_PATH="ModBuilder/output/temp_build/$MOD_NAME"
           mkdir -p "$MOD_PATH"
 
-          # Nur feste Vorlagen: ModEntry.cs + manifest.json
+          # ModEntry.cs erstellen
           cat > "$MOD_PATH/ModEntry.cs" <<'EOF'
 using StardewModdingAPI;
 namespace MyModTemplate {
@@ -50,6 +44,7 @@ namespace MyModTemplate {
 }
 EOF
 
+          # manifest.json erstellen
           cat > "$MOD_PATH/manifest.json" <<EOF
 {
   "Name": "$MOD_NAME",
@@ -62,13 +57,13 @@ EOF
 }
 EOF
 
-          # CSProj zur Laufzeit erzeugen
+          # CSProj erstellen
           cat > "$MOD_PATH/$MOD_NAME.csproj" <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <GamePath>\${{ github.workspace }}/DLL-Builder/input/stardew</GamePath>
+    <GamePath>$GITHUB_WORKSPACE/DLL-Builder/input/stardew</GamePath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
@@ -77,35 +72,24 @@ EOF
 </Project>
 EOF
 
-          # SLN zur Laufzeit erzeugen und CSProj hinzufügen
-          cd "$MOD_PATH"
-          dotnet new sln --name "$MOD_NAME"
-          dotnet sln add "$MOD_NAME.csproj"
-          cd - > /dev/null
-        done
+          # SLN erstellen und CSProj hinzufügen
+          cd "$MOD_PATH" || true
+          dotnet new sln --name "$MOD_NAME" || true
+          dotnet sln add "$MOD_NAME.csproj" || true
+          cd - > /dev/null || true
 
-    - name: Build all Mod Templates
-      run: |
-        for CS_PROJECT in $(find ModBuilder/temp_build -name "*.csproj"); do
-          echo "Building $CS_PROJECT ..."
+      - name: Build Mod Template
+        run: |
+          CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
           dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
-            | tee "ModBuilder/output/logs/$(basename $CS_PROJECT .csproj).log" || true
-        done
+            | tee ModBuilder/output/logs/build.log || true
 
-    - name: Collect all mod output
-      run: |
-        mkdir -p ModBuilder/output/build
-        for CS_PROJECT in $(find ModBuilder/temp_build -name "*.csproj"); do
-          MOD_DIR=$(dirname "$CS_PROJECT")
-          MOD_NAME=$(basename "$MOD_DIR")
-          BUILD_OUT=ModBuilder/output/build/$MOD_NAME
-          mkdir -p "$BUILD_OUT"
-          find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
-          cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
-        done
-
-    - name: Upload all mods as artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: smapi-mod-templates
-        path: ModBuilder/output/build
+      - name: Collect Mod Files
+        run: |
+          MOD_PATH=$(dirname $(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1))
+          BUILD_OUT=ModBuilder/output/build
+          mkdir -p "$BUILD_OUT/$MOD_NAME"
+          cp "$MOD_PATH/ModEntry.cs" "$BUILD_OUT/$MOD_NAME/"
+          cp "$MOD_PATH/manifest.json" "$BUILD_OUT/$MOD_NAME/"
+          cp "$MOD_PATH/$MOD_NAME.csproj" "$BUILD_OUT/$MOD_NAME/"
+          cp "$MOD_PATH/$MOD_NAME.sln" "$BUILD_OUT/$MOD_NAME/"
