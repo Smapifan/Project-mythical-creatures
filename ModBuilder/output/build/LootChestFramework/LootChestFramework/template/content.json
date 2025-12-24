@@ -1,0 +1,24 @@
+{
+  "LogName": "Chest1",
+  "Target": "Smapifan/LootChest.Framework",
+  "Entries": {
+    "Chest1": { //chest id
+      "ChestKey": "Chest1",
+      "Location": {
+        "MapID": "Farm",
+        "TileX": 30,
+        "TileY": 30
+      },
+      "Unbreakable": true, //Can it be dismantled? 
+      "ForWorld": true, // For all players? 
+      "ForPlayer": false, // for specific number of players 
+      "PlayerCount": 1, //number of players 
+      "CanStoreItems": false, //Can items be deposited and saved in moddata? 
+      "Items": [ // Item ID and number of items 
+        { "ID": "388", "Count": 10 },
+        { "ID": "390", "Count": 5 },
+        { "ID": "Steak", "Count": 3 } 
+      ]
+    }
+  }
+}
