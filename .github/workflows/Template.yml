@@ -1,4 +1,4 @@
-name: SMAPI Mod Builder
+name: SMAPI Mod Template Builder
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-mods:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -26,13 +26,20 @@ jobs:
     - name: Prepare folders
       run: |
         rm -rf ModBuilder/temp_build
-        mkdir -p ModBuilder/temp_build/ModTemplate
+        mkdir -p ModBuilder/temp_build
         mkdir -p ModBuilder/output/logs
         mkdir -p ModBuilder/output/build
 
-    - name: Generate ModEntry.cs
+    - name: Generate multiple Mod Templates
       run: |
-        cat > ModBuilder/temp_build/ModTemplate/ModEntry.cs <<'EOF'
+        MOD_COUNT=3
+        for i in $(seq 1 $MOD_COUNT); do
+          MOD_NAME="MyModTemplate_$i"
+          MOD_PATH="ModBuilder/temp_build/$MOD_NAME"
+          mkdir -p "$MOD_PATH"
+
+          # Nur feste Vorlagen: ModEntry.cs + manifest.json
+          cat > "$MOD_PATH/ModEntry.cs" <<'EOF'
 using StardewModdingAPI;
 namespace MyModTemplate {
     public class ModEntry : Mod {
@@ -43,28 +50,25 @@ namespace MyModTemplate {
 }
 EOF
 
-    - name: Generate manifest.json
-      run: |
-        cat > ModBuilder/temp_build/ModTemplate/manifest.json <<'EOF'
+          cat > "$MOD_PATH/manifest.json" <<EOF
 {
-  "Name": "MyModTemplate",
+  "Name": "$MOD_NAME",
   "Author": "Smapifan",
   "Version": "1.0.0",
   "Description": "Automatisch erstellte Mod Vorlage",
-  "UniqueID": "Smapifan.MyModTemplate",
-  "EntryDll": "MyModTemplate.dll",
+  "UniqueID": "Smapifan.$MOD_NAME",
+  "EntryDll": "$MOD_NAME.dll",
   "MinimumApiVersion": "3.0.0"
 }
 EOF
 
-    - name: Generate csproj
-      run: |
-        cat > ModBuilder/temp_build/ModTemplate/MyModTemplate.csproj <<'EOF'
+          # CSProj zur Laufzeit erzeugen
+          cat > "$MOD_PATH/$MOD_NAME.csproj" <<EOF
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <GamePath>$GITHUB_WORKSPACE/DLL-Builder/input/stardew</GamePath>
     <OutputType>Library</OutputType>
+    <GamePath>\${{ github.workspace }}/DLL-Builder/input/stardew</GamePath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
@@ -73,28 +77,35 @@ EOF
 </Project>
 EOF
 
-    - name: Generate SLN
-      run: |
-        cd ModBuilder/temp_build/ModTemplate
-        dotnet new sln --name MyModTemplate
-        dotnet sln add MyModTemplate.csproj
+          # SLN zur Laufzeit erzeugen und CSProj hinzufügen
+          cd "$MOD_PATH"
+          dotnet new sln --name "$MOD_NAME"
+          dotnet sln add "$MOD_NAME.csproj"
+          cd - > /dev/null
+        done
 
-    - name: Build SMAPI Mod
+    - name: Build all Mod Templates
       run: |
-        CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
-        dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log || true
+        for CS_PROJECT in $(find ModBuilder/temp_build -name "*.csproj"); do
+          echo "Building $CS_PROJECT ..."
+          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
+            | tee "ModBuilder/output/logs/$(basename $CS_PROJECT .csproj).log" || true
+        done
 
-    - name: Collect mod output
+    - name: Collect all mod output
       run: |
-        CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
-        MOD_DIR=$(dirname "$CS_PROJECT")
-        BUILD_OUT=ModBuilder/output/build/MyModTemplate
-        mkdir -p "$BUILD_OUT"
-        find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
-        cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
+        mkdir -p ModBuilder/output/build
+        for CS_PROJECT in $(find ModBuilder/temp_build -name "*.csproj"); do
+          MOD_DIR=$(dirname "$CS_PROJECT")
+          MOD_NAME=$(basename "$MOD_DIR")
+          BUILD_OUT=ModBuilder/output/build/$MOD_NAME
+          mkdir -p "$BUILD_OUT"
+          find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
+          cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
+        done
 
-    - name: Upload build files
+    - name: Upload all mods as artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: smapi-mod-files
+        name: smapi-mod-templates
         path: ModBuilder/output/build
