@@ -29,7 +29,7 @@
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChest.cs` | 53 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestConfig.cs` | 11 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootManager.cs` | 64 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 38 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 37 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json` | 73 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json` | 108 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json` | 24 |
@@ -82,6 +82,6 @@
 | `Werewolf/[FTM] Werewolf/content.json` | 322 |
 | `Werewolf/[FTM] Werewolf/manifest.json` | 12 |
 | `other/counts/filetype.json` | 30 |
-| `other/counts/linecount.json` | 83 |
+| `other/counts/linecount.json` | 84 |
 
-_Generated on 2025-12-24 22:07:24 UTC_
+_Generated on 2025-12-24 22:08:08 UTC_
