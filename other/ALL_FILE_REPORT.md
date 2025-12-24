@@ -1,6 +1,6 @@
 # 📦 Filetype Report
 
-**Total Files:** 387
+**Total Files:** 310
 
 | File Extension | Count |
 |----------------|--------|
@@ -12,16 +12,12 @@
 | `.dylib` | 2 |
 | `.exe` | 1 |
 | `.ini` | 1 |
-| `.json` | 52 |
+| `.json` | 24 |
 | `.marker` | 1 |
-| `.md` | 6 |
-| `.png` | 38 |
-| `.sln` | 1 |
-| `.tbin` | 3 |
-| `.txt` | 4 |
-| `.wav` | 2 |
+| `.md` | 4 |
+| `.txt` | 2 |
 | `.xml` | 7 |
 | `.zip` | 2 |
-| `no_extension` | 3 |
+| `no_extension` | 2 |
 
-_Generated on 2025-12-24 08:38:18 UTC_
+_Generated on 2025-12-24 08:38:40 UTC_

@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 7198
+**Total Lines:** 4502
 
 | File | Lines |
 |------|--------|
@@ -26,35 +26,7 @@
 | `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
 | `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
-| `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
-| `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
-| `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
-| `Werewolf/Werewolf/assets/Animails/Stable/Wolf.json` | 0 |
-| `Werewolf/Werewolf/assets/Another/MountsAndCavesOptions.json` | 173 |
-| `Werewolf/Werewolf/assets/Buildings/Wolf_cave.json` | 116 |
-| `Werewolf/Werewolf/assets/Items/Items.json` | 174 |
-| `Werewolf/Werewolf/assets/Items/Swords.json` | 33 |
-| `Werewolf/Werewolf/assets/Maps/Maps.json` | 138 |
-| `Werewolf/Werewolf/assets/Maps/Overlay.json` | 199 |
-| `Werewolf/Werewolf/assets/NpcData/Abigail/Abigail.json` | 53 |
-| `Werewolf/Werewolf/assets/NpcData/Abigail/W_Abigail.json` | 429 |
-| `Werewolf/Werewolf/assets/NpcData/Adrian/Adrian.json` | 0 |
-| `Werewolf/Werewolf/assets/NpcData/Blank.json` | 1 |
-| `Werewolf/Werewolf/assets/NpcData/Lauren/Lauren.json` | 0 |
-| `Werewolf/Werewolf/assets/NpcData/Luca/Luca.json` | 0 |
-| `Werewolf/Werewolf/assets/NpcData/Mails.json` | 24 |
-| `Werewolf/Werewolf/assets/NpcData/Rudolf/Rudolf.json` | 0 |
-| `Werewolf/Werewolf/assets/NpcData/Silvan/Silvan.json` | 97 |
-| `Werewolf/Werewolf/assets/NpcData/Silvan/dialogue.json` | 159 |
-| `Werewolf/Werewolf/assets/NpcData/Silvan/schedule.json` | 8 |
-| `Werewolf/Werewolf/assets/Shops/Shops.json` | 32 |
-| `Werewolf/Werewolf/assets/Sounds/Sounds.json` | 30 |
-| `Werewolf/Werewolf/config.json` | 26 |
-| `Werewolf/Werewolf/content.json` | 213 |
-| `Werewolf/Werewolf/i18n/de.json` | 213 |
-| `Werewolf/Werewolf/i18n/default.json` | 225 |
-| `Werewolf/Werewolf/manifest.json` | 12 |
 | `other/counts/filetype.json` | 24 |
 | `other/counts/linecount.json` | 57 |
 
-_Generated on 2025-12-24 08:38:18 UTC_
+_Generated on 2025-12-24 08:38:40 UTC_
