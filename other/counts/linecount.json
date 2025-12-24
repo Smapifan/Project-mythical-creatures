@@ -1,7 +1,7 @@
 {
-  "total_lines": 9466,
+  "total_lines": 9487,
   "files": {
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 19,
+    "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 37,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
@@ -74,7 +74,7 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/es.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
-    "other/counts/linecount.json": 77,
+    "other/counts/linecount.json": 80,
     "other/counts/filetype.json": 30
   }
 }
