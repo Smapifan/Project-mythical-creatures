@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "HtvxIHShOR0=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/temp_build/MyModTemplate/MyModTemplate.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/pathoschild.stardew.modbuildconfig/4.4.0/pathoschild.stardew.modbuildconfig.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
