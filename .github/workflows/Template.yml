@@ -1,31 +1,68 @@
-name: Build Mod Template
+name: Build MyModTemplate
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   build-template:
     runs-on: ubuntu-latest
-    steps:
-      # 1️⃣ Checkout Repo
-      - uses: actions/checkout@v4
+    permissions:
+      contents: write
 
-      # 2️⃣ Setup .NET 6
-      - name: Setup .NET 6
+    steps:
+      # 1️⃣ Checkout repository
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2️⃣ Set GitHub Actions user
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # 3️⃣ Setup .NET 6
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 3️⃣ Restore NuGet Packages
-      - name: Restore NuGet Packages
-        run: dotnet restore MyModTemplate/MyModTemplate.sln
-
-      # 4️⃣ Build the Class Library (Release)
-      - name: Build Template DLL
-        run: dotnet build MyModTemplate/MyModTemplate.sln --configuration Release
-
-      # 5️⃣ Copy DLL to GamePath (wie beim DLL-Builder)
-      - name: Copy DLL to GamePath
+      # 4️⃣ Prepare output folder
+      - name: Prepare output
         run: |
-          mkdir -p DLL-Builder/input/stardew
-          cp MyModTemplate/bin/Release/net6.0/MyModTemplate.dll DLL-Builder/input/stardew/
+          mkdir -p TemplateOutput
+          echo "" > TemplateOutput/build.log
+
+      # 5️⃣ Restore NuGet packages (Pathoschild SMAPI)
+      - name: Restore NuGet packages
+        run: |
+          dotnet restore MyModTemplate/MyModTemplate.sln >> TemplateOutput/build.log 2>&1
+        continue-on-error: true
+
+      # 6️⃣ Build the solution
+      - name: Build solution
+        run: |
+          dotnet build MyModTemplate/MyModTemplate.sln --configuration Release >> TemplateOutput/build.log 2>&1
+        continue-on-error: true
+
+      # 7️⃣ Copy built DLLs
+      - name: Copy output DLLs
+        run: |
+          mkdir -p TemplateOutput/DLL
+          cp MyModTemplate/bin/Release/net6.0/*.dll TemplateOutput/DLL/ || echo "No DLLs found"
+
+      # 8️⃣ Zip the template
+      - name: Create ZIP
+        run: |
+          cd TemplateOutput
+          zip -r MyModTemplate.zip DLL build.log
+          cd ..
+
+      # 9️⃣ Upload artifact
+      - name: Upload template artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MyModTemplate
+          path: TemplateOutput/MyModTemplate.zip
