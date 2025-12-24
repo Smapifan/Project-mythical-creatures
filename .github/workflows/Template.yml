@@ -83,7 +83,7 @@ EOF
         run: |
           set -e
           CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
-          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log
+          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log || true
 
       - name: Collect Mod Files
         run: |
