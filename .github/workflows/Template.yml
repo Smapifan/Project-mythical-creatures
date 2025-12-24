@@ -28,6 +28,7 @@ jobs:
 
       - name: Generate Mod Template
         run: |
+          set -e
           MOD_NAME="MyModTemplate"
           MOD_PATH="ModBuilder/output/temp_build/$MOD_NAME"
           mkdir -p "$MOD_PATH"
@@ -72,20 +73,21 @@ EOF
 </Project>
 EOF
 
-          # SLN erstellen und CSProj hinzufügen
-          cd "$MOD_PATH" || true
-          dotnet new sln --name "$MOD_NAME" || true
-          dotnet sln add "$MOD_NAME.csproj" || true
-          cd - > /dev/null || true
+          # Solution erstellen und CSProj hinzufügen
+          pushd "$MOD_PATH"
+          dotnet new sln --name "$MOD_NAME"
+          dotnet sln add "$MOD_NAME.csproj"
+          popd
 
       - name: Build Mod Template
         run: |
+          set -e
           CS_PROJECT=$(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1)
-          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" \
-            | tee ModBuilder/output/logs/build.log || true
+          dotnet build "$CS_PROJECT" -c Release -p:GamePath="$GITHUB_WORKSPACE/DLL-Builder/input/stardew" | tee ModBuilder/output/logs/build.log
 
       - name: Collect Mod Files
         run: |
+          set -e
           MOD_PATH=$(dirname $(find ModBuilder/output/temp_build -name "*.csproj" | head -n 1))
           BUILD_OUT=ModBuilder/output/build
           mkdir -p "$BUILD_OUT/$MOD_NAME"
