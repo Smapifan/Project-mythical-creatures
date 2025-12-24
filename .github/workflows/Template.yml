@@ -1,72 +1,94 @@
-name: SMAPI Mod Template Builder
+name: SMAPI Mod Builder
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  template:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    # 1️⃣ Repo klonen (keine Submodule)
+    - name: Checkout repo
+      uses: actions/checkout@v4
+      with:
+        submodules: false
 
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
+    # 2️⃣ .NET 6 installieren
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
 
-      - name: Create structure
-        run: |
-          mkdir -p output/MySmapiMod
-          cd output
-          dotnet new sln -n MySmapiMod
-          dotnet new classlib -n MySmapiMod
-          dotnet sln MySmapiMod.sln add MySmapiMod/MySmapiMod.csproj
+    # 3️⃣ Tools
+    - name: Install tools
+      run: sudo apt-get update && sudo apt-get install -y unzip jq
 
-      - name: Add SMAPI package
-        run: |
-          cd output/MySmapiMod
-          dotnet add package Pathoschild.Stardew.ModBuildConfig --version 4.4.0
+    # 4️⃣ Ordner vorbereiten
+    - name: Prepare folders
+      run: |
+        rm -rf ModBuilder/temp_build
+        mkdir -p ModBuilder/temp_build
+        mkdir -p ModBuilder/output/logs
+        mkdir -p ModBuilder/output/build
 
-      - name: Create ModEntry.cs
-        run: |
-          printf '%s\n' \
-          'using StardewModdingAPI;' \
-          '' \
-          'namespace MySmapiMod' \
-          '{' \
-          '    public class ModEntry : Mod' \
-          '    {' \
-          '        public override void Entry(IModHelper helper)' \
-          '        {' \
-          '            Monitor.Log("Mod loaded!", LogLevel.Info);' \
-          '        }' \
-          '    }' \
-          '}' \
-          > output/MySmapiMod/ModEntry.cs
+    # 5️⃣ Mod-Template entpacken
+    - name: Unpack template
+      run: |
+        unzip -o ModBuilder/input/template/*.zip -d ModBuilder/temp_build
 
-      - name: Create manifest.json
-        run: |
-          printf '%s\n' \
-          '{' \
-          '  "Name": "MySmapiMod",' \
-          '  "Author": "Smapifan",' \
-          '  "Version": "1.0.0",' \
-          '  "Description": "Generated SMAPI mod template",' \
-          '  "UniqueID": "Smapifan.MySmapiMod",' \
-          '  "EntryDll": "MySmapiMod.dll",' \
-          '  "MinimumApiVersion": "4.0.0"' \
-          '}' \
-          > output/MySmapiMod/manifest.json
+    # 6️⃣ Debug: Stardew GamePath prüfen
+    - name: Debug GamePath
+      run: |
+        echo "GamePath contents:"
+        ls ModBuilder/input/stardew
 
-      - name: Zip result
-        run: |
-          cd output
-          zip -r MySmapiMod-template.zip MySmapiMod MySmapiMod.sln
+    # 7️⃣ CSProj finden
+    - name: Find csproj
+      run: |
+        CS_PROJECT=$(find ModBuilder/temp_build -name "*.csproj" | head -n 1)
+        echo "Found: $CS_PROJECT"
+        echo "CS_PROJECT=$CS_PROJECT" >> $GITHUB_ENV
 
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: smapi-mod-template
-          path: output/MySmapiMod-template.zip
+    # 8️⃣ Build SMAPI Mod
+    - name: Build SMAPI Mod
+      run: |
+        dotnet build "$CS_PROJECT" -c Release \
+          -p:GamePath="$GITHUB_WORKSPACE/ModBuilder/input/stardew" \
+          | tee ModBuilder/output/logs/build.log
+
+    # 9️⃣ Mod-Name aus manifest.json lesen
+    - name: Read mod name
+      run: |
+        MOD_DIR=$(dirname "$CS_PROJECT")
+        MOD_NAME=$(jq -r .Name "$MOD_DIR/manifest.json")
+        echo "MOD_NAME=$MOD_NAME" >> $GITHUB_ENV
+
+    # 🔟 Mod-Dateien sammeln (entpackt)
+    - name: Collect mod output
+      run: |
+        MOD_DIR=$(dirname "$CS_PROJECT")
+        BUILD_OUT=ModBuilder/output/build/$MOD_NAME
+        mkdir -p "$BUILD_OUT"
+
+        # DLL kopieren
+        find "$MOD_DIR/bin/Release" -name "*.dll" -exec cp {} "$BUILD_OUT" \;
+
+        # Assets kopieren
+        if [ -d "$MOD_DIR/Assets" ]; then
+          cp -r "$MOD_DIR/Assets" "$BUILD_OUT"
+        fi
+
+        # manifest.json kopieren
+        cp "$MOD_DIR/manifest.json" "$BUILD_OUT"
+
+    # 1️⃣1️⃣ Artifact hochladen
+    - name: Upload result
+      uses: actions/upload-artifact@v4
+      with:
+        name: smapi-mod
+        path: |
+          ModBuilder/output/build/*
+          ModBuilder/output/logs/build.log
