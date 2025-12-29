@@ -1,1 +1,13 @@
-MSBUILD : error MSB1003: Specify a project or solution file. The current working directory does not contain a project or solution file.
+  Determining projects to restore...
+  Restored /home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj (in 652 ms).
+/usr/share/dotnet/sdk/10.0.101/Current/SolutionFile/ImportAfter/Microsoft.NET.Sdk.Solution.targets(36,5): warning NETSDK1194: The "--output" option isn't supported when building a solution. Specifying a solution-level output path results in all projects copying outputs to the same directory, which can lead to inconsistent builds. [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework.sln]
+/home/runner/.nuget/packages/pathoschild.stardew.modbuildconfig/4.4.0/build/Pathoschild.Stardew.ModBuildConfig.targets(74,5): error : The mod build package can't find your game folder. You can specify where to find it; see https://smapi.io/package/custom-game-path. [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj]
+
+Build FAILED.
+
+/usr/share/dotnet/sdk/10.0.101/Current/SolutionFile/ImportAfter/Microsoft.NET.Sdk.Solution.targets(36,5): warning NETSDK1194: The "--output" option isn't supported when building a solution. Specifying a solution-level output path results in all projects copying outputs to the same directory, which can lead to inconsistent builds. [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework.sln]
+/home/runner/.nuget/packages/pathoschild.stardew.modbuildconfig/4.4.0/build/Pathoschild.Stardew.ModBuildConfig.targets(74,5): error : The mod build package can't find your game folder. You can specify where to find it; see https://smapi.io/package/custom-game-path. [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj]
+    1 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:02.66
