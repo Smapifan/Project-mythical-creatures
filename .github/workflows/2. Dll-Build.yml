@@ -3,58 +3,76 @@ name: DLL Builder
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
 
 jobs:
-  build-dll:
+  build-dlls:
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
-    env:
-      INPUT_FOLDER: ${{ github.workspace }}/ModBuilder/output/build/LootChestFramework
-      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
-      OUTPUT_FOLDER: ${{ github.workspace }}/ModBuilder/output/build
-      LOG_FILE: ${{ github.workspace }}/ModBuilder/output/build/log.txt
-
     steps:
+      # 1️⃣ Checkout code
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2️⃣ Set Git user
       - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Setup .NET 6
+      # 3️⃣ Setup .NET 6
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      - name: Prepare Output Folder
-        run: mkdir -p ${{ env.OUTPUT_FOLDER }}
-
-      - name: Find Solution
-        id: find_sln
+      # 4️⃣ Define paths (adjustable)
+      - name: Set paths
         run: |
-          echo "sln_file=$(find DLL-Builder/temp_build -name '*.sln' | head -n 1)" >> $GITHUB_OUTPUT
+          echo "INPUT_PATH=DLL-Builder/input/stardew" >> $GITHUB_ENV
+          echo "GAME_PATH=DLL-Builder/input/stardew" >> $GITHUB_ENV
+          echo "OUTPUT_PATH=DLL-Builder/output/build" >> $GITHUB_ENV
+          echo "SLN_FILE=" >> $GITHUB_ENV  # leave empty to auto detect
 
-      - name: Build DLL
-        run: |
-          echo "Building solution ${{ steps.find_sln.outputs.sln_file }} ..."
-          mkdir -p $(dirname "${{ env.LOG_FILE }}")
-          dotnet build "${{ steps.find_sln.outputs.sln_file }}" \
-            -c Release \
-            -o "${{ env.OUTPUT_FOLDER }}" \
-            /p:ReferencePath="${{ env.INPUT_FOLDER }}" \
-            /p:GamePath="${{ env.GAME_PATH }}" \
-            /v:m > "${{ env.LOG_FILE }}" 2>&1 || true
-          echo "✅ Build finished. Log at ${{ env.LOG_FILE }}"
+      # 5️⃣ Create output folder
+      - name: Prepare output folder
+        run: mkdir -p ${{ env.OUTPUT_PATH }}
 
-      - name: Commit & Push log
+      # 6️⃣ Run build for all SLNs (auto-detect if empty)
+      - name: Build DLLs
         run: |
-          git add "${{ env.LOG_FILE }}" || echo "Nothing to add"
-          git commit -m "Update DLL Builder log [skip ci]" || echo "Nothing to commit"
+          # Find SLN if not set
+          if [ -z "${SLN_FILE}" ]; then
+            SLN_FILE=$(find "${INPUT_PATH}" -name "*.sln" | head -n 1)
+            if [ -z "$SLN_FILE" ]; then
+              echo "❌ No solution file found in ${INPUT_PATH}"
+              exit 1
+            fi
+          else
+            SLN_FILE="${SLN_FILE}"
+          fi
+          echo "🟢 Using solution file: $SLN_FILE"
+
+          # Dotnet build with game path simulation and output folder
+          dotnet build "$SLN_FILE" -c Release -o "${OUTPUT_PATH}" /p:DefineConstants="GAMEPATH='${GAME_PATH}'" > "${OUTPUT_PATH}/log.txt" 2>&1 || true
+
+      # 7️⃣ List built DLLs and log
+      - name: List output
+        run: |
+          echo "✅ Built files:"
+          ls -la "${OUTPUT_PATH}"
+          echo "✅ Log file:"
+          cat "${OUTPUT_PATH}/log.txt"
+
+      # 8️⃣ Commit and push output + log
+      - name: Commit and push build results
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add "${OUTPUT_PATH}" || echo "Nothing to add"
+          git commit -m "Update build output and log [skip ci]" || echo "Nothing to commit"
           git push origin main
