@@ -1,5 +1,5 @@
 {
-  "total_lines": 9644,
+  "total_lines": 9643,
   "files": {
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 42,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
@@ -79,6 +79,6 @@
     "DLL-Builder/input/stardew/smapi-internal/i18n/default.json": 6,
     "DLL-Builder/input/stardew/smapi-internal/i18n/ja.json": 6,
     "other/counts/linecount.json": 84,
-    "other/counts/filetype.json": 32
+    "other/counts/filetype.json": 31
   }
 }
