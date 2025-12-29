@@ -1,36 +1,29 @@
-name: DLL Builder Custom Paths
+name: DLL Custom Paths
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build-dlls:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
+
+    strategy:
+      matrix:
+        dll: [WerewolfStory, LootChestFramework] # Hier deine DLL-Projekte
+      fail-fast: false
+
+    env:
+      BOT_USER_FILE: ${{ github.workspace }}/BOT_USER.sh
+      INPUT_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
+      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
+      LOG_PATH: ${{ github.workspace }}/DLL-Builder/logs
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: Set Paths
-        run: |
-          # === CONFIGURE PATHS HERE ===
-          INPUT_PATH="DLL-Builder/input/stardew"        # Path where SLNs and CS projects are
-          GAME_PATH="DLL-Builder/input/stardew"         # Simulated SMAPI game folder
-          LOG_FOLDER="ModBuilder/output/logs"           # Logs folder
-          BOT_USER_FILE="BOT_USER.txt"                  # Bot user info file
-          mkdir -p "$LOG_FOLDER"
+        uses: actions/checkout@v3
 
       - name: Configure Git Bot User
         run: |
@@ -38,21 +31,40 @@ jobs:
           git config --global user.name "$Name"
           git config --global user.email "$Email"
 
-      - name: Find SLNs and Build
-        run: |
-          echo "Searching SLNs in $INPUT_PATH..."
-          find "$INPUT_PATH" -maxdepth 1 -name "*.sln" | head -n 100 | while read sln; do
-            log="$LOG_FOLDER/$(basename "$sln" .sln).log"
-            echo "=== Building $sln ===" | tee "$log"
-            dotnet build "$sln" /p:GamePath="$GAME_PATH" 2>&1 | tee -a "$log"
-            if [ "${PIPESTATUS[0]}" -ne 0 ]; then
-              echo "Build failed for $sln. Check $log"
-            fi
-          done
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
 
-      - name: Add DLLs & Logs to Repo
+      - name: Build DLL
+        working-directory: ${{ env.INPUT_PATH }}
         run: |
-          git add "$INPUT_PATH"/**/bin/**/*.dll || true
-          git add "$LOG_FOLDER" || true
-          git commit -m "Update DLLs & logs [skip ci]" || echo "Nothing to commit"
-          git push origin main || echo "Push failed, logs still saved"
+          # find the solution file automatically
+          sln_file=$(find . -name "*.sln" | head -n 1)
+          echo "Solution file found: $sln_file"
+
+          # Create log directory
+          mkdir -p ${{ env.LOG_PATH }}
+          log_file="${{ env.LOG_PATH }}/${{ matrix.dll }}_build.log"
+
+          # Build DLL with simulated GamePath
+          dotnet build "$sln_file" \
+            -c Release \
+            -p:GamePath="${{ env.GAME_PATH }}" \
+            > "$log_file" 2>&1 || echo "Build failed, see log"
+
+      - name: Upload DLL
+        if: success() || always()
+        run: |
+          # find DLL output
+          dll_file=$(find ${{ env.INPUT_PATH }}/bin/Release -name "${{ matrix.dll }}.dll" | head -n 1)
+          if [ -f "$dll_file" ]; then
+            cp "$dll_file" ${{ github.workspace }}/DLL-Builder/output/
+          fi
+
+      - name: Commit & Push logs and DLL
+        run: |
+          git add ${{ env.LOG_PATH }}/*
+          git add DLL-Builder/output/*
+          git commit -m "CI: Add build logs and DLLs for ${{ matrix.dll }}" || echo "Nothing to commit"
+          git push
