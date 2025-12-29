@@ -14,6 +14,7 @@
 | `.dll` | 262 |
 | `.dylib` | 2 |
 | `.editorconfig` | 1 |
+| `.env` | 1 |
 | `.exe` | 1 |
 | `.ini` | 1 |
 | `.json` | 66 |
@@ -22,7 +23,6 @@
 | `.md` | 7 |
 | `.png` | 40 |
 | `.props` | 2 |
-| `.sh` | 1 |
 | `.sln` | 2 |
 | `.targets` | 2 |
 | `.tbin` | 4 |
@@ -32,4 +32,4 @@
 | `.zip` | 3 |
 | `no_extension` | 2 |
 
-_Generated on 2025-12-29 15:29:00 UTC_
+_Generated on 2025-12-29 15:29:53 UTC_

@@ -1,7 +1,7 @@
 {
   "total_files": 439,
   "filetypes": {
-    ".sh": 1,
+    ".env": 1,
     ".md": 7,
     ".txt": 6,
     ".sln": 2,
