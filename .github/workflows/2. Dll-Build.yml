@@ -1,0 +1,57 @@
+name: DLL Builder
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build-dlls:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      INPUT_PATH: ${{ github.workspace }}/DLL-Builder/input         # Anpassbarer Input-Pfad (wo die SLNs/CSProj liegen)
+      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew   # Game path für SMAPI
+      OUTPUT_PATH: ${{ github.workspace }}/DLL-Builder/output       # Output wie VS Code Build
+
+    steps:
+      # 1️⃣ Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2️⃣ Git user (optional, falls Commit nötig)
+      - name: Configure Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # 3️⃣ Install .NET 6 SDK
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      # 4️⃣ Prepare folders
+      - name: Prepare folders
+        run: |
+          mkdir -p "$INPUT_PATH"
+          mkdir -p "$GAME_PATH"
+          mkdir -p "$OUTPUT_PATH"
+
+      # 5️⃣ Build all projects automatically
+      - name: Build all SLNs/CSProj
+        run: |
+          echo "🔹 Starting automatic build..."
+          # Suche alle .sln Dateien im Input-Pfad
+          find "$INPUT_PATH" -name "*.sln" | while read sln_file; do
+            echo "🔹 Building solution: $sln_file"
+            # Dotnet build wie in VS Code, Release Config, GamePath simuliert
+            dotnet build "$sln_file" -c Release -p:GamePath="$GAME_PATH" \
+              2>&1 | tee "$OUTPUT_PATH/$(basename "$sln_file").log"
+            echo "✅ Finished building $sln_file"
+          done
+          echo "🎉 All builds completed!"
