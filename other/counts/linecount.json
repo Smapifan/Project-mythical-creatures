@@ -1,11 +1,11 @@
 {
-  "total_lines": 9700,
+  "total_lines": 9666,
   "files": {
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 46,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/template/content.json": 33,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestFramework.cs": 109,
+    "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs": 75,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/LootChestHelper.cs": 35,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/IChest.cs": 23,
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
