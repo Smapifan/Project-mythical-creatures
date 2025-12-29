@@ -67,9 +67,4 @@ namespace LootChest.Framework.Code
         // - Chest leeren/auffüllen
         // - Texturen optional überschreiben
     }
-}    {
-        public string MapID { get; set; } = "";
-        public int TileX { get; set; }
-        public int TileY { get; set; }
-    }
 }
