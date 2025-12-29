@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 2️⃣ Git user (optional, falls Commit nötig)
+      # 2️⃣ Git user
       - name: Configure Git user
         run: |
           git config --global user.name "github-actions[bot]"
@@ -42,16 +42,25 @@ jobs:
           mkdir -p "$GAME_PATH"
           mkdir -p "$OUTPUT_PATH"
 
-      # 5️⃣ Build all projects automatically
+      # 5️⃣ Build all projects automatically with logs
       - name: Build all SLNs/CSProj
         run: |
           echo "🔹 Starting automatic build..."
-          # Suche alle .sln Dateien im Input-Pfad
           find "$INPUT_PATH" -name "*.sln" | while read sln_file; do
+            LOG_FILE="$OUTPUT_PATH/$(basename "$sln_file").log"
             echo "🔹 Building solution: $sln_file"
-            # Dotnet build wie in VS Code, Release Config, GamePath simuliert
+            # Build, log always
             dotnet build "$sln_file" -c Release -p:GamePath="$GAME_PATH" \
-              2>&1 | tee "$OUTPUT_PATH/$(basename "$sln_file").log"
+              > "$LOG_FILE" 2>&1 || echo "⚠️ Build failed, see log: $LOG_FILE"
             echo "✅ Finished building $sln_file"
           done
-          echo "🎉 All builds completed!"
+
+      # 6️⃣ Commit and push logs
+      - name: Commit and push logs
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+          git add "$OUTPUT_PATH"/*.log
+          git commit -m "Update DLL build logs [skip ci]" || echo "Nothing to commit"
+          git push origin main
