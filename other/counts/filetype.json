@@ -1,5 +1,5 @@
 {
-  "total_files": 438,
+  "total_files": 439,
   "filetypes": {
     ".sh": 1,
     ".md": 7,
@@ -17,8 +17,8 @@
     ".png": 40,
     ".tbin": 4,
     ".wav": 2,
+    ".log": 2,
     "no_extension": 2,
-    ".log": 1,
     ".0": 1,
     ".dylib": 2,
     ".exe": 1,
