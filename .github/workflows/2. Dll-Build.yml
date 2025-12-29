@@ -1,66 +1,60 @@
 name: DLL Builder
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  build-dlls:
+  build-dll:
     runs-on: ubuntu-latest
     permissions:
       contents: write
 
     env:
-      INPUT_PATH: ${{ github.workspace }}/ModBuilder/output/build/LootChestFramework         # Anpassbarer Input-Pfad (wo die SLNs/CSProj liegen)
-      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew   # Game path für SMAPI
-      OUTPUT_PATH: ${{ github.workspace }}/DLL-Builder/output       # Output wie VS Code Build
+      INPUT_FOLDER: ${{ github.workspace }}/ModBuilder/output/build/LootChestFramework
+      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
+      OUTPUT_FOLDER: ${{ github.workspace }}/ModBuilder/output/build
+      LOG_FILE: ${{ github.workspace }}/ModBuilder/output/build/log.txt
 
     steps:
-      # 1️⃣ Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ Git user
-      - name: Configure Git user
+      - name: Set Git user
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # 3️⃣ Install .NET 6 SDK
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 4️⃣ Prepare folders
-      - name: Prepare folders
-        run: |
-          mkdir -p "$INPUT_PATH"
-          mkdir -p "$GAME_PATH"
-          mkdir -p "$OUTPUT_PATH"
+      - name: Prepare Output Folder
+        run: mkdir -p ${{ env.OUTPUT_FOLDER }}
 
-      # 5️⃣ Build all projects automatically with logs
-      - name: Build all SLNs/CSProj
+      - name: Find Solution
+        id: find_sln
         run: |
-          echo "🔹 Starting automatic build..."
-          find "$INPUT_PATH" -name "*.sln" | while read sln_file; do
-            LOG_FILE="$OUTPUT_PATH/$(basename "$sln_file").log"
-            echo "🔹 Building solution: $sln_file"
-            # Build, log always
-            dotnet build "$sln_file" -c Release -p:GamePath="$GAME_PATH" \
-              > "$LOG_FILE" 2>&1 || echo "⚠️ Build failed, see log: $LOG_FILE"
-            echo "✅ Finished building $sln_file"
-          done
+          echo "sln_file=$(find DLL-Builder/temp_build -name '*.sln' | head -n 1)" >> $GITHUB_OUTPUT
 
-      # 6️⃣ Commit and push logs
-      - name: Commit and push logs
+      - name: Build DLL
         run: |
-          git fetch origin main
-          git checkout main
-          git pull origin main
-          git add "$OUTPUT_PATH"/*.log
-          git commit -m "Update DLL build logs [skip ci]" || echo "Nothing to commit"
+          echo "Building solution ${{ steps.find_sln.outputs.sln_file }} ..."
+          mkdir -p $(dirname "${{ env.LOG_FILE }}")
+          dotnet build "${{ steps.find_sln.outputs.sln_file }}" \
+            -c Release \
+            -o "${{ env.OUTPUT_FOLDER }}" \
+            /p:ReferencePath="${{ env.INPUT_FOLDER }}" \
+            /p:GamePath="${{ env.GAME_PATH }}" \
+            /v:m > "${{ env.LOG_FILE }}" 2>&1 || true
+          echo "✅ Build finished. Log at ${{ env.LOG_FILE }}"
+
+      - name: Commit & Push log
+        run: |
+          git add "${{ env.LOG_FILE }}" || echo "Nothing to add"
+          git commit -m "Update DLL Builder log [skip ci]" || echo "Nothing to commit"
           git push origin main
