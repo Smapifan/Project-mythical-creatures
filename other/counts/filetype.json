@@ -1,8 +1,9 @@
 {
   "total_files": 438,
   "filetypes": {
+    ".sh": 1,
     ".md": 7,
-    ".txt": 7,
+    ".txt": 6,
     ".sln": 2,
     ".cs": 13,
     ".csproj": 2,

@@ -22,13 +22,14 @@
 | `.md` | 7 |
 | `.png` | 40 |
 | `.props` | 2 |
+| `.sh` | 1 |
 | `.sln` | 2 |
 | `.targets` | 2 |
 | `.tbin` | 4 |
-| `.txt` | 7 |
+| `.txt` | 6 |
 | `.wav` | 2 |
 | `.xml` | 7 |
 | `.zip` | 3 |
 | `no_extension` | 2 |
 
-_Generated on 2025-12-29 15:22:25 UTC_
+_Generated on 2025-12-29 15:23:06 UTC_
