@@ -1,7 +1,7 @@
 {
-  "total_lines": 9651,
+  "total_lines": 9647,
   "files": {
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 46,
+    "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 42,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
     "ModBuilder/output/build/LootChestFramework/LootChestFramework/assets/content_en.json": 23,

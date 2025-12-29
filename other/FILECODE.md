@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 9651
+**Total Lines:** 9647
 
 | File | Lines |
 |------|--------|
@@ -29,7 +29,7 @@
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs` | 75 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/Helpers.cs` | 30 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/IChest.cs` | 23 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 46 |
+| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 42 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/assets/content_en.json` | 23 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json` | 73 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json` | 108 |
@@ -84,4 +84,4 @@
 | `other/counts/filetype.json` | 30 |
 | `other/counts/linecount.json` | 84 |
 
-_Generated on 2025-12-29 14:25:09 UTC_
+_Generated on 2025-12-29 14:26:09 UTC_
