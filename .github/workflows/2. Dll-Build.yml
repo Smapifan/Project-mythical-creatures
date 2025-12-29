@@ -1,64 +1,56 @@
-name: DLL Builder Parallel - Custom Paths
+name: DLL Builder Custom Paths
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-env:
-  INPUT_PATH: ModBuilder/output/build/LootChestFramework     # Source .cs/.csproj/.sln path
-  GAME_PATH: DLL-Builder/input/stardew      # Simulated Game Path
-  LOG_FOLDER: ModBuilder/output/logs        # Folder for individual logs
-  BOT_USER_FILE: BOT_USER.txt               # GitHub bot user file
-
 jobs:
   build-dlls:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        sln-file: ${{ fromJson(needs.get-sln.outputs.slns) }}
-      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Load GitHub bot user
-        id: load-bot
-        run: |
-          source $BOT_USER_FILE
-          echo "BOT_NAME=$Name" >> $GITHUB_ENV
-          echo "BOT_EMAIL=$Email" >> $GITHUB_ENV
-
-      - name: Set Git config
-        run: |
-          git config --global user.name "$BOT_NAME"
-          git config --global user.email "$BOT_EMAIL"
-
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      - name: Prepare folders
+      - name: Set Paths
         run: |
+          # === CONFIGURE PATHS HERE ===
+          INPUT_PATH="DLL-Builder/input/stardew"        # Path where SLNs and CS projects are
+          GAME_PATH="DLL-Builder/input/stardew"         # Simulated SMAPI game folder
+          LOG_FOLDER="ModBuilder/output/logs"           # Logs folder
+          BOT_USER_FILE="BOT_USER.txt"                  # Bot user info file
           mkdir -p "$LOG_FOLDER"
 
-      - name: Find SLN files
-        id: get-sln
+      - name: Configure Git Bot User
         run: |
-          slns=$(find "$INPUT_PATH" -maxdepth 1 -name "*.sln" | jq -R -s -c 'split("\n")[:-1]')
-          echo "::set-output name=slns::$slns"
+          source $BOT_USER_FILE
+          git config --global user.name "$Name"
+          git config --global user.email "$Email"
 
-      - name: Build DLLs (parallel)
+      - name: Find SLNs and Build
         run: |
-          sln="${{ matrix.sln-file }}"
-          log="$LOG_FOLDER/$(basename "$sln" .sln).log"
-          echo "Building $sln..."
-          dotnet build "$sln" /p:GamePath="$GAME_PATH" >> "$log" 2>&1 || true
+          echo "Searching SLNs in $INPUT_PATH..."
+          find "$INPUT_PATH" -maxdepth 1 -name "*.sln" | head -n 100 | while read sln; do
+            log="$LOG_FOLDER/$(basename "$sln" .sln).log"
+            echo "=== Building $sln ===" | tee "$log"
+            dotnet build "$sln" /p:GamePath="$GAME_PATH" 2>&1 | tee -a "$log"
+            if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+              echo "Build failed for $sln. Check $log"
+            fi
+          done
 
-      - name: Commit DLLs & Logs
+      - name: Add DLLs & Logs to Repo
         run: |
           git add "$INPUT_PATH"/**/bin/**/*.dll || true
           git add "$LOG_FOLDER" || true
