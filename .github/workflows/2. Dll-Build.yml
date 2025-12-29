@@ -6,55 +6,68 @@ on:
   workflow_dispatch:
 
 env:
-  INPUT_PATH: "DLL-Builder/input/stardew"        # adjustable input folder with all game DLLs
+  INPUT_PATH: "ModBuilder/output/build/LootChestFramework"        # adjustable input folder with all game DLLs
   GAME_PATH: "DLL-Builder/input/stardew"         # simulated game path
-  LOG_PATH: "DLL-Builder/output/logs"            # logs folder
-  BOT_USER_FILE: "bot_user.env"          # contains: BOT_NAME="Smapifan-bot", BOT_EMAIL="your-email@example.com"
-  MAX_PARALLEL_DLLS: 100
+  LOG_PATH: "ModBuilder/output/logs"            # logs folder
+  BOT_USER_FILE: ".github/bot_user.env"          # contains: BOT_NAME="Smapifan-bot", BOT_EMAIL="your-email@example.com"
 
 jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      dll-matrix: ${{ steps.set-matrix.outputs.dlls }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Collect DLL projects
+        id: set-matrix
+        run: |
+          echo "Collecting .csproj files..."
+          DLLS=$(find ${{ env.INPUT_PATH }} -name "*.csproj" | jq -R -s -c 'split("\n")[:-1]')
+          echo "dlls=$DLLS" >> $GITHUB_OUTPUT
+
   build-dlls:
-    name: Build DLLs
+    needs: prepare-matrix
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        dll: [ $(ls DLL-Builder/input/stardew/*.csproj | head -n ${{ env.MAX_PARALLEL_DLLS }}) ]
+        dll: ${{fromJson(needs.prepare-matrix.outputs.dll-matrix)}}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Load Bot User
-      run: source ${{ env.BOT_USER_FILE }}
+      - name: Load Bot User
+        run: source ${{ env.BOT_USER_FILE }}
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Restore NuGet Packages
-      run: |
-        echo "Restoring ${{ matrix.dll }}..."
-        dotnet restore "${{ matrix.dll }}" -p:GamePath="${{ env.GAME_PATH }}" > "${{ env.LOG_PATH }}/restore.log" 2>&1
+      - name: Restore NuGet Packages
+        run: |
+          echo "Restoring ${{ matrix.dll }}..."
+          mkdir -p "${{ env.LOG_PATH }}"
+          dotnet restore "${{ matrix.dll }}" -p:GamePath="${{ env.GAME_PATH }}" > "${{ env.LOG_PATH }}/restore.log" 2>&1
 
-    - name: Build DLL
-      run: |
-        echo "Building ${{ matrix.dll }}..."
-        mkdir -p "${{ env.LOG_PATH }}"
-        LOG_FILE="${{ env.LOG_PATH }}/$(basename ${{ matrix.dll }} .csproj)_build.log"
-        dotnet build "${{ matrix.dll }}" -c Release -p:GamePath="${{ env.GAME_PATH }}" > "$LOG_FILE" 2>&1 || echo "Build failed for ${{ matrix.dll }}, see $LOG_FILE"
+      - name: Build DLL
+        run: |
+          echo "Building ${{ matrix.dll }}..."
+          LOG_FILE="${{ env.LOG_PATH }}/$(basename ${{ matrix.dll }} .csproj)_build.log"
+          dotnet build "${{ matrix.dll }}" -c Release -p:GamePath="${{ env.GAME_PATH }}" > "$LOG_FILE" 2>&1 || echo "Build failed for ${{ matrix.dll }}, see $LOG_FILE"
 
-    - name: Upload DLLs & Logs
-      run: |
-        OUTPUT_DIR=$(dirname "${{ matrix.dll }}")/bin/Release/net6.0
-        if [ -d "$OUTPUT_DIR" ]; then
-          echo "Copying DLLs to output..."
-          mkdir -p DLL-Builder/output/build/
-          cp "$OUTPUT_DIR"/*.dll DLL-Builder/output/build/ || echo "No DLLs to copy"
-        fi
-        git config --global user.name "$BOT_NAME"
-        git config --global user.email "$BOT_EMAIL"
-        git add DLL-Builder/output/
-        git commit -m "Add DLL build output and logs for ${{ matrix.dll }}" || echo "Nothing to commit"
-        git push
+      - name: Upload DLLs & Logs
+        run: |
+          OUTPUT_DIR=$(dirname "${{ matrix.dll }}")/bin/Release/net6.0
+          if [ -d "$OUTPUT_DIR" ]; then
+            mkdir -p DLL-Builder/output/build/
+            cp "$OUTPUT_DIR"/*.dll DLL-Builder/output/build/ || echo "No DLLs to copy"
+          fi
+          git config --global user.name "$BOT_NAME"
+          git config --global user.email "$BOT_EMAIL"
+          git add DLL-Builder/output/
+          git commit -m "Add DLL build output and logs for ${{ matrix.dll }}" || echo "Nothing to commit"
+          git push
