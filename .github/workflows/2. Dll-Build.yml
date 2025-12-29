@@ -12,7 +12,7 @@ jobs:
       contents: write
 
     env:
-      INPUT_PATH: ${{ github.workspace }}/DLL-Builder/input         # Anpassbarer Input-Pfad (wo die SLNs/CSProj liegen)
+      INPUT_PATH: ${{ github.workspace }}/ModBuilder/output/build/LootChestFramework         # Anpassbarer Input-Pfad (wo die SLNs/CSProj liegen)
       GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew   # Game path für SMAPI
       OUTPUT_PATH: ${{ github.workspace }}/DLL-Builder/output       # Output wie VS Code Build
 
