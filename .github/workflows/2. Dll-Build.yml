@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  INPUT_PATH: "DLL-Builder/input/stardew"   # folder containing all DLLs / game files
+  INPUT_PATH: "ModBuilder/output/build/LootChestFramework"   # folder containing all DLLs / game files
   GAME_PATH: "DLL-Builder/input/stardew"    # simulated game path
   LOG_PATH: "ModBuilder/output/logs"        # log folder
   BOT_USER_FILE: ".github/bot_user.env"     # file containing BOT_NAME and BOT_EMAIL
