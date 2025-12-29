@@ -1,79 +1,66 @@
-name: DLL Builder
+name: DLL Builder Parallel - Custom Paths
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+env:
+  INPUT_PATH: ModBuilder/output/build/LootChestFramework     # Source .cs/.csproj/.sln path
+  GAME_PATH: DLL-Builder/input/stardew      # Simulated Game Path
+  LOG_FOLDER: ModBuilder/output/logs        # Folder for individual logs
+  BOT_USER_FILE: BOT_USER.txt               # GitHub bot user file
+
 jobs:
   build-dlls:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    # ----------------------------
-    # 🔹 Configurable strings
-    # ----------------------------
-    env:
-      INPUT_PATH: "ModBuilder/output/build/LootChestFramework"       # Path where the mod/game files are
-      GAME_PATH: "DLL-Builder/input/stardew"        # Game path simulation
-      OUTPUT_PATH: "ModBuilder/output/build"       # Output folder like dotnet build
-      SLN_FILE: ""                                  # If empty, auto-detect .sln
-
+    strategy:
+      matrix:
+        sln-file: ${{ fromJson(needs.get-sln.outputs.slns) }}
+      fail-fast: false
     steps:
-      # 1️⃣ Checkout code
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ Set Git user
-      - name: Set Git user
+      - name: Load GitHub bot user
+        id: load-bot
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          source $BOT_USER_FILE
+          echo "BOT_NAME=$Name" >> $GITHUB_ENV
+          echo "BOT_EMAIL=$Email" >> $GITHUB_ENV
 
-      # 3️⃣ Setup .NET 6
-      - name: Setup .NET
+      - name: Set Git config
+        run: |
+          git config --global user.name "$BOT_NAME"
+          git config --global user.email "$BOT_EMAIL"
+
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      # 4️⃣ Create output folder
-      - name: Prepare output folder
-        run: mkdir -p ${{ env.OUTPUT_PATH }}
-
-      # 5️⃣ Run build for SLN
-      - name: Build DLLs
+      - name: Prepare folders
         run: |
-          # Auto-detect SLN if not set
-          if [ -z "${SLN_FILE}" ]; then
-            SLN_FILE=$(find "${INPUT_PATH}" -name "*.sln" | head -n 1)
-            if [ -z "$SLN_FILE" ]; then
-              echo "❌ No solution file found in ${INPUT_PATH}"
-              exit 1
-            fi
-          else
-            SLN_FILE="${SLN_FILE}"
-          fi
-          echo "🟢 Using solution file: $SLN_FILE"
+          mkdir -p "$LOG_FOLDER"
 
-          # Dotnet build with game path simulation and output folder
-          dotnet build "$SLN_FILE" -c Release -o "${OUTPUT_PATH}" /p:DefineConstants="GAMEPATH='${GAME_PATH}'" > "${OUTPUT_PATH}/log.txt" 2>&1 || true
-
-      # 6️⃣ List built DLLs and log
-      - name: List output
+      - name: Find SLN files
+        id: get-sln
         run: |
-          echo "✅ Built files:"
-          ls -la "${OUTPUT_PATH}"
-          echo "✅ Log file:"
-          cat "${OUTPUT_PATH}/log.txt"
+          slns=$(find "$INPUT_PATH" -maxdepth 1 -name "*.sln" | jq -R -s -c 'split("\n")[:-1]')
+          echo "::set-output name=slns::$slns"
 
-      # 7️⃣ Commit and push build output + log
-      - name: Commit and push build results
+      - name: Build DLLs (parallel)
         run: |
-          git fetch origin main
-          git checkout main
-          git pull origin main
-          git add "${OUTPUT_PATH}" || echo "Nothing to add"
-          git commit -m "Update build output and log [skip ci]" || echo "Nothing to commit"
-          git push origin main
+          sln="${{ matrix.sln-file }}"
+          log="$LOG_FOLDER/$(basename "$sln" .sln).log"
+          echo "Building $sln..."
+          dotnet build "$sln" /p:GamePath="$GAME_PATH" >> "$log" 2>&1 || true
+
+      - name: Commit DLLs & Logs
+        run: |
+          git add "$INPUT_PATH"/**/bin/**/*.dll || true
+          git add "$LOG_FOLDER" || true
+          git commit -m "Update DLLs & logs [skip ci]" || echo "Nothing to commit"
+          git push origin main || echo "Push failed, logs still saved"
