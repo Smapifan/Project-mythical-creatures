@@ -11,6 +11,15 @@ jobs:
     permissions:
       contents: write
 
+    # ----------------------------
+    # 🔹 Configurable strings
+    # ----------------------------
+    env:
+      INPUT_PATH: "ModBuilder/output/build/LootChestFramework"       # Path where the mod/game files are
+      GAME_PATH: "DLL-Builder/input/stardew"        # Game path simulation
+      OUTPUT_PATH: "ModBuilder/output/build"       # Output folder like dotnet build
+      SLN_FILE: ""                                  # If empty, auto-detect .sln
+
     steps:
       # 1️⃣ Checkout code
       - uses: actions/checkout@v4
@@ -29,22 +38,14 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
-      # 4️⃣ Define paths (adjustable)
-      - name: Set paths
-        run: |
-          echo "INPUT_PATH=DLL-Builder/input/stardew" >> $GITHUB_ENV
-          echo "GAME_PATH=DLL-Builder/input/stardew" >> $GITHUB_ENV
-          echo "OUTPUT_PATH=DLL-Builder/output/build" >> $GITHUB_ENV
-          echo "SLN_FILE=" >> $GITHUB_ENV  # leave empty to auto detect
-
-      # 5️⃣ Create output folder
+      # 4️⃣ Create output folder
       - name: Prepare output folder
         run: mkdir -p ${{ env.OUTPUT_PATH }}
 
-      # 6️⃣ Run build for all SLNs (auto-detect if empty)
+      # 5️⃣ Run build for SLN
       - name: Build DLLs
         run: |
-          # Find SLN if not set
+          # Auto-detect SLN if not set
           if [ -z "${SLN_FILE}" ]; then
             SLN_FILE=$(find "${INPUT_PATH}" -name "*.sln" | head -n 1)
             if [ -z "$SLN_FILE" ]; then
@@ -59,7 +60,7 @@ jobs:
           # Dotnet build with game path simulation and output folder
           dotnet build "$SLN_FILE" -c Release -o "${OUTPUT_PATH}" /p:DefineConstants="GAMEPATH='${GAME_PATH}'" > "${OUTPUT_PATH}/log.txt" 2>&1 || true
 
-      # 7️⃣ List built DLLs and log
+      # 6️⃣ List built DLLs and log
       - name: List output
         run: |
           echo "✅ Built files:"
@@ -67,7 +68,7 @@ jobs:
           echo "✅ Log file:"
           cat "${OUTPUT_PATH}/log.txt"
 
-      # 8️⃣ Commit and push output + log
+      # 7️⃣ Commit and push build output + log
       - name: Commit and push build results
         run: |
           git fetch origin main
