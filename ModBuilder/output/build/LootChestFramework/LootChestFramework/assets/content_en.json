@@ -1,0 +1,23 @@
+{
+  "LogName": "Chest1", // Optional log name
+  "Target": "Smapifan/LootChest.Framework",
+  "Entries": {
+    "Chest1": {
+      "Location": {
+        "MapID": "Farm", // Map or mod map
+        "TileX": 30,
+        "TileY": 30
+      },
+      "Unbreakable": true, // Can chest be destroyed?
+      "ForWorld": true, // Loot shared for all players
+      "ForPlayer": false, // If false, ForWorld=true, else loot split by PlayerCount
+      "PlayerCount": 1, // Players per loot group (ignored if ForWorld=true)
+      "CanStoreItems": false, // Can players deposit items into this chest?
+      "Items": [
+        { "ID": "388", "Count": 10 }, // Item ID, count
+        { "ID": "390", "Count": 5 },
+        { "ID": "928", "Count": 3 }
+      ]
+    }
+  }
+}
