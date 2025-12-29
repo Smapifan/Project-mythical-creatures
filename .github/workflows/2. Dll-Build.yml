@@ -1,70 +1,60 @@
-name: DLL Custom Paths
+name: DLL Builder - Parallel Build
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
+
+env:
+  INPUT_PATH: "DLL-Builder/input/stardew"        # adjustable input folder with all game DLLs
+  GAME_PATH: "DLL-Builder/input/stardew"         # simulated game path
+  LOG_PATH: "DLL-Builder/output/logs"            # logs folder
+  BOT_USER_FILE: "bot_user.env"          # contains: BOT_NAME="Smapifan-bot", BOT_EMAIL="your-email@example.com"
+  MAX_PARALLEL_DLLS: 100
 
 jobs:
   build-dlls:
+    name: Build DLLs
     runs-on: ubuntu-latest
-
     strategy:
-      matrix:
-        dll: [WerewolfStory, LootChestFramework] # Hier deine DLL-Projekte
       fail-fast: false
-
-    env:
-      BOT_USER_FILE: ${{ github.workspace }}/BOT_USER.sh
-      INPUT_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
-      GAME_PATH: ${{ github.workspace }}/DLL-Builder/input/stardew
-      LOG_PATH: ${{ github.workspace }}/DLL-Builder/logs
+      matrix:
+        dll: [ $(ls DLL-Builder/input/stardew/*.csproj | head -n ${{ env.MAX_PARALLEL_DLLS }}) ]
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Configure Git Bot User
-        run: |
-          source $BOT_USER_FILE
-          git config --global user.name "$Name"
-          git config --global user.email "$Email"
+    - name: Load Bot User
+      run: source ${{ env.BOT_USER_FILE }}
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
 
-      - name: Build DLL
-        working-directory: ${{ env.INPUT_PATH }}
-        run: |
-          # find the solution file automatically
-          sln_file=$(find . -name "*.sln" | head -n 1)
-          echo "Solution file found: $sln_file"
+    - name: Restore NuGet Packages
+      run: |
+        echo "Restoring ${{ matrix.dll }}..."
+        dotnet restore "${{ matrix.dll }}" -p:GamePath="${{ env.GAME_PATH }}" > "${{ env.LOG_PATH }}/restore.log" 2>&1
 
-          # Create log directory
-          mkdir -p ${{ env.LOG_PATH }}
-          log_file="${{ env.LOG_PATH }}/${{ matrix.dll }}_build.log"
+    - name: Build DLL
+      run: |
+        echo "Building ${{ matrix.dll }}..."
+        mkdir -p "${{ env.LOG_PATH }}"
+        LOG_FILE="${{ env.LOG_PATH }}/$(basename ${{ matrix.dll }} .csproj)_build.log"
+        dotnet build "${{ matrix.dll }}" -c Release -p:GamePath="${{ env.GAME_PATH }}" > "$LOG_FILE" 2>&1 || echo "Build failed for ${{ matrix.dll }}, see $LOG_FILE"
 
-          # Build DLL with simulated GamePath
-          dotnet build "$sln_file" \
-            -c Release \
-            -p:GamePath="${{ env.GAME_PATH }}" \
-            > "$log_file" 2>&1 || echo "Build failed, see log"
-
-      - name: Upload DLL
-        if: success() || always()
-        run: |
-          # find DLL output
-          dll_file=$(find ${{ env.INPUT_PATH }}/bin/Release -name "${{ matrix.dll }}.dll" | head -n 1)
-          if [ -f "$dll_file" ]; then
-            cp "$dll_file" ${{ github.workspace }}/DLL-Builder/output/
-          fi
-
-      - name: Commit & Push logs and DLL
-        run: |
-          git add ${{ env.LOG_PATH }}/*
-          git add DLL-Builder/output/*
-          git commit -m "CI: Add build logs and DLLs for ${{ matrix.dll }}" || echo "Nothing to commit"
-          git push
+    - name: Upload DLLs & Logs
+      run: |
+        OUTPUT_DIR=$(dirname "${{ matrix.dll }}")/bin/Release/net6.0
+        if [ -d "$OUTPUT_DIR" ]; then
+          echo "Copying DLLs to output..."
+          mkdir -p DLL-Builder/output/build/
+          cp "$OUTPUT_DIR"/*.dll DLL-Builder/output/build/ || echo "No DLLs to copy"
+        fi
+        git config --global user.name "$BOT_NAME"
+        git config --global user.email "$BOT_EMAIL"
+        git add DLL-Builder/output/
+        git commit -m "Add DLL build output and logs for ${{ matrix.dll }}" || echo "Nothing to commit"
+        git push
