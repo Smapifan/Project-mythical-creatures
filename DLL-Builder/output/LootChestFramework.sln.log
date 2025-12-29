@@ -1,0 +1,11 @@
+  Determining projects to restore...
+  Restored /home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj (in 611 ms).
+/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs(56,35): error CS0246: The type or namespace name 'MenuChangedEventArgs' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj]
+
+Build FAILED.
+
+/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs(56,35): error CS0246: The type or namespace name 'MenuChangedEventArgs' could not be found (are you missing a using directive or an assembly reference?) [/home/runner/work/Project-mythical-creatures/Project-mythical-creatures/ModBuilder/output/build/LootChestFramework/LootChestFramework/LootChestFramework.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:05.09
