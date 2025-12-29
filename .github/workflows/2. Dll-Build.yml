@@ -1,4 +1,4 @@
-name: DLL Builder - Parallel Build
+name: DLL Builder - Custom Paths
 
 on:
   push:
@@ -6,68 +6,61 @@ on:
   workflow_dispatch:
 
 env:
-  INPUT_PATH: "ModBuilder/output/build/LootChestFramework"        # adjustable input folder with all game DLLs
-  GAME_PATH: "DLL-Builder/input/stardew"         # simulated game path
-  LOG_PATH: "ModBuilder/output/logs"            # logs folder
-  BOT_USER_FILE: ".github/bot_user.env"          # contains: BOT_NAME="Smapifan-bot", BOT_EMAIL="your-email@example.com"
+  INPUT_PATH: "DLL-Builder/input/stardew"   # folder containing all DLLs / game files
+  GAME_PATH: "DLL-Builder/input/stardew"    # simulated game path
+  LOG_PATH: "ModBuilder/output/logs"        # log folder
+  BOT_USER_FILE: ".github/bot_user.env"     # file containing BOT_NAME and BOT_EMAIL
 
 jobs:
-  prepare-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      dll-matrix: ${{ steps.set-matrix.outputs.dlls }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Collect DLL projects
-        id: set-matrix
-        run: |
-          echo "Collecting .csproj files..."
-          DLLS=$(find ${{ env.INPUT_PATH }} -name "*.csproj" | jq -R -s -c 'split("\n")[:-1]')
-          echo "dlls=$DLLS" >> $GITHUB_OUTPUT
-
   build-dlls:
-    needs: prepare-matrix
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        dll: ${{fromJson(needs.prepare-matrix.outputs.dll-matrix)}}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Load Bot User
-        run: source ${{ env.BOT_USER_FILE }}
+        run: |
+          if [ -f "$BOT_USER_FILE" ]; then
+            source "$BOT_USER_FILE"
+            git config user.name "$BOT_NAME"
+            git config user.email "$BOT_EMAIL"
+          else
+            echo "Bot user file missing!"
+            exit 1
+          fi
 
-      - name: Setup .NET
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
 
-      - name: Restore NuGet Packages
+      - name: Restore Dependencies
         run: |
-          echo "Restoring ${{ matrix.dll }}..."
-          mkdir -p "${{ env.LOG_PATH }}"
-          dotnet restore "${{ matrix.dll }}" -p:GamePath="${{ env.GAME_PATH }}" > "${{ env.LOG_PATH }}/restore.log" 2>&1
-
-      - name: Build DLL
-        run: |
-          echo "Building ${{ matrix.dll }}..."
-          LOG_FILE="${{ env.LOG_PATH }}/$(basename ${{ matrix.dll }} .csproj)_build.log"
-          dotnet build "${{ matrix.dll }}" -c Release -p:GamePath="${{ env.GAME_PATH }}" > "$LOG_FILE" 2>&1 || echo "Build failed for ${{ matrix.dll }}, see $LOG_FILE"
-
-      - name: Upload DLLs & Logs
-        run: |
-          OUTPUT_DIR=$(dirname "${{ matrix.dll }}")/bin/Release/net6.0
-          if [ -d "$OUTPUT_DIR" ]; then
-            mkdir -p DLL-Builder/output/build/
-            cp "$OUTPUT_DIR"/*.dll DLL-Builder/output/build/ || echo "No DLLs to copy"
+          echo "Restoring projects..."
+          sln_file=$(find $INPUT_PATH -name "*.sln" | head -n 1)
+          if [ -z "$sln_file" ]; then
+            echo "No solution file found in $INPUT_PATH"
+            exit 1
           fi
-          git config --global user.name "$BOT_NAME"
-          git config --global user.email "$BOT_EMAIL"
-          git add DLL-Builder/output/
-          git commit -m "Add DLL build output and logs for ${{ matrix.dll }}" || echo "Nothing to commit"
+          dotnet restore "$sln_file"
+
+      - name: Build DLLs
+        run: |
+          OUTPUT_DIR=$(dirname "$sln_file")/bin/Release/net6.0
+          mkdir -p "$OUTPUT_DIR"
+          mkdir -p "$LOG_PATH"
+          echo "Building $sln_file..."
+          # Build solution and capture logs always
+          dotnet build "$sln_file" -c Release > "$LOG_PATH/build.log" 2>&1 || true
+
+      - name: Push DLLs and Logs
+        run: |
+          # Sync with remote to prevent fast-forward errors
+          git fetch origin main
+          git reset --hard origin/main
+
+          # Add DLLs and logs
+          git add "$OUTPUT_DIR" "$LOG_PATH"
+          git commit -m "Add DLL build output and logs" || echo "Nothing to commit"
           git push
