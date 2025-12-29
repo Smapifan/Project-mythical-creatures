@@ -1,8 +1,8 @@
 {
-  "total_files": 437,
+  "total_files": 438,
   "filetypes": {
     ".md": 7,
-    ".txt": 6,
+    ".txt": 7,
     ".sln": 2,
     ".cs": 13,
     ".csproj": 2,
