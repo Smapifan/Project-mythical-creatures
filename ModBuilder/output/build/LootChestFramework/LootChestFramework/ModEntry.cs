@@ -4,28 +4,29 @@ using LootChest.Framework.Code;
 
 namespace LootChest.Framework
 {
-    /// <summary>
-    /// Main Mod Entry. Registriert Events und initialisiert ChestManager.
-    /// </summary>
     public class ModEntry : Mod
     {
         private ChestManager chestManager = null!;
 
         public override void Entry(IModHelper helper)
         {
-            chestManager = new ChestManager(helper, Monitor);
+            chestManager = new ChestManager(this.Helper, this.Monitor);
 
-            // Events registrieren
+            // Game events
             helper.Events.GameLoop.GameLaunched += OnGameLaunched;
+            helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Display.MenuChanged += OnMenuChanged;
-            helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
         }
 
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
-            Monitor.Log("LootChest Framework initialized.", LogLevel.Info);
-            chestManager.LoadChestsFromContent(); // Lädt Content-Patcher JSONs
+            chestManager.LoadJson(); // Load JSON from assets/
+        }
+
+        private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
+        {
+            chestManager.LoadModData(); // Load loot states from save
         }
 
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
@@ -36,11 +37,6 @@ namespace LootChest.Framework
         private void OnMenuChanged(object? sender, MenuChangedEventArgs e)
         {
             chestManager.OnMenuChanged(e);
-        }
-
-        private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
-        {
-            chestManager.LoadModData();
         }
     }
 }
