@@ -1,66 +1,70 @@
-name: DLL Builder - Custom Paths
+name: DLL Builder Parallel - Custom Paths
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-
-env:
-  INPUT_PATH: "ModBuilder/output/build/LootChestFramework"   # folder containing all DLLs / game files
-  GAME_PATH: "DLL-Builder/input/stardew"    # simulated game path
-  LOG_PATH: "ModBuilder/output/logs"        # log folder
-  BOT_USER_FILE: ".github/bot_user.env"     # file containing BOT_NAME and BOT_EMAIL
+    branches:
+      - main
 
 jobs:
   build-dlls:
     runs-on: ubuntu-latest
-
+    env:
+      # Anpassbare Pfade und Dateien
+      INPUT_PATH: "DLL-Builder/input/stardew"      # Pfad zu allen DLLs / Projekten
+      GAME_PATH: "DLL-Builder/input/stardew"       # Simulierter GamePath für SMAPI Build
+      LOG_PATH: "ModBuilder/output/logs"           # Pfad für logs
+      BOT_USER_FILE: ".github/bot_user.env"        # Enthält USERNAME & EMAIL
+      DOTNET_ROOT: /usr/share/dotnet
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Load Bot User
         run: |
           if [ -f "$BOT_USER_FILE" ]; then
             source "$BOT_USER_FILE"
-            git config user.name "$BOT_NAME"
-            git config user.email "$BOT_EMAIL"
           else
-            echo "Bot user file missing!"
+            echo "BOT_USER_FILE not found!"
             exit 1
           fi
 
-      - name: Setup .NET 6
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: 6.0.x
 
-      - name: Restore Dependencies
+      - name: Restore NuGet Packages
         run: |
           echo "Restoring projects..."
-          sln_file=$(find $INPUT_PATH -name "*.sln" | head -n 1)
-          if [ -z "$sln_file" ]; then
-            echo "No solution file found in $INPUT_PATH"
-            exit 1
-          fi
-          dotnet restore "$sln_file"
+          find "$INPUT_PATH" -name "*.sln" | while read sln; do
+            dotnet restore "$sln"
+          done
 
-      - name: Build DLLs
+      - name: Build Projects (Auto Output)
         run: |
-          OUTPUT_DIR=$(dirname "$sln_file")/bin/Release/net6.0
-          mkdir -p "$OUTPUT_DIR"
+          echo "Building projects..."
           mkdir -p "$LOG_PATH"
-          echo "Building $sln_file..."
-          # Build solution and capture logs always
-          dotnet build "$sln_file" -c Release > "$LOG_PATH/build.log" 2>&1 || true
 
-      - name: Push DLLs and Logs
+          find "$INPUT_PATH" -name "*.sln" | while read sln; do
+            echo "Building $sln..."
+            OUTPUT_DIR=$(dirname "$sln")/bin/Release/net6.0
+            dotnet build "$sln" -c Release /p:GamePath="$GAME_PATH" > "$LOG_PATH/build.log" 2>&1 || true
+          done
+
+      - name: Configure Git User
         run: |
-          # Sync with remote to prevent fast-forward errors
+          git config user.name "$BOT_NAME"
+          git config user.email "$BOT_EMAIL"
+
+      - name: Commit & Push DLLs and Logs
+        run: |
+          # Sync with remote to prevent fast-forward issues
           git fetch origin main
           git reset --hard origin/main
 
-          # Add DLLs and logs
-          git add "$OUTPUT_DIR" "$LOG_PATH"
+          # Ensure paths exist
+          [ -d "$LOG_PATH" ] || mkdir -p "$LOG_PATH"
+          # Add all built DLLs and log
+          git add "$INPUT_PATH" "$LOG_PATH"
           git commit -m "Add DLL build output and logs" || echo "Nothing to commit"
-          git push
+          git push origin main
