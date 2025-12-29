@@ -1,65 +1,46 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using LootChest.Framework.Code;
 
 namespace LootChest.Framework
 {
+    /// <summary>
+    /// Main Mod Entry. Registriert Events und initialisiert ChestManager.
+    /// </summary>
     public class ModEntry : Mod
     {
-        private List<Code.LootChest> chests = new();
+        private ChestManager chestManager = null!;
 
         public override void Entry(IModHelper helper)
         {
-            // Initialize chests
-            LoadChests();
+            chestManager = new ChestManager(helper, Monitor);
 
-            // Register events
+            // Events registrieren
+            helper.Events.GameLoop.GameLaunched += OnGameLaunched;
             helper.Events.GameLoop.DayStarted += OnDayStarted;
             helper.Events.Display.MenuChanged += OnMenuChanged;
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
         }
 
-        private void LoadChests()
+        private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
-            // Example chest from JSON or hardcoded
-            chests.Add(new Code.LootChest(this.Monitor)
-            {
-                ChestKey = "Chest1",
-                MapID = "Farm",
-                TileX = 30,
-                TileY = 30,
-                Unbreakable = true,
-                ForWorld = true,
-                ForPlayer = false,
-                PlayerCount = 1,
-                CanStoreItems = false,
-                Items = new List<Code.LootChest.ItemEntry>
-                {
-                    new Code.LootChest.ItemEntry{ ID = "388", Count = 10 },
-                    new Code.LootChest.ItemEntry{ ID = "390", Count = 5 },
-                    new Code.LootChest.ItemEntry{ ID = "Steak", Count = 3 }
-                }
-            });
+            Monitor.Log("LootChest Framework initialized.", LogLevel.Info);
+            chestManager.LoadChestsFromContent(); // Lädt Content-Patcher JSONs
         }
 
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
         {
-            foreach (var chest in chests)
-                chest.OnDayStarted();
+            chestManager.OnDayStarted();
         }
 
         private void OnMenuChanged(object? sender, MenuChangedEventArgs e)
         {
-            foreach (var chest in chests)
-                chest.OnMenuChanged(e);
+            chestManager.OnMenuChanged(e);
         }
 
         private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
-            foreach (var chest in chests)
-                chest.InitializeModData();
+            chestManager.LoadModData();
         }
     }
 }
