@@ -1,6 +1,6 @@
 # 📦 Filetype Report
 
-**Total Files:** 439
+**Total Files:** 438
 
 | File Extension | Count |
 |----------------|--------|
@@ -14,7 +14,6 @@
 | `.dll` | 262 |
 | `.dylib` | 2 |
 | `.editorconfig` | 1 |
-| `.env` | 1 |
 | `.exe` | 1 |
 | `.ini` | 1 |
 | `.json` | 66 |
@@ -32,4 +31,4 @@
 | `.zip` | 3 |
 | `no_extension` | 2 |
 
-_Generated on 2025-12-29 15:32:53 UTC_
+_Generated on 2025-12-29 15:33:44 UTC_
