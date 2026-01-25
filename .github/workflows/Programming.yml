@@ -1,0 +1,32 @@
+# .github/workflows/complex tester.yml
+name: Complex Tester
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Install cloc
+        run: sudo apt-get update && sudo apt-get install -y cloc
+
+      - name: Run cloc and output Markdown
+        run: |
+          cloc . --exclude-dir=node_modules,assets,dist --quiet --md --report-file=CODE_STATS.md
+
+      - name: Commit CODE_STATS.md if changed
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "auto: update CODE_STATS.md"
+          branch: ${{ github.ref_name }}
+          file_pattern: "CODE_STATS.md"
