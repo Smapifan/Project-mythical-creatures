@@ -28,5 +28,5 @@ jobs:
         with:
           commit_message: "auto: update CODE_STATS.md"
           branch: ${{ github.ref_name }}
-          file_pattern: "other/CODE_STATS.md"
+          file_pattern: "CODE_STATS.md"
           push_options: --force-with-lease
