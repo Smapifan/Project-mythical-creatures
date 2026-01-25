@@ -1,34 +1,23 @@
 # 📦 Filetype Report
 
-**Total Files:** 438
+**Total Files:** 132
 
 | File Extension | Count |
 |----------------|--------|
-| `.0` | 1 |
-| `.1` | 1 |
 | `.cache` | 6 |
-| `.cdx` | 1 |
-| `.config` | 1 |
 | `.cs` | 13 |
 | `.csproj` | 2 |
-| `.dll` | 262 |
-| `.dylib` | 2 |
+| `.dll` | 2 |
 | `.editorconfig` | 1 |
-| `.exe` | 1 |
-| `.ini` | 1 |
-| `.json` | 66 |
-| `.log` | 2 |
-| `.marker` | 1 |
+| `.json` | 44 |
 | `.md` | 7 |
 | `.png` | 40 |
 | `.props` | 2 |
 | `.sln` | 2 |
 | `.targets` | 2 |
 | `.tbin` | 4 |
-| `.txt` | 6 |
+| `.txt` | 4 |
 | `.wav` | 2 |
-| `.xml` | 7 |
-| `.zip` | 3 |
-| `no_extension` | 2 |
+| `.zip` | 1 |
 
-_Generated on 2026-01-25 20:52:25 UTC_
+_Generated on 2026-01-25 20:52:49 UTC_

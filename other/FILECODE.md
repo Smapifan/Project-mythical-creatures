@@ -1,31 +1,9 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 9643
+**Total Lines:** 5222
 
 | File | Lines |
 |------|--------|
-| `DLL-Builder/input/stardew/Stardew Valley.deps.json` | 1518 |
-| `DLL-Builder/input/stardew/Stardew Valley.runtimeconfig.json` | 15 |
-| `DLL-Builder/input/stardew/StardewModdingAPI.deps.json` | 1518 |
-| `DLL-Builder/input/stardew/StardewModdingAPI.runtimeconfig.json` | 17 |
-| `DLL-Builder/input/stardew/smapi-internal/config.json` | 185 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/de.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/default.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/es.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/fr.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/hu.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/id.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/it.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/ja.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/ko.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/pl.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/pt.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/ru.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/th.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/tr.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/uk.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/i18n/zh.json` | 6 |
-| `DLL-Builder/input/stardew/smapi-internal/metadata.json` | 1072 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs` | 70 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/Helpers.cs` | 30 |
 | `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/IChest.cs` | 23 |
@@ -84,4 +62,4 @@
 | `other/counts/filetype.json` | 31 |
 | `other/counts/linecount.json` | 84 |
 
-_Generated on 2026-01-25 20:52:25 UTC_
+_Generated on 2026-01-25 20:52:49 UTC_
