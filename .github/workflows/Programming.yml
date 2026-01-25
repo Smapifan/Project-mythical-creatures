@@ -1,5 +1,5 @@
 # .github/workflows/complex tester.yml
-name: Complex Tester
+name: Code Type Tester
 
 on:
   push:
