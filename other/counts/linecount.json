@@ -1,13 +1,6 @@
 {
-  "total_lines": 5222,
+  "total_lines": 4820,
   "files": {
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs": 42,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json": 108,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json": 73,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/assets/content_en.json": 23,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs": 70,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/Helpers.cs": 30,
-    "ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/IChest.cs": 23,
     "Werewolf/WerewolfStory/WerewolfStory/manifest.json": 10,
     "Werewolf/WerewolfStory/WerewolfStory/ModEntry.cs": 56,
     "Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json": 115,
@@ -56,7 +49,7 @@
     "Werewolf/Werewolf/i18n/default.json": 341,
     "Werewolf/[FTM] Werewolf/manifest.json": 12,
     "Werewolf/[FTM] Werewolf/content.json": 322,
-    "other/counts/linecount.json": 84,
-    "other/counts/filetype.json": 31
+    "other/counts/linecount.json": 62,
+    "other/counts/filetype.json": 20
   }
 }

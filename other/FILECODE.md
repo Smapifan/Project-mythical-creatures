@@ -1,16 +1,9 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 5222
+**Total Lines:** 4820
 
 | File | Lines |
 |------|--------|
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/ChestManager.cs` | 70 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/Helpers.cs` | 30 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/Code/IChest.cs` | 23 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/ModEntry.cs` | 42 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/assets/content_en.json` | 23 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/LootChestFramework.csproj.nuget.dgspec.json` | 73 |
-| `ModBuilder/output/build/LootChestFramework/LootChestFramework/obj/project.assets.json` | 108 |
 | `Werewolf/Werewolf/assets/Animails/Coop/Wolf.json` | 0 |
 | `Werewolf/Werewolf/assets/Animails/Mounts/Wolf.json` | 341 |
 | `Werewolf/Werewolf/assets/Animails/Pet/Wolf.json` | 0 |
@@ -59,7 +52,7 @@
 | `Werewolf/WerewolfStory/WerewolfStory/obj/project.assets.json` | 115 |
 | `Werewolf/[FTM] Werewolf/content.json` | 322 |
 | `Werewolf/[FTM] Werewolf/manifest.json` | 12 |
-| `other/counts/filetype.json` | 31 |
-| `other/counts/linecount.json` | 84 |
+| `other/counts/filetype.json` | 20 |
+| `other/counts/linecount.json` | 62 |
 
-_Generated on 2026-01-25 20:52:49 UTC_
+_Generated on 2026-01-25 20:53:12 UTC_
