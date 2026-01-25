@@ -1,6 +1,6 @@
 # 📊 Code Linecount Report
 
-**Total Lines:** 4820
+**Total Lines:** 4813
 
 | File | Lines |
 |------|--------|
@@ -53,6 +53,6 @@
 | `Werewolf/[FTM] Werewolf/content.json` | 322 |
 | `Werewolf/[FTM] Werewolf/manifest.json` | 12 |
 | `other/counts/filetype.json` | 20 |
-| `other/counts/linecount.json` | 62 |
+| `other/counts/linecount.json` | 55 |
 
-_Generated on 2026-01-25 20:53:12 UTC_
+_Generated on 2026-01-25 20:53:57 UTC_
