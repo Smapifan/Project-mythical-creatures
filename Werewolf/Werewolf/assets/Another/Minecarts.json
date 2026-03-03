@@ -5,9 +5,6 @@
             "Target": "Data/Minecarts",
             "Entries": {
                 "Smapifan.Werewolf.Minecart_1": {
-                    // "UnlockCondition": "PLAYER_HAS_MAIL Current Minecarts",
-                    "UnlockCondition": null,
-                    "LockedMessage": null,
                     "ChooseDestinationMessage": null,
                     "BuyTicketMessage": null,
                     "Destinations": [
@@ -43,4 +40,5 @@
             }
         }
     ]
+
 }
