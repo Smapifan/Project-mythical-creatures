@@ -1,5 +1,5 @@
 {
-  "total_lines": 4436,
+  "total_lines": 4438,
   "files": {
     "Werewolf/Werewolf/manifest.json": 12,
     "Werewolf/Werewolf/content.json": 242,
@@ -45,6 +45,6 @@
     "Werewolf/[FTM] Werewolf/manifest.json": 12,
     "Werewolf/[FTM] Werewolf/content.json": 322,
     "other/counts/filetype.json": 21,
-    "other/counts/linecount.json": 48
+    "other/counts/linecount.json": 50
   }
 }
