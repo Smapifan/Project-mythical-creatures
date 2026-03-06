@@ -1,5 +1,5 @@
 {
-  "total_lines": 4367,
+  "total_lines": 4436,
   "files": {
     "Werewolf/Werewolf/manifest.json": 12,
     "Werewolf/Werewolf/content.json": 242,
@@ -43,6 +43,8 @@
     "Werewolf/WerewolfStory/WerewolfStory/Embedded/assets/Animails/Mounts/Wolf.json": 341,
     "Werewolf/WerewolfStory/WerewolfStory/bin/Debug/net6.0/WerewolfStory.deps.json": 34,
     "Werewolf/[FTM] Werewolf/manifest.json": 12,
-    "Werewolf/[FTM] Werewolf/content.json": 322
+    "Werewolf/[FTM] Werewolf/content.json": 322,
+    "other/counts/filetype.json": 21,
+    "other/counts/linecount.json": 48
   }
 }

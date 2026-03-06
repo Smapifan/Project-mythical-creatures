@@ -1,9 +1,9 @@
 {
-  "total_files": 115,
+  "total_files": 117,
   "filetypes": {
-    ".md": 8,
-    "no_extension": 2,
-    ".json": 40,
+    ".md": 10,
+    "no_extension": 1,
+    ".json": 41,
     ".txt": 2,
     ".tbin": 4,
     ".png": 40,
