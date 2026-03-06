@@ -1,10 +1,10 @@
-cloc|github.com/AlDanial/cloc v 1.98  T=0.02 s (1525.5 files/s, 90648.9 lines/s)
+cloc|github.com/AlDanial/cloc v 1.98  T=0.03 s (1387.8 files/s, 79104.5 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
 :-------|-------:|-------:|-------:|-------:
-JSON|10|40|0|1153
-Markdown|8|41|0|149
+JSON|12|40|0|1224
+Markdown|10|46|0|221
 YAML|3|28|7|125
 Python|1|28|8|97
 C#|3|17|64|85
@@ -15,4 +15,4 @@ INI|1|0|0|15
 MSBuild script|1|3|0|13
 C# Generated|1|4|9|9
 --------|--------|--------|--------|--------
-SUM:|33|166|89|1706
+SUM:|37|171|89|1849
