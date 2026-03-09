@@ -1,0 +1,116 @@
+{
+    "Changes": [
+		{
+			"Action": "EditData",
+			"Target": "Data/Buildings",
+			"Entries": {
+				"Smapifan.Werewolf.Grey_Wolf_Cave": {
+					"Name": "{{i18n:Grey_Wolf_Cave}}",
+					"Description": "{{i18n:Grey_Wolf_Cave_Description}}",
+					"Texture": "assets/Buildings/Grey_Wolf_Cave.png",
+					"CollisionMap": "XXXXX\nXXXXXX\nXXXXX\nXOOOOOX",
+					"Builder": "Robin",
+					"BuildCost": "{{Build Cost for Grey Wolf Cave}}",
+					"BuildDays": "{{Build Days for Grey Wolf Cave}}",
+					"BuildMaterials": [
+                        {
+                            "ItemId": "(O)382",
+                            "Amount":" {{Coal Cost for Grey Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)388",
+                            "Amount": "{{Wood Cost for Grey Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)390",
+                            "Amount":" {{Stone Cost for Grey Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)709",
+                            "Amount": "{{Hardwood Cost for Grey Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)771",
+                            "Amount": "{{Fiber Cost for Grey Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)Moss",
+                            "Amount": "{{Moss Cost for Grey Wolf Cave}}"
+                        }
+						],
+					"Size": {
+						"X": 6,
+                        "Y": 3
+					},
+					"SourceRect": {
+						"X": 0,
+						"Y": 0,
+						"Width": 96,
+				        "Height": 144
+					},
+					"SeasonOffset": {
+						"X": 96,
+				        "Y": 0
+					},
+					"DrawShadow": true
+				}
+			}
+		},
+			{
+			"Action": "EditData",
+			"Target": "Data/Buildings",
+			"Entries": {
+				"Smapifan.Werewolf.white_Wolf_Cave": {
+					"Name": "{{i18n:White_Wolf_Cave}}",
+					"Description": "{{i18n:White_Wolf_Cave_Description}}",
+					"CollisionMap": "XXXXX\nXXXXXX\nXXXXX\nXOOOOOX",
+					"Texture": "assets/Buildings/White_Wolf_Cave.png",
+					"Builder": "Robin",
+					"BuildCost": "{{Build Cost for White Wolf Cave}}",
+					"BuildDays": "{{Build Days for White Wolf Cave}}",
+					"BuildMaterials": [
+                        {
+                            "ItemId": "(O)80",
+                            "Amount":" {{Quartz Cost for White Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)388",
+                            "Amount": "{{Wood Cost for White Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)390",
+                            "Amount":" {{Stone Cost for White Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)709",
+                            "Amount": "{{Hardwood Cost for White Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)771",
+                            "Amount": "{{Fiber Cost for White Wolf Cave}}"
+                        },
+                        {
+                            "ItemId": "(O)Moss",
+                            "Amount": "{{Moss Cost for White Wolf Cave}}"
+                        }
+						],
+					"Size": {
+						"X": 6,
+                        "Y": 3
+					},
+					"SourceRect": {
+						"X": 0,
+						"Y": 0,
+						"Width": 96,
+				        "Height": 144
+					},
+					"SeasonOffset": {
+						"X": 96,
+				        "Y": 0
+					},
+					"DrawShadow": true
+				}
+			}
+		}
+    ]
+}

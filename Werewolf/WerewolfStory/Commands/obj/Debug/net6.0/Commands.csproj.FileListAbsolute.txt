@@ -1,0 +1,8 @@
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\bin\Debug\net6.0\Commands.deps.json
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\bin\Debug\net6.0\Commands.dll
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.csproj.AssemblyReference.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.AssemblyInfoInputs.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.AssemblyInfo.cs
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.csproj.CoreCompileInputs.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\Commands\obj\Debug\net6.0\Commands.dll
