@@ -1,0 +1,8 @@
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\bin\Debug\net6.0\AudioPlayer.deps.json
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\bin\Debug\net6.0\AudioPlayer.dll
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.csproj.AssemblyReference.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.AssemblyInfoInputs.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.AssemblyInfo.cs
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.csproj.CoreCompileInputs.cache
+C:\Users\tequi\OneDrive\Desktop\Von Luca\Project-mythical-creatures-main\Project-mythical-creatures-main\Werewolf\WerewolfStory\AudioPlayer\obj\Debug\net6.0\AudioPlayer.dll

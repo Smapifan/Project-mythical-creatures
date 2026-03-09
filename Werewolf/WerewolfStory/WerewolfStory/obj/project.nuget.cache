@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "7VE7ehRfVbNf3MH0FlPmGUVCnW10+kF4cKz+mAcI9sMvPxZYtAQaQAyqFvw6QyzDx7TOUPR9yxpxBepxJ5J5SA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\tequi\\OneDrive\\Desktop\\Von Luca\\Project-mythical-creatures-main\\Project-mythical-creatures-main\\Werewolf\\WerewolfStory\\WerewolfStory\\WerewolfStory.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\tequi\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\tequi\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.4.0\\pathoschild.stardew.modbuildconfig.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
